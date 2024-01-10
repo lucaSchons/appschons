@@ -1,0 +1,138 @@
+.container-padaria{
+    column-count: 3;
+    column-gap: 10px;
+    margin: 100px;
+}
+
+.head-page{
+    background: rgb(206, 206, 206) 0% 0% no-repeat padding-box;
+    height: 189px;
+    padding-bottom: 40px;
+    margin: 60px auto 40px auto;
+    padding: 0 5%;
+
+    .container{
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 80px;
+    }
+
+    h1{
+        color: var(--cinza);
+        font-size: 2rem;
+    }
+}
+.teste{
+    background-color: #e2e2e2;
+    padding: 10px;
+    margin: 10px;
+    display: block;
+    
+}
+.button_material{
+    &:hover{
+        cursor:pointer;
+    }
+}
+
+.container-padaria li {
+    margin: 0;
+    float: left;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #e2e2e2;
+    padding: 5px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+li .container-legenda{
+    background-color: #f6f6f6;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+    span{
+        font-size: 1.2rem;
+        font-weight: 600;
+    }
+    &:hover{
+        background-color: #e2e2e2; 
+    }
+}
+
+.container-legenda .legenda{
+    margin-top: 3px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+
+    .no-underline{
+        margin-left: 10px;
+    }
+}
+
+li img {
+    width: 100%;
+    display: flex;
+    border-radius: 4px;
+} 
+
+.separador-section{
+    height: 6px;
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+    width: 80%;
+    margin: 0 auto;
+}
+
+@media(max-width: 1024px){
+    .container-padaria{
+        margin: 45px;
+    }
+}
+
+@media (max-width: 858px){
+    .head-page{
+        height: 160px;
+
+        .container{
+            padding: 60px;
+        }
+
+        h1{
+            font-size: 1.8rem;
+        }
+    }
+}
+
+@media (max-width: 768px){
+    .head-page{
+        height: 120px;
+
+        .container{
+            padding: 50px;
+        }
+
+        h1{
+            font-size: 1.6rem;
+        }
+    }
+
+    .container-padaria{
+        column-count: 2;
+        column-gap: 8px;
+        margin: 25px;
+    }
+}
+
+@media (max-width: 480px){
+    .container-padaria{
+        column-count: 1;
+        column-gap: 8px;
+        margin: 20px;
+    }
+}

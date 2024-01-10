@@ -1,0 +1,18 @@
+<section class="section_dialog-padaria">
+  <div class="header-dialog">
+    <h1 mat-dialog-title>{{produto.descricao}}</h1>
+    <div mat-dialog-actions>
+      <mat-icon mat-button mat-dialog-close class="material-icons md-36">cancel</mat-icon>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="data-dialog">
+    <span class="material-symbols-outlined md-36">date_range</span>
+    <span class="data-dialog_text">Temos diponível {{produto.data_disponivel}}</span>
+  </div>
+  <div mat-dialog-content>
+    <div class="image-dialog">
+      <img src="{{produto.imageUrl}}" />
+    </div>
+  </div>
+</section>

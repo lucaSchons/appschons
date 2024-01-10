@@ -1,0 +1,32 @@
+.section_dialog-padaria{
+    .header-dialog{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .material-icons{ 
+            width: 100%;
+            height: 100%;
+            font-size: 36px;
+            cursor: pointer;
+        }
+    }
+
+    .data-dialog{
+        display: flex;
+        padding: 20px 20px 0 20px;
+        align-items: center;
+        .md-36{
+            font-size: 36px;
+            padding-right: 10px;
+        }
+        &_text{
+            font-size: 1.2rem;
+        }
+    }
+ 
+    img{  
+        border-radius: 5px; 
+        max-width: 600px; 
+    }
+    
+}

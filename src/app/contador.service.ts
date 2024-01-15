@@ -28,15 +28,25 @@ export class ContadorService {
   }
 
   decrementar(id: string) {
-    this.contadorSubject.next(this.contadorSubject.value - 1);
+   
     const novoQuantidadeProduto = { ...this.quantidadeProdutoSubject.value };
 
-    if (!novoQuantidadeProduto[id]) {
-      novoQuantidadeProduto[id] = 1;
+    if (!novoQuantidadeProduto[id] || novoQuantidadeProduto[id] === 0)  {
+      alert("seu produto está zerado");
+      novoQuantidadeProduto[id] = 0;
+      
+    } else if (novoQuantidadeProduto[id] === 1){
+        alert("tem certeza que deseja excluir item?");
+        novoQuantidadeProduto[id] = 0;
+        this.contadorSubject.next(this.contadorSubject.value - 1);
     } else {
       novoQuantidadeProduto[id]--;
     }
 
+    if(novoQuantidadeProduto[id] >= 1 ) {
+      this.contadorSubject.next(this.contadorSubject.value - 1);    
+    }
     this.quantidadeProdutoSubject.next(novoQuantidadeProduto);
+    
   }
 }

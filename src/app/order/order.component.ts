@@ -1,6 +1,6 @@
 import { Observable, map } from 'rxjs';
 import { ContadorService } from './../contador.service';
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { collection, getDoc, doc, addDoc, query, where, getDocs } from 'firebase/firestore';
 import { Firestore } from '@angular/fire/firestore';
 import { pedidoItem } from '../pedido-item.model';
@@ -16,7 +16,7 @@ export class OrderComponent implements OnInit {
     produtos!: Observable<any>;
     variavel_produto!: string;
     variavel_produto_quantidade!: number;
-    valor_total!: number;
+    // valor_total!: number;
     resultado_calculo: number = 0;
     finalizar_pedido_produtos: pedidoItem[] = [];
     descricao: string[] = [];
@@ -24,7 +24,7 @@ export class OrderComponent implements OnInit {
     valor_unit: number[] = [];
     valor_total_var = 0;
     docId: string = "";
-
+    @Input() valor_total = 0;
     constructor(private firestore: Firestore, private contador: ContadorService) { }
 
     ngOnInit() {

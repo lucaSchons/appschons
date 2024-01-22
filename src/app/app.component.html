@@ -14,8 +14,9 @@
             <li class="menu__item"><a (click)="closeMenu()" routerLink="#">Contato</a></li>
             <div class="separador"></div>
             <li class="menu__item">
-                <a routerLink="order" mat-raised-button [matBadge]="contadorService.contador | async" [matBadgeHidden]="(contadorService.contador | async) === 0">
-                    <span class="material-symbols-outlined">shopping_cart</span>
+                <a routerLink="order" mat-raised-button [matBadge]="(obtemTotalContador())">
+                    <span class="material-symbols-outlined">shopping_cart</span> 
+                    <span></span>
                 </a>
             </li>
         </ul>

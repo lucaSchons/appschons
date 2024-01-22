@@ -10,43 +10,69 @@ export class ContadorService {
   contador = this.contadorSubject.asObservable();
   private quantidadeProdutoSubject = new BehaviorSubject<{ [key: string]: number }>({});
   quantidadeProduto = this.quantidadeProdutoSubject.asObservable();
-  variavel_produto: Object[] = [];
 
   constructor(private firestore: Firestore) { }
 
-  incrementar(id: string) {
-    this.contadorSubject.next(this.contadorSubject.value + 1);
+  incrementar(descricao: string) {
     const novoQuantidadeProduto = { ...this.quantidadeProdutoSubject.value };
+    if (localStorage.getItem('contador')) {
+      const quantidadeString = localStorage.getItem('contador');
+      const quantidade = quantidadeString ? +quantidadeString : 0;
+      const resultado = quantidade + 1;
+      this.contadorSubject.next(resultado);
 
-    if (!novoQuantidadeProduto[id]) {
-      novoQuantidadeProduto[id] = 1;
     } else {
-      novoQuantidadeProduto[id]++;
+      this.contadorSubject.next(this.contadorSubject.value + 1)
     }
 
+    if (localStorage.getItem(descricao)) {
+      const quantidadeString = localStorage.getItem(descricao);
+      const quantidade = quantidadeString ? +quantidadeString : 0;
+      const resultado = quantidade + 1;
+      novoQuantidadeProduto[descricao] = resultado;
+
+    } else {
+
+      if (!novoQuantidadeProduto[descricao]) {
+        novoQuantidadeProduto[descricao] = 1;
+      } else {
+        novoQuantidadeProduto[descricao]++;
+      }
+    }
+
+    localStorage.setItem('contador', JSON.stringify(this.contadorSubject.value))
     this.quantidadeProdutoSubject.next(novoQuantidadeProduto);
+    localStorage.setItem(descricao, JSON.stringify(novoQuantidadeProduto[descricao]));
   }
 
-  decrementar(id: string) {
-   
+  decrementar(descricao: string) {
+    if (this.contadorSubject.value >= 1) {
+      this.contadorSubject.next(this.contadorSubject.value - 1);
+    }
     const novoQuantidadeProduto = { ...this.quantidadeProdutoSubject.value };
+    if (localStorage.getItem(descricao)) {
+      const quantidadeString = localStorage.getItem(descricao);
+      const quantidade = quantidadeString ? +quantidadeString : 0;
+      console.log("acessando localstorage", quantidade);
+      const resultado = quantidade - 1;
+      novoQuantidadeProduto[descricao] = resultado;
 
-    if (!novoQuantidadeProduto[id] || novoQuantidadeProduto[id] === 0)  {
-      alert("seu produto está zerado");
-      novoQuantidadeProduto[id] = 0;
-      
-    } else if (novoQuantidadeProduto[id] === 1){
+    } else {
+
+      if (!novoQuantidadeProduto[descricao] || novoQuantidadeProduto[descricao] === 0) {
+        alert("seu produto está zerado");
+        novoQuantidadeProduto[descricao] = 0;
+
+      } else if (novoQuantidadeProduto[descricao] === 1) {
         alert("tem certeza que deseja excluir item?");
-        novoQuantidadeProduto[id] = 0;
+        novoQuantidadeProduto[descricao] = 0;
         this.contadorSubject.next(this.contadorSubject.value - 1);
-    } else {
-      novoQuantidadeProduto[id]--;
-    }
-
-    if(novoQuantidadeProduto[id] >= 1 ) {
-      this.contadorSubject.next(this.contadorSubject.value - 1);    
+      } else {
+        novoQuantidadeProduto[descricao]--;
+      }
     }
     this.quantidadeProdutoSubject.next(novoQuantidadeProduto);
-    
-  }
+    localStorage.setItem('contador', JSON.stringify(this.contadorSubject.value))
+    localStorage.setItem(descricao, JSON.stringify(novoQuantidadeProduto[descricao]));
+  }  
 }

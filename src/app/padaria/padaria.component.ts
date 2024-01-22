@@ -22,9 +22,13 @@ export class PadariaComponent {
     quantidade_produto_service!: Observable<any>;
     
     constructor(public dialog: MatDialog, private firestore: Firestore, public contadorService: ContadorService) {
-        this.getData();
         const collectionInstance = collectionGroup(this.firestore, 'produto_encomenda');
         this.produtosEncomenda = collectionData(collectionInstance, { idField: 'id' });
+        const collec = collection(this.firestore, 'produtos_padaria');
+        collectionData(collec, { idField: 'id' }).subscribe(resul => {
+            console.log(resul);
+        })
+        this.produtos = collectionData(collec, { idField: 'id' });
     }
 
     async openDialog(produto: Produto) {
@@ -43,33 +47,21 @@ export class PadariaComponent {
         });
     }
 
-    getQuantidadeProduto(id: string): number {
-        let quant_variavel = 0;
-        const quantidadeProduto = this.contadorService.quantidadeProduto;
-    
-        quantidadeProduto.pipe(
-          map(quantidades => quantidades[id] || 0)
-        ).subscribe(result => {
-            quant_variavel = result;
-        })
-
-        return quant_variavel;
+    getQuantidadeProduto(descricao: string){
+        let quantidades;
+        if(localStorage.getItem(descricao)){
+            quantidades = localStorage.getItem(descricao);
+        }else{
+            quantidades = 0;
+        }
+        return quantidades;
     }
 
-    getData() {
-        const collectionInstance = collection(this.firestore, 'produtos_padaria');
-        collectionData(collectionInstance, { idField: 'id' }).subscribe(resul => {
-            console.log(resul);
-        })
-        this.produtos = collectionData(collectionInstance, { idField: 'id' });
+    incrementa(descricao: string) {
+        this.contadorService.incrementar(descricao);
     }
 
-    incrementa(id: string) {
-        this.contadorService.incrementar(id);
+    decrementa(descricao: string){
+        this.contadorService.decrementar(descricao);
     }
-
-    decrementa(id: string){
-        this.contadorService.decrementar(id);
-    }
-
 }

@@ -16,7 +16,6 @@ export class OrderComponent implements OnInit {
     produtos!: Observable<any>;
     variavel_produto!: string;
     variavel_produto_quantidade!: number;
-    // valor_total!: number;
     resultado_calculo: number = 0;
     finalizar_pedido_produtos: pedidoItem[] = [];
     descricao: string[] = [];
@@ -24,7 +23,7 @@ export class OrderComponent implements OnInit {
     valor_unit: number[] = [];
     valor_total_var = 0;
     docId: string = "";
-    @Input() valor_total = 0;
+    valor_total = 0;
     constructor(private firestore: Firestore, private contador: ContadorService) { }
 
     ngOnInit() {
@@ -45,16 +44,11 @@ export class OrderComponent implements OnInit {
             for (let i = 0; i < result.length; i++) {
                 this.variavel_produto = result[i].id;
                 this.variavel_produto_quantidade = result[i].quantidade;
-                console.log("valor produto result.descricao ", this.variavel_produto);
-                console.log("valor produto result.qauntidade: ", this.variavel_produto_quantidade);
-                // this.obterDadosDoProduto(this.variavel_produto, this.variavel_produto_quantidade);
-                // Aguarde a conclusão de obterId antes de chamar obterDadosDoProduto
+               
                 await this.obterId(this.variavel_produto);
-                console.log("dentro do obterdados completos ", this.docId);
-
-                // Chame obterDadosDoProduto somente se docId for definido
+        
                 if (this.docId !== "") {
-                    await this.obterDadosDoProduto(this.variavel_produto, this.variavel_produto_quantidade);
+                    await this.obterDadosDoProduto(this.variavel_produto_quantidade);
                 }
             }
         })
@@ -69,25 +63,19 @@ export class OrderComponent implements OnInit {
         });
     }
     
-    async obterDadosDoProduto(descricao: string, quantidade: number) {
+    async obterDadosDoProduto(quantidade: number) {
         if (this.docId !== "") {
-            console.log("passei ", this.docId);
             const docInstance = doc(this.firestore, 'produto_encomenda', this.docId)
             const docSnap = await getDoc(docInstance);
 
             if (docSnap.exists()) {
                 const idProduto = docSnap.id;
-                console.log(idProduto);
                 const nomeProduto = docSnap.get("descricao");
-                console.log(nomeProduto);
                 const valor_unitario = docSnap.get("valor_unitario");
-                console.log(valor_unitario);
                 const quantidade_produto = quantidade;
-                console.log(quantidade_produto);
                 const calculo = quantidade_produto * valor_unitario;
                 this.resultado_calculo += calculo;
                 this.valor_total = this.resultado_calculo;
-                console.log(this.valor_total);
                 const novoProduto: pedidoItem = {
                     id_produto: idProduto,
                     descricao_produto: nomeProduto,

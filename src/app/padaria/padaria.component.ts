@@ -49,8 +49,11 @@ export class PadariaComponent {
 
     getQuantidadeProduto(descricao: string){
         let quantidades;
-        if(localStorage.getItem(descricao)){
-            quantidades = localStorage.getItem(descricao);
+        const quantidadeStorage = localStorage.getItem('@schons');
+        if (quantidadeStorage !== null) {
+            const quantidadeObj = JSON.parse(quantidadeStorage);
+            quantidades = quantidadeObj[descricao];
+            
         }else{
             quantidades = 0;
         }

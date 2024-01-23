@@ -1,4 +1,4 @@
-import { Observable, map } from 'rxjs';
+import { Observable, map, of } from 'rxjs';
 import { ContadorService } from './../contador.service';
 import { Component, Input, OnInit } from "@angular/core";
 import { collection, getDoc, doc, addDoc, query, where, getDocs } from 'firebase/firestore';
@@ -13,7 +13,7 @@ import { pedidoItem } from '../pedido-item.model';
 
 export class OrderComponent implements OnInit {
     contadorTotal!: number;
-    produtos!: Observable<any>;
+    produtos!: Observable<any[]>; 
     variavel_produto!: string;
     variavel_produto_quantidade!: number;
     resultado_calculo: number = 0;
@@ -24,6 +24,7 @@ export class OrderComponent implements OnInit {
     valor_total_var = 0;
     docId: string = "";
     valor_total = 0;
+
     constructor(private firestore: Firestore, private contador: ContadorService) { }
 
     ngOnInit() {
@@ -31,27 +32,48 @@ export class OrderComponent implements OnInit {
             this.contadorTotal = result;
         });
 
-        this.produtos = this.contador.quantidadeProduto.pipe(
-            map(quantidades => {
-                return Object.keys(quantidades).map(key => ({
-                    id: key,
-                    quantidade: quantidades[key]
-                }));
-            })
-        )
+        const arrayStorage = localStorage.getItem('@schons');
+        if (arrayStorage !== null) {
+            const produto = JSON.parse(arrayStorage);
 
-        this.produtos.subscribe(async result => {
-            for (let i = 0; i < result.length; i++) {
-                this.variavel_produto = result[i].id;
-                this.variavel_produto_quantidade = result[i].quantidade;
+            // this.produtos = this.contador.quantidadeProduto.pipe(
+            //     map(quantidades => {
+            //         return Object.keys(produto).map(key => ({
+            //             id: key,
+            //             quantidade: produto[key]
+            //         }));
+            //     })
+            // );
+            this.produtos = this.contador.quantidadeProduto.pipe(
+                map(quantidades => {
+                  return Object.keys(produto)
+                    .filter(key => produto[key] > 0) // Filtra os objetos com quantidade > 0
+                    .map(key => ({
+                      id: key,
+                      quantidade: produto[key]
+                    }));
+                })
+              );
+            
+
+            this.produtos.subscribe(res => {
+                console.log(res);
+            });
+        }
+    
+        // this.produtos.subscribe(async result => {
+        //     for (let i = 0; i < result.length; i++) {
+        //         this.variavel_produto = result[i].id;
+        //         this.variavel_produto_quantidade = result[i].quantidade;
+        //         console.log("dentro do order, nome do produto: ", this.variavel_produto, " quantidade: ", this.variavel_produto_quantidade);
                
-                await this.obterId(this.variavel_produto);
+        //         await this.obterId(this.variavel_produto);
         
-                if (this.docId !== "") {
-                    await this.obterDadosDoProduto(this.variavel_produto_quantidade);
-                }
-            }
-        })
+        //         if (this.docId !== "") {
+        //             await this.obterDadosDoProduto(this.variavel_produto_quantidade);
+        //         }
+        //     }
+        // })
     }
 
     async obterId(descricao: string) {

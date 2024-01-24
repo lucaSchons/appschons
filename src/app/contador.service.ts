@@ -62,28 +62,33 @@ export class ContadorService implements OnInit{
   }
 
   decrementar(descricao: string) {
-    if (this.contadorSubject.value >= 1) {
-      this.contadorSubject.next(this.contadorSubject.value - 1);
-      if (localStorage.getItem('contador')) {
-        const quantidadeString = localStorage.getItem('contador');
-        const quantidade = quantidadeString ? +quantidadeString : 0;
-        const resultado = quantidade - 1;
-        this.contadorSubject.next(resultado);
-        
-      } else {
-        this.contadorSubject.next(this.contadorSubject.value - 1)
-      }
-    }
     const novoQuantidadeProduto = { ...this.quantidadeProdutoSubject.value };
     const quantidadeStorage = localStorage.getItem('@schons');
-  
+
+    if (localStorage.getItem('contador')) {
+      const quantidadeString = localStorage.getItem('contador');
+      const quantidade = quantidadeString ? +quantidadeString : 0;
+      let quantidade_ext = quantidade;
+      console.log("quantidade vinda do storage", quantidade_ext);
+      console.log("produto quantidade", novoQuantidadeProduto[descricao]);
+      if(quantidade_ext >= 2 && novoQuantidadeProduto[descricao] !== 0){
+        const resultado = quantidade_ext -1;
+        console.log("resultado", resultado);
+        this.contadorSubject.next(resultado);
+      }else if(quantidade_ext === 1 && novoQuantidadeProduto[descricao] !== 0){
+        this.contadorSubject.next(0);
+      }
+    }
+
     if (quantidadeStorage !== null) {
       const quantidadeObj = JSON.parse(quantidadeStorage);
       const quantidade = quantidadeObj[descricao];
-      if(quantidade !== undefined && quantidade >= 1) {
-        const resultado = quantidade - 1;
+      
+      if(quantidade >= 2 && novoQuantidadeProduto[descricao] !== 0){
+        const resultado = quantidade -1;
         novoQuantidadeProduto[descricao] = resultado;
-      }else{
+      }else if(quantidade === 1 && novoQuantidadeProduto[descricao] !== 0){
+        alert("tem certeza que deseja excluir item?");
         novoQuantidadeProduto[descricao] = 0;
       }
       for (const chave in quantidadeObj) {
@@ -91,25 +96,26 @@ export class ContadorService implements OnInit{
           novoQuantidadeProduto[chave] = quantidadeObj[chave];
         }
       }
+
     } else {
 
       if (!novoQuantidadeProduto[descricao] || novoQuantidadeProduto[descricao] === 0) {
         alert("seu produto está zerado");
         novoQuantidadeProduto[descricao] = 0;
+      } 
+      // else if (novoQuantidadeProduto[descricao] === 1) {
+      //   alert("tem certeza que deseja excluir item?");
+      //   novoQuantidadeProduto[descricao] = 0;
+      // } else {
+      //   novoQuantidadeProduto[descricao]--;
+      // }
+    }  
 
-      } else if (novoQuantidadeProduto[descricao] === 1) {
-        alert("tem certeza que deseja excluir item?");
-        novoQuantidadeProduto[descricao] = 0;
-        this.contadorSubject.next(this.contadorSubject.value - 1);
-      } else {
-        novoQuantidadeProduto[descricao]--;
-      }
-    }
     this.quantidadeProdutoSubject.next(novoQuantidadeProduto);
     localStorage.setItem('contador', JSON.stringify(this.contadorSubject.value))
     this.quantidadeProduto.subscribe(result =>{
       this.produto = result;
     });
     localStorage.setItem('@schons', JSON.stringify(this.produto));
-  }  
+  }
 }

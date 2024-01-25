@@ -1,9 +1,10 @@
-import { Observable, map, of } from 'rxjs';
+import { BehaviorSubject, Observable, map, of } from 'rxjs';
 import { ContadorService } from './../contador.service';
 import { Component, Input, OnInit } from "@angular/core";
 import { collection, getDoc, doc, addDoc, query, where, getDocs } from 'firebase/firestore';
 import { Firestore } from '@angular/fire/firestore';
 import { pedidoItem } from '../pedido-item.model';
+import { ProdutoService } from '../produtos.service';
 
 @Component({
     selector: 'app-order',
@@ -13,118 +14,88 @@ import { pedidoItem } from '../pedido-item.model';
 
 export class OrderComponent implements OnInit {
     contadorTotal!: number;
-    produtos!: Observable<any[]>; 
-    variavel_produto!: string;
-    variavel_produto_quantidade!: number;
-    resultado_calculo: number = 0;
-    finalizar_pedido_produtos: pedidoItem[] = [];
-    descricao: string[] = [];
-    quantidade: number[] = [];
-    valor_unit: number[] = [];
-    valor_total_var = 0;
-    docId: string = "";
-    valor_total = 0;
+    produtos!: Observable<any[]>;
+    precoTotal = new BehaviorSubject<number>(0);
+    variavel_produtos_encomenda!: Observable<any[]>
+    variavel_quantidade: number[] = [];
+    variavel_preco: number[] = [];
 
-    constructor(private firestore: Firestore, private contador: ContadorService) { }
+    constructor(private contador: ContadorService, public produtoService: ProdutoService) { }
 
     ngOnInit() {
-        this.contador.contadorSubject.subscribe(result => {
-            this.contadorTotal = result;
-        });
-
         const arrayStorage = localStorage.getItem('@schons');
         if (arrayStorage !== null) {
+            console.log("entrei");
             const produto = JSON.parse(arrayStorage);
-
-            // this.produtos = this.contador.quantidadeProduto.pipe(
-            //     map(quantidades => {
-            //         return Object.keys(produto).map(key => ({
-            //             id: key,
-            //             quantidade: produto[key]
-            //         }));
-            //     })
-            // );
             this.produtos = this.contador.quantidadeProduto.pipe(
                 map(quantidades => {
-                  return Object.keys(produto)
-                    .filter(key => produto[key] > 0) // Filtra os objetos com quantidade > 0
-                    .map(key => ({
-                      id: key,
-                      quantidade: produto[key]
-                    }));
+                    return Object.keys(produto)
+                        .filter(key => produto[key] > 0)
+                        .map(key => ({
+                            id: key,
+                            quantidade: produto[key]
+                        }));
                 })
-              );
-            
-
-            this.produtos.subscribe(res => {
-                console.log(res);
-            });
-        }
-    
-        // this.produtos.subscribe(async result => {
-        //     for (let i = 0; i < result.length; i++) {
-        //         this.variavel_produto = result[i].id;
-        //         this.variavel_produto_quantidade = result[i].quantidade;
-        //         console.log("dentro do order, nome do produto: ", this.variavel_produto, " quantidade: ", this.variavel_produto_quantidade);
-               
-        //         await this.obterId(this.variavel_produto);
-        
-        //         if (this.docId !== "") {
-        //             await this.obterDadosDoProduto(this.variavel_produto_quantidade);
-        //         }
-        //     }
-        // })
-    }
-
-    async obterId(descricao: string) {
-        const q = query(collection(this.firestore, "produto_encomenda"), where("descricao", "==", descricao));
-
-        const querySnapshot = await getDocs(q);
-        querySnapshot.forEach((doc) => {
-            this.docId = doc.id;
-        });
-    }
-    
-    async obterDadosDoProduto(quantidade: number) {
-        if (this.docId !== "") {
-            const docInstance = doc(this.firestore, 'produto_encomenda', this.docId)
-            const docSnap = await getDoc(docInstance);
-
-            if (docSnap.exists()) {
-                const idProduto = docSnap.id;
-                const nomeProduto = docSnap.get("descricao");
-                const valor_unitario = docSnap.get("valor_unitario");
-                const quantidade_produto = quantidade;
-                const calculo = quantidade_produto * valor_unitario;
-                this.resultado_calculo += calculo;
-                this.valor_total = this.resultado_calculo;
-                const novoProduto: pedidoItem = {
-                    id_produto: idProduto,
-                    descricao_produto: nomeProduto,
-                    quantidade_produto: quantidade_produto,
-                    valor_unitario_produto: valor_unitario,
-                    valor_total_pedido: this.valor_total
-                };
-                this.finalizar_pedido_produtos.push(novoProduto);
-            } else {
-                console.log("Doc não encontrado!");
+            );
+            if(this.produtos){
+                this.calcularPrecoTotal();
             }
         }
     }
 
-    encomendar() {
-        this.finalizar_pedido_produtos.forEach((produto: pedidoItem) => {
-            this.descricao.push(produto.descricao_produto);
-            this.quantidade.push(produto.quantidade_produto);
-            this.valor_unit.push(produto.valor_unitario_produto);
-            this.valor_total_var = produto.valor_total_pedido;
-        });
-
-        const docRef = addDoc(collection(this.firestore, "pedido_item"), {
-            produto_desc: this.descricao,
-            valor_unit: this.valor_unit,
-            quantidade: this.quantidade,
-            valor_total: this.valor_total_var
+    calcularPrecoTotal() {
+        this.produtos.subscribe(produtosEncomenda => {
+            produtosEncomenda.forEach(produto => {
+                const descricao = produto.id;
+                const quantidade =  produto.quantidade;
+                
+                this.produtoService.getProduto(descricao).subscribe(produto => {
+                    const valor_unitario = produto[0]?.['valor_unitario'] || 0;
+                    
+                    this.variavel_quantidade.push(quantidade);
+                    this.variavel_preco.push(valor_unitario);
+                    this.valorobtido();
+                });
+            });
         });
     }
+
+    async valorobtido(){
+        console.log(this.variavel_quantidade, this.variavel_preco);
+        let resultado = 0;
+        let resultadoTotal = 0;
+        for(let i=0; i < this.variavel_quantidade.length; i++){
+            resultado = this.variavel_quantidade[i] * this.variavel_preco[i];
+            resultadoTotal += resultado;
+        }
+        this.precoTotal.next(resultadoTotal);
+    }
+
+    // encomendar() {
+    //     const novoProduto: pedidoItem = {
+    //         id_produto: idProduto,
+    //         descricao_produto: nomeProduto,
+    //         quantidade_produto: quantidade_produto,
+    //         valor_unitario_produto: valor_unitario,
+    //         valor_total_pedido: this.valor_total
+    //     };
+    //     this.finalizar_pedido_produtos.forEach((produto: pedidoItem) => {
+    //         this.descricao.push(produto.descricao_produto);
+    //         this.quantidade.push(produto.quantidade_produto);
+    //         this.valor_unit.push(produto.valor_unitario_produto);
+    //         this.valor_total_var = produto.valor_total_pedido;
+    //     });
+
+    //     const docRef = addDoc(collection(this.firestore, "pedido_item"), {
+    //         produto_desc: this.descricao,
+    //         valor_unit: this.valor_unit,
+    //         quantidade: this.quantidade,
+    //         valor_total: this.valor_total_var
+    //     });
+    // }
+
 }
+
+
+
+    

@@ -16,6 +16,7 @@ import { FormsModule } from '@angular/forms';
 import { PadariaComponent } from './padaria/padaria.component';
 import { DialogPadaria } from './dialog-padaria/dialog-padaria.component';
 import { OrderComponent } from './order/order.component';
+import { ProdutoService } from './produtos.service';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,7 @@ import { OrderComponent } from './order/order.component';
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore())
   ],
-  providers: [ContadorService],
+  providers: [ContadorService, ProdutoService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

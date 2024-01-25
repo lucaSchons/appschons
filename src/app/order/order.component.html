@@ -3,5 +3,5 @@
   <span>Descricao: {{ produto.id }} </span>
   <span>Quantidade: {{ produto.quantidade }}</span>
 </div>
-<span>Valor Total: {{valor_total}}</span>
-<button (click)="encomendar()">Finalizar</button>
+<span>Valor Total: {{ precoTotal | async }}</span>
+<!-- <button (click)="encomendar()">Finalizar</button> -->

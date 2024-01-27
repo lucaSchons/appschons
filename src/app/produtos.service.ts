@@ -1,8 +1,7 @@
-import { Injectable, OnInit } from '@angular/core';
-import { Firestore, collectionData, collectionGroup } from '@angular/fire/firestore';
-import { collection, getDoc, doc, addDoc, query, where, getDocs } from 'firebase/firestore';
-import { BehaviorSubject, Observable, map } from 'rxjs';
-import { ProdutoEncomenda } from './produto-encomenda.model';
+import { Injectable } from '@angular/core';
+import { Firestore, collectionData } from '@angular/fire/firestore';
+import { collection, query, where, getDocs } from 'firebase/firestore';
+import { Observable} from 'rxjs';
 import { Produto } from './produto.model';
 import { DialogPadaria } from './dialog-padaria/dialog-padaria.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -16,13 +15,17 @@ export class ProdutoService {
   produtos!: Observable<any>;
 
   constructor(private firestore: Firestore, public dialog: MatDialog) {
-    const collectionInstance = collectionGroup(this.firestore, 'produto_encomenda');
-    this.produtosEncomenda = collectionData(collectionInstance, { idField: 'id' });
-    const collec = collection(this.firestore, 'produtos_padaria');
-    collectionData(collec, { idField: 'id' }).subscribe(resul => {
+    const collectionProdutoEncomenda = collection(this.firestore, 'produto_encomenda');
+    collectionData(collectionProdutoEncomenda, { idField: 'id' }).subscribe(resul => {
       console.log(resul);
     })
-    this.produtos = collectionData(collec, { idField: 'id' });
+    this.produtosEncomenda = collectionData(collectionProdutoEncomenda, { idField: 'id' });
+
+    const collectionProduto = collection(this.firestore, 'produtos_padaria');
+    collectionData(collectionProduto, { idField: 'id' }).subscribe(resul => {
+      console.log(resul);
+    })
+    this.produtos = collectionData(collectionProduto, { idField: 'id' });
   }
 
   getProdutosEncomenda() {

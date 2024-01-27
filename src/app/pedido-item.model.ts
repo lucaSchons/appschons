@@ -1,7 +1,8 @@
 export interface pedidoItem{
-    id_produto: string;
-    descricao_produto: string;
+    descricao_produto: string | null;
     quantidade_produto: number;
-    valor_unitario_produto: number;
-    valor_total_pedido: number;
+    valor_unitario_produto: number | null;
+    ingredientes: string | null,
+    imageUrl: string | null
+    
 }

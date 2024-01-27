@@ -1,7 +1,7 @@
 <h1>Pedido</h1>
-<div *ngFor="let produto of produtos | async ">
-  <span>Descricao: {{ produto.id }} </span>
-  <span>Quantidade: {{ produto.quantidade }}</span>
+<div *ngFor="let dados of dadosDaOrdem ">
+  <span>Descricao: {{ dados.descricao_produto }}</span>
+  <!-- <span>Quantidade: {{ produto.quantidade }}</span> -->
 </div>
 <span>Valor Total: {{ precoTotal | async }}</span>
-<!-- <button (click)="encomendar()">Finalizar</button> -->
+<button (click)="finishOrder()">Finalizar</button>

@@ -4,7 +4,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatBadgeModule } from '@angular/material/badge';
-import { ContadorService } from './contador.service';
+import { OrderService } from './order.service';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -36,7 +36,7 @@ import { ProdutoService } from './produtos.service';
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore())
   ],
-  providers: [ContadorService, ProdutoService],
+  providers: [OrderService, ProdutoService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

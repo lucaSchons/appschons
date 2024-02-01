@@ -1,8 +1,16 @@
-export interface pedidoItem{
-    descricao_produto: string | null;
-    quantidade_produto: number;
-    valor_unitario_produto: number | null;
-    ingredientes: string | null,
-    imageUrl: string | null
-    
-}
+export interface pedidoItem {
+    items: {
+      produto: {
+        descricao_produto: string;
+        valor_unitario_produto: number;
+        quantity: number;
+        ingredientes: string | null;
+        imageUrl: string | null;
+      }[];
+      valor_total: number | null;
+    },
+    user: {
+      name: string | null,
+      phone: string | null,
+    } 
+  }

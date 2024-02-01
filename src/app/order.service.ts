@@ -1,3 +1,4 @@
+import { Produto } from './produto.model';
 import { Injectable, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { pedidoItem } from './pedido-item.model';
@@ -16,15 +17,15 @@ export class OrderService implements OnInit {
 
   constructor() { }
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   getOrder() {
     return this.order;
   }
 
-  incrementar(produto: ProdutoEncomenda) {
-    const newOrder: pedidoItem[] = [...this.orderSubject.value];
-    console.log("NEW ORDER NO INICIO ", newOrder);
+  addProduct(produto: ProdutoEncomenda) {
+    const novoPedido: pedidoItem[] = [...this.orderSubject.value];
+    console.log("NOVO PEDIDO NO INICIO ", novoPedido);
     const produtosLocalStorage = localStorage.getItem('@schons');
 
     if (localStorage.getItem('contador')) {
@@ -35,59 +36,86 @@ export class OrderService implements OnInit {
     } else {
       this.contadorSubject.next(this.contadorSubject.value + 1)
     }
-
+    
     if (produtosLocalStorage !== null) {
       const objeto = JSON.parse(produtosLocalStorage);
       const instancia = objeto;
-
+      console.log("PRIMEIRO IF ", instancia)
+      if (objeto.length > 0) {
+        this.orderSubject.next(objeto);
+      }
+     
       if (instancia !== undefined) {
-        const instancia = objeto.find((item: { descricao_produto: string; }) => item.descricao_produto === produto.descricao);
-
-        if (instancia !== undefined) {
+        const itemExistente = objeto.find((item: pedidoItem) => item.items.produto.some(p => p.descricao_produto === produto.descricao));
+        
+        if (itemExistente !== undefined ) {
+          const quantidade = itemExistente.items.produto[0].quantity;
           const varNewOrder: pedidoItem[] = [...this.orderSubject.value];
-          const quantidade = instancia.quantidade_produto;
-
-          const index = varNewOrder.findIndex(item => item.descricao_produto === produto.descricao);
-
-          if (index !== -1) {
-            varNewOrder[index].quantidade_produto = quantidade + 1;
+          
+          if(varNewOrder.length === 0){
+            itemExistente.items.produto[0].quantity = quantidade + 1;
+            varNewOrder.push(itemExistente);
+          }else{
+            const index = varNewOrder.findIndex(item => item.items.produto[0].descricao_produto === produto.descricao);
+            if (index !== -1) {
+              console.log("QUANTIDADE DE VAR NEW ORDER ", quantidade);
+              varNewOrder[index].items.produto[0].quantity = quantidade + 1;
+            }
           }
-          console.log("dentro da INSTANCIA 1", varNewOrder)
-          this.orderSubject.next(varNewOrder);
 
+          this.orderSubject.next(varNewOrder);
           localStorage.setItem('@schons', JSON.stringify(varNewOrder));
+
         } else{
           const novoItem: pedidoItem = {
-            descricao_produto: produto.descricao,
-            quantidade_produto: 1,
-            valor_unitario_produto: produto.valor,
-            ingredientes: produto.ingredientes,
-            imageUrl: produto.imageUrl
+            items: {
+              produto: [{
+                descricao_produto: produto.descricao,
+                valor_unitario_produto: produto.valor,
+                quantity: 1,
+                ingredientes: produto.ingredientes,
+                imageUrl: produto.imageUrl
+              }],
+              valor_total: null,
+            },
+            user: {
+              name: null,
+              phone: null,
+            }
           };
-          console.log("ENTREI ", novoItem);
-          newOrder.push(novoItem);
+          novoPedido.push(novoItem);
+          this.orderSubject.next(novoPedido);
+          localStorage.setItem('@schons', JSON.stringify(novoPedido));
         }
       }
+      
     } else {
 
       const novoItem: pedidoItem = {
-        descricao_produto: produto.descricao,
-        quantidade_produto: 1,
-        valor_unitario_produto: produto.valor,
-        ingredientes: produto.ingredientes,
-        imageUrl: produto.imageUrl
+        items: {
+          produto: [{
+            descricao_produto: produto.descricao,
+            valor_unitario_produto: produto.valor,
+            quantity: 1,
+            ingredientes: produto.ingredientes,
+            imageUrl: produto.imageUrl
+          }],
+          valor_total: null,
+        },
+        user: {
+          name: null,
+          phone: null,
+        }
       };
-      console.log("ENTREI ", novoItem);
-      newOrder.push(novoItem);
+      novoPedido.push(novoItem);
+      this.orderSubject.next(novoPedido);
+      localStorage.setItem('@schons', JSON.stringify(novoPedido));
     }
 
-    this.orderSubject.next(newOrder);
-    this.order.subscribe(result => {});
-
-    localStorage.setItem('@schons', JSON.stringify(newOrder));
+    this.order.subscribe(result => { });
+    localStorage.setItem('contador', JSON.stringify(this.contadorSubject.value));
+    
   }
-
-
 
   // decrementar(descricao: string) {
   //   const novoQuantidadeProduto = { ...this.quantidadeProdutoSubject.value };

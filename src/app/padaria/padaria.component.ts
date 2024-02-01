@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { OrderService } from '../order.service';
 import { ProdutoService } from '../produtos.service';
+import { pedidoItem } from '../pedido-item.model';
+import { ProdutoEncomenda } from '../produto-encomenda.model';
 
 @Component({
     selector: 'app-padaria',
@@ -23,10 +25,25 @@ export class PadariaComponent implements OnInit {
         this.produtos = this.produtoService.getProdutos();
     }
 
-    getOrderQuantity(descricaoProduto: string): number {
-        const order = this.orderService.orderSubject.value;
-        const produto = order.find(item => item.descricao_produto === descricaoProduto);
+    getOrderQuantity(produto: string) {  
+        let quantidades;
+        const quantidadeStorage = localStorage.getItem('@schons');
+       
+        if (quantidadeStorage !== null) {
+            const quantidadeObj = JSON.parse(quantidadeStorage);
+            let descricao_produto = "";
+            quantidadeObj.forEach((item: { items: { produto: any; }; }) => {
+                descricao_produto = item.items.produto[0].descricao_produto;
+                if(descricao_produto === produto){
+                    const quant = item.items.produto[0].quantity;
+                    quantidades = quant;
+                }
+            });
 
-        return produto ? produto.quantidade_produto : 0;
+        } else {
+            quantidades = 0;
+        }
+
+        return quantidades;
     }
 }

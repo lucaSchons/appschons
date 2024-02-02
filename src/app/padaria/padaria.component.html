@@ -9,9 +9,9 @@
       <li>
         <a class="button_material"(click)="orderService.addProduct(produtoEncomenda)"><span class="material-symbols-outlined">add</span></a>
         <span class="teste">
-          {{ produtoEncomenda.descricao }} - - Quantidade: {{ getOrderQuantity(produtoEncomenda.descricao) }}
+          {{ produtoEncomenda.descricao }} - - Quantidade: {{ getOrderQuantity(produtoEncomenda.descricao) || 0 }}
         </span>
-        <!-- <a class="button_material" (click)="contadorService.decrementar(produtoEncomenda.descricao)"><span class="material-symbols-outlined">remove</span></a> -->
+        <a class="button_material" (click)="orderService.removeProduct(produtoEncomenda)"><span class="material-symbols-outlined">remove</span></a>
       </li>
     </ul>
     <a routerLink="/order">Encomendar</a>

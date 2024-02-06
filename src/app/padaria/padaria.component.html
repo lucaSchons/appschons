@@ -1,38 +1,47 @@
 <section>
   <div class="head-page">
     <div class="container">
-      <h1>Nossos Produtos</h1>
+      <h1>Padaria</h1>
     </div>
   </div>
-  <div>
-    <ul *ngFor="let produtoEncomenda of produtosEncomenda | async; let i = index">
-      <li>
-        <a class="button_material"(click)="orderService.addProduct(produtoEncomenda)"><span class="material-symbols-outlined">add</span></a>
-        <span class="teste">
-          {{ produtoEncomenda.descricao }} - - Quantidade: {{ getOrderQuantity(produtoEncomenda.descricao) || 0 }}
-        </span>
-        <a class="button_material" (click)="orderService.removeProduct(produtoEncomenda)"><span class="material-symbols-outlined">remove</span></a>
-      </li>
-    </ul>
-    <a routerLink="/order">Encomendar</a>
-  </div>
-  <div class="separador-section"></div>
-  <div class="container-padaria">
-    <ul *ngFor="let produto of produtos | async">
-      <li>
-        <a (click)="produtoService.openDialog(produto)">
-          <img src="{{ produto.imageUrl }}" />
-          <div class="container-legenda">
-            <div class="legenda">
-              <span>{{produto.descricao}}</span>
-              <span class="material-symbols-outlined no-underline">
-                arrow_forward
-              </span>
-            </div>
+  <div class="container">
+    <div class="card-list-encomenda">
+      <ul *ngFor="let produtoEncomenda of produtosEncomenda | async; let i = index">
+        <li>
+          <img src="{{produtoEncomenda.imageUrl}}">
+          <div class="content">
+            <span class="title">{{ produtoEncomenda.descricao }}</span>
+            <span class="ingredientes">{{ produtoEncomenda.ingredientes }}</span>
+            <span class="valor"><span class="material-symbols-outlined valor">
+              attach_money</span> {{ produtoEncomenda.valor }}</span>
           </div>
-        </a>
-      </li>
-    </ul>
+          <div class="button">
+            <a class="button_material" (click)="orderService.removeProduct(produtoEncomenda)"><span
+                class="material-symbols-outlined icon">remove</span></a>
+            <span class="contador">{{ getOrderQuantity(produtoEncomenda.descricao) || 0 }}</span>
+            <a class="button_material" (click)="orderService.addProduct(produtoEncomenda)"><span
+                class="material-symbols-outlined icon">add</span></a>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="divider"></div>
+    <div class="card-list-produto">
+      <ul *ngFor="let produto of produtos | async">
+        <li>
+          <a (click)="produtoService.openDialog(produto)">
+            <img src="{{ produto.imageUrl }}" />
+            <div class="container-legenda">
+              <div class="legenda">
+                <span>{{produto.descricao}}</span>
+                <span class="material-symbols-outlined no-underline">
+                  arrow_forward
+                </span>
+              </div>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </div>
   </div>
-  
 </section>

@@ -1,27 +1,104 @@
-.container-padaria{
-    column-count: 3;
-    column-gap: 10px;
-    margin: 100px;
-}
-
 .head-page{
     background: rgb(206, 206, 206) 0% 0% no-repeat padding-box;
-    height: 189px;
+    height: 150px;
     padding-bottom: 40px;
     margin: 60px auto 40px auto;
     padding: 0 5%;
+}
+.head-page .container{
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 80px;
+}
 
-    .container{
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 80px;
+.head-page h1{
+    color: var(--cinza);
+    font-size: 2rem;
+}
+
+.container{
+   display: flex;
+   flex-wrap: wrap;
+
+   max-width: 90%;
+   margin: 0 auto;
+}
+
+.card-list-encomenda{
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+
+    gap: 20px;
+    
+    padding-bottom: 50px;
+}
+
+.card-list-encomenda li {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    border: 1px solid #d6d6d6;
+    padding: 5px;
+    border-radius: 4px;
+    width: 300px;
+    
+}
+
+.card-list-encomenda li .content {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    gap: 10px;
+    
+    .title{
+        font-size: 1.5rem;
+        font-weight: 400;
+       
     }
+    span {
+        font-size: 1rem;
+        font-weight: 400;
+    }
+    .ingredientes{
+        min-height: 90px;
+    }
+    .valor{
+        display: flex;
+        justify-content: flex-end;
+        font-size: 1.5rem;
+        font-weight: 400;
+        align-items: center;
+    }
+    
+}
 
-    h1{
-        color: var(--cinza);
+.card-list-encomenda li .button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    .icon {
+        display: flex;
         font-size: 2rem;
+        font-weight: 300;
+        padding: 0 8px;
+    }
+    .contador {
+        font-size: 1.5rem;
+        font-weight: 400;
     }
 }
+
+.card-list-encomenda li img {
+    width: 100%;
+    display: flex;
+    background-color: #f6f7f2;
+} 
+
+
+
+
 .teste{
     background-color: #e2e2e2;
     padding: 10px;
@@ -75,13 +152,8 @@ li .container-legenda{
     }
 }
 
-li img {
-    width: 100%;
-    display: flex;
-    border-radius: 4px;
-} 
 
-.separador-section{
+.divider{
     height: 6px;
     border-top: 1px solid #000;
     border-bottom: 1px solid #000;

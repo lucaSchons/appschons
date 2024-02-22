@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { OrderService } from '../order.service';
 import { ProdutoService } from '../produtos.service';
 import { pedidoItem } from '../pedido-item.model';
@@ -13,28 +13,55 @@ import { ProdutoEncomenda } from '../produto-encomenda.model';
 
 export class PadariaComponent implements OnInit {
     produtos!: Observable<any>;
-    descricao!: string;
-    imageUrl!: string;
     produtosEncomenda!: Observable<any>;
-    quantidade_produto_service!: Observable<any>;
 
     constructor(public orderService: OrderService, public produtoService: ProdutoService) { }
 
     ngOnInit() {
         this.produtosEncomenda = this.produtoService.getProdutosEncomenda();
         this.produtos = this.produtoService.getProdutos();
+        this.produtosEncomenda.subscribe(produtos => {
+            this.orderService.isSelect_buttonAdd = produtos.map(() => true);
+            this.orderService.isSelect_button = produtos.map(() => false);
+        });
+
+        const produtosLocalStorage = localStorage.getItem('@schons');
+
+        if (produtosLocalStorage !== null) {
+            const objeto = JSON.parse(produtosLocalStorage);
+            const instancia = objeto;
+            if (objeto.length > 0) {
+                this.orderService.orderSubject.next(objeto);
+            }
+            if (instancia !== undefined) {
+                console.log("ng on init, instancia: ", instancia);
+                const quantidadesMaioresQueZero = objeto.filter((item: pedidoItem) => 
+                    item.items.produto.some(p => p.quantity > 0)
+                    
+                );
+                this.produtosEncomenda.subscribe(res => {
+                    quantidadesMaioresQueZero.forEach((item: { items: { produto: { descricao_produto: any; }[]; }; }) => {
+                        const descricao = item.items.produto[0].descricao_produto; // Supondo que o primeiro item do array seja o desejado
+                        const index = res.findIndex((produto: any) => produto.descricao === descricao);
+                        console.log("Index encontrado:", index);
+                        this.orderService.isSelect_buttonAdd[index] = false;
+                        this.orderService.isSelect_button[index] = true;
+                    });
+                });
+            }
+        }
     }
 
-    getOrderQuantity(produto: string) {  
+    getOrderQuantity(produto: string) {
         let quantidades;
         const quantidadeStorage = localStorage.getItem('@schons');
-       
+
         if (quantidadeStorage !== null) {
             const quantidadeObj = JSON.parse(quantidadeStorage);
             let descricao_produto = "";
             quantidadeObj.forEach((item: { items: { produto: any; }; }) => {
                 descricao_produto = item.items.produto[0].descricao_produto;
-                if(descricao_produto === produto){
+                if (descricao_produto === produto) {
                     const quant = item.items.produto[0].quantity;
                     quantidades = quant;
                 }

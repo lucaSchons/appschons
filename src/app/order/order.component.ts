@@ -26,30 +26,31 @@ export class OrderComponent implements OnInit {
       const arrayObjetos = JSON.parse(objetosLocalStorage);
       let resultado_total = 0;
       arrayObjetos.forEach((item: { items: { produto: any; }; }) => {
-        console.log("ENTREI", item.items.produto[0]);
         const descricao = item.items.produto[0].descricao_produto;
         const valor_unitario = item.items.produto[0].valor_unitario_produto || 0;
         const quantidade = item.items.produto[0].quantity;
         const resultado = valor_unitario * quantidade;
-        console.log("ENTREI", valor_unitario, descricao, quantidade);
         resultado_total += resultado;
-        const novoItem: pedidoItem = {
-          items: {
-            produto: [{
-              descricao_produto: descricao,
-              valor_unitario_produto: valor_unitario,
-              quantity: quantidade,
-              ingredientes: null,
-              imageUrl: null
-            }],
-            valor_total: null,
-          },
-          user: {
-            name: null,
-            phone: null,
-          }
-        };
-        this.dadosDaOrdem.push(novoItem);
+        if(quantidade > 0){
+          const novoItem: pedidoItem = {
+            items: {
+              produto: [{
+                descricao_produto: descricao,
+                valor_unitario_produto: valor_unitario,
+                quantity: quantidade,
+                ingredientes: null,
+                imageUrl: null
+              }],
+              valor_total: null,
+            },
+            user: {
+              name: null,
+              phone: null,
+            }
+          };
+          this.dadosDaOrdem.push(novoItem);
+          this.orderService.orderSubject.next(this.dadosDaOrdem);
+        }
       });
       
       this.precoTotal.next(resultado_total);

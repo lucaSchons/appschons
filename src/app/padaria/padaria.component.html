@@ -4,27 +4,32 @@
       <h1>Padaria</h1>
     </div>
   </div>
+  <div class="divider-legend"><span>Encomemdas</span></div>
+  <div class="divider"></div>
   <div class="container">
     <div class="card-list-encomenda">
       <ul *ngFor="let produtoEncomenda of produtosEncomenda | async; let i = index">
         <li>
-          <img src="{{produtoEncomenda.imageUrl}}">
+          <img src="{{ produtoEncomenda.imageUrl }}">
           <div class="content">
             <span class="title">{{ produtoEncomenda.descricao }}</span>
             <span class="ingredientes">{{ produtoEncomenda.ingredientes }}</span>
-            <span class="valor"><span class="material-symbols-outlined valor">
-              attach_money</span> {{ produtoEncomenda.valor }}</span>
+            <span class="valor">
+              <span class="cifrao"><i class="fa-solid fa-brazilian-real-sign"></i></span>{{ produtoEncomenda.valor | number:'1.2-2'}}
+            </span>
           </div>
-          <div class="button">
-            <a class="button_material" (click)="orderService.removeProduct(produtoEncomenda)"><span
+          <button (click)="orderService.newProduct(i, produtoEncomenda)" [ngStyle]="{'display': orderService.isSelect_buttonAdd[i] ? 'flex' : 'none'}" class="button_add"><span class="text">Adicionar</span></button>
+          <div class="button" [ngStyle]="{'display': orderService.isSelect_button[i] ? 'flex' : 'none'}">
+            <a class="button_material" (click)="orderService.decrementProduct(produtoEncomenda)"><span
                 class="material-symbols-outlined icon">remove</span></a>
-            <span class="contador">{{ getOrderQuantity(produtoEncomenda.descricao) || 0 }}</span>
-            <a class="button_material" (click)="orderService.addProduct(produtoEncomenda)"><span
+            <span class="contador">{{ getOrderQuantity(produtoEncomenda.descricao)}}</span>
+            <a class="button_material" (click)="orderService.incrementProduct(produtoEncomenda)"><span
                 class="material-symbols-outlined icon">add</span></a>
           </div>
         </li>
       </ul>
     </div>
+    <div class="divider-legend"><span>Produtos em geral</span></div>
     <div class="divider"></div>
     <div class="card-list-produto">
       <ul *ngFor="let produto of produtos | async">

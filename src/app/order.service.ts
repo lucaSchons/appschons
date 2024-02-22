@@ -1,4 +1,3 @@
-import { Produto } from './produto.model';
 import { Injectable, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { pedidoItem } from './pedido-item.model';
@@ -10,6 +9,9 @@ import { ProdutoEncomenda } from './produto-encomenda.model';
 export class OrderService implements OnInit {
   contadorSubject = new BehaviorSubject<number>(0);
   contador = this.contadorSubject.asObservable();
+  memorizador_index: any[] = [];
+  isSelect_buttonAdd: boolean[] = [];
+  isSelect_button: boolean[] = [];
 
   pedido: pedidoItem[] = [];
   orderSubject = new BehaviorSubject<pedidoItem[]>(this.pedido);
@@ -23,7 +25,69 @@ export class OrderService implements OnInit {
     return this.order;
   }
 
-  addProduct(produto: ProdutoEncomenda) {
+  newProduct(index: number, produto: ProdutoEncomenda) {
+    const novoIndex = {
+      id: index,
+      descricao: produto.descricao
+    }
+    this.memorizador_index.push(novoIndex);
+    this.isSelect_buttonAdd[index] = false;
+    this.isSelect_button[index] = true;
+
+    const novoPedido: pedidoItem[] = [...this.orderSubject.value];
+
+    const itemExistente = novoPedido.find(item => {
+      return item.items.produto.some(produtoExistente => produtoExistente.descricao_produto === produto.descricao);
+    });
+
+    if (itemExistente) {
+      itemExistente.items.produto[0].quantity++;
+
+    } else {
+
+      const novoItem: pedidoItem = {
+        items: {
+          produto: [{
+            descricao_produto: produto.descricao,
+            valor_unitario_produto: produto.valor,
+            quantity: 1,
+            ingredientes: produto.ingredientes,
+            imageUrl: produto.imageUrl
+          }],
+          valor_total: null,
+        },
+        user: {
+          name: null,
+          phone: null,
+        }
+      };
+      novoPedido.push(novoItem);
+    }
+    this.orderSubject.next(novoPedido);
+    localStorage.setItem('@schons', JSON.stringify(novoPedido));
+
+    this.contadorSubject.next(this.contadorSubject.value + 1)
+
+    localStorage.setItem('contador', JSON.stringify(this.contadorSubject.value));
+  }
+
+  removeProduct(index: number) {
+    console.log("DENTRO DO REMOVEPRODUCT ", index);
+    this.isSelect_buttonAdd[index] = true;
+    this.isSelect_button[index] = false;
+    const currentProducts = this.orderSubject.getValue();
+    console.log("DENTRO DO REMOVER: ", currentProducts)
+
+    if (index >= 0 && index < currentProducts.length) {
+      currentProducts.splice(index, 1);
+      this.orderSubject.next(currentProducts);
+      const novoPedido: pedidoItem[] = [...this.orderSubject.value];
+      console.log("REMOVER ITEM ", novoPedido)
+      localStorage.setItem('@schons', JSON.stringify(novoPedido));
+    }
+  }
+
+  incrementProduct(produto: ProdutoEncomenda) {
     const novoPedido: pedidoItem[] = [...this.orderSubject.value];
     const produtosLocalStorage = localStorage.getItem('@schons');
 
@@ -85,38 +149,15 @@ export class OrderService implements OnInit {
           localStorage.setItem('@schons', JSON.stringify(novoPedido));
         }
       }
-
-    } else {
-
-      const novoItem: pedidoItem = {
-        items: {
-          produto: [{
-            descricao_produto: produto.descricao,
-            valor_unitario_produto: produto.valor,
-            quantity: 1,
-            ingredientes: produto.ingredientes,
-            imageUrl: produto.imageUrl
-          }],
-          valor_total: null,
-        },
-        user: {
-          name: null,
-          phone: null,
-        }
-      };
-      novoPedido.push(novoItem);
-      this.orderSubject.next(novoPedido);
-      localStorage.setItem('@schons', JSON.stringify(novoPedido));
     }
 
     this.order.subscribe(result => { });
     localStorage.setItem('contador', JSON.stringify(this.contadorSubject.value));
-
   }
 
-  removeProduct(produto: ProdutoEncomenda) {
+  decrementProduct(produto: ProdutoEncomenda) {
     const novoPedido: pedidoItem[] = [...this.orderSubject.value];
-    console.log("REMOVE INICIO", novoPedido);
+    console.log("DECREMENT ", novoPedido);
     const produtosLocalStorage = localStorage.getItem('@schons');
 
     if (localStorage.getItem('contador')) {
@@ -151,13 +192,17 @@ export class OrderService implements OnInit {
           if (quantidade >= 2 && index !== -1) {
             varNewOrder[index].items.produto[0].quantity = quantidade - 1;
             this.orderSubject.next(varNewOrder);
-          } else if(quantidade === 1 && index !== -1) {
+            localStorage.setItem('@schons', JSON.stringify(varNewOrder));
+          } else if (quantidade === 1 && index !== -1) {
             alert("Tem certeza que deseja excluir item?");
             varNewOrder[index].items.produto[0].quantity = 0;
+            const idx = this.memorizador_index.find(index => index.descricao === produto.descricao);
+            this.removeProduct(idx.id);
+
             this.orderSubject.next(varNewOrder);
           }
+
           
-          localStorage.setItem('@schons', JSON.stringify(varNewOrder));
         }
       }
     }

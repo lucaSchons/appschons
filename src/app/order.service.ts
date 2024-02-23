@@ -81,9 +81,6 @@ export class OrderService implements OnInit {
     if (index >= 0 && index < currentProducts.length) {
       currentProducts.splice(index, 1);
       this.orderSubject.next(currentProducts);
-      const novoPedido: pedidoItem[] = [...this.orderSubject.value];
-      console.log("REMOVER ITEM ", novoPedido)
-      localStorage.setItem('@schons', JSON.stringify(novoPedido));
     }
   }
 
@@ -192,7 +189,7 @@ export class OrderService implements OnInit {
           if (quantidade >= 2 && index !== -1) {
             varNewOrder[index].items.produto[0].quantity = quantidade - 1;
             this.orderSubject.next(varNewOrder);
-            localStorage.setItem('@schons', JSON.stringify(varNewOrder));
+            
           } else if (quantidade === 1 && index !== -1) {
             alert("Tem certeza que deseja excluir item?");
             varNewOrder[index].items.produto[0].quantity = 0;
@@ -201,8 +198,7 @@ export class OrderService implements OnInit {
 
             this.orderSubject.next(varNewOrder);
           }
-
-          
+          localStorage.setItem('@schons', JSON.stringify(varNewOrder));
         }
       }
     }

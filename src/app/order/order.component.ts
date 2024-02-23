@@ -49,7 +49,7 @@ export class OrderComponent implements OnInit {
             }
           };
           this.dadosDaOrdem.push(novoItem);
-          this.orderService.orderSubject.next(this.dadosDaOrdem);
+          // this.orderService.orderSubject.next(this.dadosDaOrdem);
         }
       });
       

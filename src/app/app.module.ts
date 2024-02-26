@@ -17,13 +17,17 @@ import { PadariaComponent } from './padaria/padaria.component';
 import { DialogPadaria } from './dialog-padaria/dialog-padaria.component';
 import { OrderComponent } from './order/order.component';
 import { ProdutoService } from './produtos.service';
+import { PrevDirective } from './prev.directive';
+import { NextDirective } from './next.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
     PadariaComponent,
     DialogPadaria,
-    OrderComponent
+    OrderComponent,
+    PrevDirective,
+    NextDirective
   ],
   imports: [
     BrowserModule,

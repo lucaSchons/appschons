@@ -8,7 +8,7 @@
   <div class="divider"></div>
   <div class="container">
     <div class="card-list-encomenda">
-      <ul *ngFor="let produtoEncomenda of produtosEncomenda | async; let i = index">
+      <ul class="item" *ngFor="let produtoEncomenda of produtosEncomenda | async; let i = index" >
         <li>
           <img src="{{ produtoEncomenda.imageUrl }}">
           <div class="content">
@@ -29,24 +29,29 @@
         </li>
       </ul>
     </div>
-    <div class="divider-legend"><span>Produtos em geral</span></div>
-    <div class="divider"></div>
-    <div class="card-list-produto">
-      <ul *ngFor="let produto of produtos | async">
-        <li>
-          <a (click)="produtoService.openDialog(produto)">
-            <img src="{{ produto.imageUrl }}" />
-            <div class="container-legenda">
-              <div class="legenda">
-                <span>{{produto.descricao}}</span>
-                <span class="material-symbols-outlined no-underline">
-                  arrow_forward
-                </span>
-              </div>
-            </div>
-          </a>
-        </li>
-      </ul>
+    <div class="button-area">
+      <button type="button" class="prev" appPrev>Anterior</button>
+      <button type="button" class="next" appNext>Próxima</button>
     </div>
   </div>
+  <div class="divider-legend"><span>Produtos em geral</span></div>
+  <div class="divider"></div>
+  <div class="card-list-produto">
+    <ul *ngFor="let produto of produtos | async">
+      <li>
+        <a (click)="produtoService.openDialog(produto)">
+          <img src="{{ produto.imageUrl }}" />
+          <div class="container-legenda">
+            <div class="legenda">
+              <span>{{produto.descricao}}</span>
+              <span class="material-symbols-outlined no-underline">
+                arrow_forward
+              </span>
+            </div>
+          </div>
+        </a>
+      </li>
+    </ul>
+  </div>
+  
 </section>

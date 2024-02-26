@@ -34,6 +34,13 @@
 
     padding-top: 50px;
     padding-bottom: 50px;
+
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+}
+
+.card-list-encomenda::-webkit-scrollbar{
+    width: 0;
 }
 
 .card-list-encomenda li {
@@ -103,12 +110,14 @@
         font-size: 2rem;
         font-weight: 300;
         padding: 0 8px;
+        user-select:none
     }
 
     .contador {
         display: flex;
         font-size: 1.5rem;
         font-weight: 400;
+        user-select:none
     }
 }
 
@@ -136,6 +145,17 @@
     width: 100%;
     display: flex;
     background-color: #f6f7f2;
+}
+
+.prev{
+    position: absolute;
+    left: 0;
+    top: 50%;
+}
+
+.next{
+    position: absolute;
+    right: 0;
 }
 
 .card-list-produto {

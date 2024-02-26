@@ -14,6 +14,7 @@ import { ProdutoEncomenda } from '../produto-encomenda.model';
 export class PadariaComponent implements OnInit {
     produtos!: Observable<any>;
     produtosEncomenda!: Observable<any>;
+    imageObject: any[] = []; 
 
     constructor(public orderService: OrderService, public produtoService: ProdutoService) { }
 
@@ -25,6 +26,7 @@ export class PadariaComponent implements OnInit {
             this.orderService.isSelect_button = produtos.map(() => false);
         });
 
+
         const produtosLocalStorage = localStorage.getItem('@schons');
 
         if (produtosLocalStorage !== null) {
@@ -34,16 +36,14 @@ export class PadariaComponent implements OnInit {
                 this.orderService.orderSubject.next(objeto);
             }
             if (instancia !== undefined) {
-                console.log("ng on init, instancia: ", instancia);
-                const quantidadesMaioresQueZero = objeto.filter((item: pedidoItem) => 
+                const quantidadesMaioresQueZero = objeto.filter((item: pedidoItem) =>
                     item.items.produto.some(p => p.quantity > 0)
-                    
+
                 );
                 this.produtosEncomenda.subscribe(res => {
                     quantidadesMaioresQueZero.forEach((item: { items: { produto: { descricao_produto: any; }[]; }; }) => {
                         const descricao = item.items.produto[0].descricao_produto; // Supondo que o primeiro item do array seja o desejado
                         const index = res.findIndex((produto: any) => produto.descricao === descricao);
-                        console.log("Index encontrado:", index);
                         this.orderService.isSelect_buttonAdd[index] = false;
                         this.orderService.isSelect_button[index] = true;
                     });

@@ -16,7 +16,8 @@ export class OrderComponent implements OnInit {
   produtos!: Observable<any[]>;
   precoTotal = new BehaviorSubject<number>(0);
   dadosDaOrdem: pedidoItem[] = [];
-
+  dadosString: string = "";
+  linkWhatsApp: any;
   constructor(private orderService: OrderService, public produtoService: ProdutoService, private firestore: Firestore) { }
 
   ngOnInit() {
@@ -31,7 +32,7 @@ export class OrderComponent implements OnInit {
         const quantidade = item.items.produto[0].quantity;
         const resultado = valor_unitario * quantidade;
         resultado_total += resultado;
-        if(quantidade > 0){
+        if (quantidade > 0) {
           const novoItem: pedidoItem = {
             items: {
               produto: [{
@@ -52,7 +53,7 @@ export class OrderComponent implements OnInit {
           // this.orderService.orderSubject.next(this.dadosDaOrdem);
         }
       });
-      
+
       this.precoTotal.next(resultado_total);
     }
   }
@@ -65,6 +66,20 @@ export class OrderComponent implements OnInit {
         quantity: produtoItem.quantity,
       })),
     }));
+
+    dadosParaFirestore.forEach((item) => {
+      item.produto.forEach((produtoItem) => {
+        this.dadosString += `Descrição: ${produtoItem.descricao_produto}, `;
+        this.dadosString += `Valor unitário: ${produtoItem.valor_unitario_produto}, `;
+        this.dadosString += `Quantidade: ${produtoItem.quantity}\n`;
+      });
+    });
+
+    const dadosStringEncoded = encodeURIComponent(this.dadosString);
+
+    // Monta o link href do WhatsApp com o texto codificado
+    this.linkWhatsApp = `https://wa.me/5551980521997?text=${dadosStringEncoded}`;
+
 
     const docRef = addDoc(collection(this.firestore, "pedido_item"), {
       items: dadosParaFirestore,

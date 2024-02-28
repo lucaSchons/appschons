@@ -19,7 +19,9 @@ export class OrderService implements OnInit {
 
   constructor() { }
 
-  ngOnInit() { }
+  ngOnInit() {
+
+  }
 
   getOrder() {
     return this.order;
@@ -31,6 +33,7 @@ export class OrderService implements OnInit {
       descricao: produto.descricao
     }
     this.memorizador_index.push(novoIndex);
+    localStorage.setItem('memory_idx', JSON.stringify(this.memorizador_index));
     this.isSelect_buttonAdd[index] = false;
     this.isSelect_button[index] = true;
 
@@ -156,6 +159,7 @@ export class OrderService implements OnInit {
     const novoPedido: pedidoItem[] = [...this.orderSubject.value];
     console.log("DECREMENT ", novoPedido);
     const produtosLocalStorage = localStorage.getItem('@schons');
+    const idx_localStorage = localStorage.getItem('memory_idx');
 
     if (localStorage.getItem('contador')) {
       const quantidadeString = localStorage.getItem('contador');
@@ -185,23 +189,38 @@ export class OrderService implements OnInit {
           const quantidade = itemExistente.items.produto[0].quantity;
           const varNewOrder: pedidoItem[] = [...this.orderSubject.value];
           const index = varNewOrder.findIndex(item => item.items.produto[0].descricao_produto === produto.descricao);
-
+          console.log("INDEX ACRESCENTAR ", index);
           if (quantidade >= 2 && index !== -1) {
             varNewOrder[index].items.produto[0].quantity = quantidade - 1;
             this.orderSubject.next(varNewOrder);
-            
+
           } else if (quantidade === 1 && index !== -1) {
             alert("Tem certeza que deseja excluir item?");
             varNewOrder[index].items.produto[0].quantity = 0;
-            const idx = this.memorizador_index.find(index => index.descricao === produto.descricao);
-            this.removeProduct(idx.id);
+           
+            if (idx_localStorage !== null) {
+              const obj = JSON.parse(idx_localStorage);
+              if (Array.isArray(obj) && obj.length > 0) {
+                this.memorizador_index.push(obj);
+                this.memorizador_index.forEach((item: any[]) => {
+                  if (Array.isArray(item)) {
+                    const resultado = item.find(index => index.descricao === produto.descricao);
+                    if (resultado) {
+                      console.log(resultado.id);
+                      this.removeProduct(resultado.id);
+                    }
+                  }
+                })
+              }
+            }
 
             this.orderSubject.next(varNewOrder);
           }
+
           localStorage.setItem('@schons', JSON.stringify(varNewOrder));
         }
       }
     }
   }
-
 }
+

@@ -4,7 +4,7 @@
       <h1>Padaria</h1>
     </div>
   </div>
-  <div class="divider-legend"><span>Encomemdas</span></div>
+  <div class="divider-legend"><span>Faça seu Pedido!</span></div>
   <div class="divider"></div>
   <div class="container">
     <div class="card-list-encomenda">
@@ -34,24 +34,27 @@
       <button type="button" class="next" appNext>Próxima</button>
     </div>
   </div>
-  <div class="divider-legend"><span>Produtos em geral</span></div>
-  <div class="divider"></div>
-  <div class="card-list-produto">
-    <ul *ngFor="let produto of produtos | async">
-      <li>
-        <a (click)="produtoService.openDialog(produto)">
-          <img src="{{ produto.imageUrl }}" />
-          <div class="container-legenda">
-            <div class="legenda">
-              <span>{{produto.descricao}}</span>
-              <span class="material-symbols-outlined no-underline">
-                arrow_forward
-              </span>
-            </div>
-          </div>
-        </a>
-      </li>
-    </ul>
+  <div class="divider-legend">
+    <span>Nosso Cardápio</span>
   </div>
-  
+  <div class="divider"></div>
+  <div class="container">
+    <div class="card-list-produto">
+      <ul *ngFor="let produto of produtos | async">
+        <li>
+          <a (click)="produtoService.openDialog(produto)">
+            <img src="{{ produto.imageUrl }}" />
+            <div class="container-legenda">
+              <div class="legenda">
+                <span>{{produto.descricao}}</span>
+                <span class="material-symbols-outlined no-underline">
+                  arrow_forward
+                </span>
+              </div>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
 </section>

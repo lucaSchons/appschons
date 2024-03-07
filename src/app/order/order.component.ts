@@ -77,7 +77,6 @@ export class OrderComponent implements OnInit {
 
     const dadosStringEncoded = encodeURIComponent(this.dadosString);
 
-    // Monta o link href do WhatsApp com o texto codificado
     this.linkWhatsApp = `https://wa.me/5551980521997?text=${dadosStringEncoded}`;
 
 

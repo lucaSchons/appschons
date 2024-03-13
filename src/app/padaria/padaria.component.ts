@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { OrderService } from '../order.service';
 import { ProdutoService } from '../produtos.service';
 import { pedidoItem } from '../pedido-item.model';
-import { ProdutoEncomenda } from '../produto-encomenda.model';
 
 @Component({
     selector: 'app-padaria',
@@ -42,7 +41,7 @@ export class PadariaComponent implements OnInit {
                 );
                 this.produtosEncomenda.subscribe(res => {
                     quantidadesMaioresQueZero.forEach((item: { items: { produto: { descricao_produto: any; }[]; }; }) => {
-                        const descricao = item.items.produto[0].descricao_produto; // Supondo que o primeiro item do array seja o desejado
+                        const descricao = item.items.produto[0].descricao_produto;
                         const index = res.findIndex((produto: any) => produto.descricao === descricao);
                         this.orderService.isSelect_buttonAdd[index] = false;
                         this.orderService.isSelect_button[index] = true;

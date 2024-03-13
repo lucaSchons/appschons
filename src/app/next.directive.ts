@@ -9,9 +9,19 @@ export class NextDirective {
 
   @HostListener('click')
   nextFunc(){
-    var elm = this.el.nativeElement.parentElement.parentElement.children[0];
-    var card = elm.getElementsByClassName("item");
-    elm.append(card[0]);
+    const elm = this.el.nativeElement.parentElement.parentElement.children[0];
+    const card = elm.querySelector(".item");
+
+    if (card) {
+      card.classList.add('animate');
+  
+      setTimeout(() => {
+        card.classList.remove('animate');
+        elm.append(card);
+      }, 200);
+    } else {
+      console.log("Item não encontrado");
+    }
   }
 
 }

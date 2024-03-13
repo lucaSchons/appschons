@@ -19,6 +19,8 @@ import { OrderComponent } from './order/order.component';
 import { ProdutoService } from './produtos.service';
 import { PrevDirective } from './prev.directive';
 import { NextDirective } from './next.directive';
+import { SobreComponent } from './sobre/sobre.component';
+import { ContatoComponent } from './contato/contato.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { NextDirective } from './next.directive';
     DialogPadaria,
     OrderComponent,
     PrevDirective,
-    NextDirective
+    NextDirective,
+    SobreComponent,
+    ContatoComponent
   ],
   imports: [
     BrowserModule,

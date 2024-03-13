@@ -9,9 +9,23 @@ export class PrevDirective {
 
   @HostListener('click')
   prevFunc(){
-    var elm = this.el.nativeElement.parentElement.parentElement.children[0];
-    var item = elm.getElementsByClassName("item");
-    elm.prepend(item[item.length - 1]);
-  }
+    const elm = this.el.nativeElement.parentElement.parentElement.children[0];
+    const items = elm.querySelectorAll('.item');
 
+    if (items.length > 0) {
+      const firstItem = items[0];
+      const lastItem = items[items.length - 1];
+      
+      elm.insertBefore(lastItem, firstItem);
+      lastItem.classList.add('animate');
+
+      setTimeout(() => {
+        lastItem.classList.remove('animate');
+      }, 200);
+    } else {
+      console.log("Item não encontrado");
+    }
+  
+  }
+  
 }

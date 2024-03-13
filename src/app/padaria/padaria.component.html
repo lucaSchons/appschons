@@ -6,19 +6,22 @@
   </div>
   <div class="divider-legend"><span>Faça seu Pedido!</span></div>
   <div class="divider"></div>
-  <div class="container">
+  <div class="container-encomenda">
     <div class="card-list-encomenda">
-      <ul class="item" *ngFor="let produtoEncomenda of produtosEncomenda | async; let i = index" >
+      <ul class="item" *ngFor="let produtoEncomenda of produtosEncomenda | async; let i = index">
         <li>
           <img src="{{ produtoEncomenda.imageUrl }}">
           <div class="content">
             <span class="title">{{ produtoEncomenda.descricao }}</span>
             <span class="ingredientes">{{ produtoEncomenda.ingredientes }}</span>
             <span class="valor">
-              <span class="cifrao"><i class="fa-solid fa-brazilian-real-sign"></i></span>{{ produtoEncomenda.valor | number:'1.2-2'}}
+              <span class="cifrao"><i class="fa-solid fa-brazilian-real-sign"></i></span>{{ produtoEncomenda.valor |
+              number:'1.2-2'}}
             </span>
           </div>
-          <button (click)="orderService.newProduct(i, produtoEncomenda)" [ngStyle]="{'display': orderService.isSelect_buttonAdd[i] ? 'flex' : 'none'}" class="button_add"><span class="text">Adicionar</span></button>
+          <button (click)="orderService.newProduct(i, produtoEncomenda)"
+            [ngStyle]="{'display': orderService.isSelect_buttonAdd[i] ? 'flex' : 'none'}" class="button_add"><span
+              class="text">Adicionar</span></button>
           <div class="button" [ngStyle]="{'display': orderService.isSelect_button[i] ? 'flex' : 'none'}">
             <a class="button_material" (click)="orderService.decrementProduct(produtoEncomenda)"><span
                 class="material-symbols-outlined icon">remove</span></a>
@@ -30,15 +33,24 @@
       </ul>
     </div>
     <div class="button-area">
-      <button type="button" class="prev" appPrev>Anterior</button>
-      <button type="button" class="next" appNext>Próxima</button>
+      <button type="button" class="prev" appPrev>
+        <span class="material-symbols-outlined">
+          arrow_back_ios
+        </span>
+      </button>
+      <button type="button" class="next" appNext>
+        <span class="material-symbols-outlined">
+          arrow_forward_ios
+        </span>
+      </button>
     </div>
+
   </div>
   <div class="divider-legend">
     <span>Nosso Cardápio</span>
   </div>
   <div class="divider"></div>
-  <div class="container">
+  <div class="container-produto">
     <div class="card-list-produto">
       <ul *ngFor="let produto of produtos | async">
         <li>

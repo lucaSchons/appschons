@@ -129,6 +129,13 @@ footer {
     display: none;
 }
 
+@media (max-width: 1380px) {
+    header,
+    .container {
+        height: 5em;
+    }
+}
+
 @media (max-width: 858px) {
     .container {
         width: 100%;
@@ -185,7 +192,6 @@ footer {
     #check:checked~ul {
         left: 0;
     }
-
 }
 
 @media (max-width: 768px) {

@@ -155,14 +155,14 @@
     position: absolute;
     left: 8%;
     top: 600px;
-    padding: 15px;
+    padding: 10px;
     border-radius: 50%;
     border: 1px solid var(--cinza);
     background: transparent;
     justify-content: center;
 
     span {
-        font-size: 25px;
+        font-size: 40px;
     }
 
     &:hover {
@@ -175,14 +175,14 @@
     position: absolute;
     right: 8%;
     top: 600px;
-    padding: 15px;
+    padding: 10px;
     border-radius: 50%;
     border: 1px solid var(--cinza);
     background: transparent;
     justify-content: center;
 
     span {
-        font-size: 25px;
+        font-size: 40px;
     }
 
     &:hover {
@@ -301,21 +301,115 @@
 
 @media(max-width: 1700px){
     .container-encomenda {
-        width: 940px;
+        width: 1060px;
     }
     .prev {
-        left: 18%
+        left: 12%
     }
     .next{
-        right: 18%;
+        right: 12%;
+    }
+    .card-list-encomenda li {
+        width: 250px;
+    }
+}
+@media(max-width: 1600px) {
+    .prev {
+        left: 10%
+    }
+    .next{
+        right: 10%;
+    }
+}
+@media(max-width: 1500px) {
+    .prev {
+        left: 6%
+    }
+    .next{
+        right: 6%;
+    }
+}
+@media(max-width: 1380px) {
+    .container-encomenda {
+        width: 770px;
+    }
+    .prev {
+        left: 12%
+    }
+    .next{
+        right: 12%;
+    }
+    .card-list-encomenda {
+        gap: 10px
     }
 
+    .card-list-encomenda li {
+        width: 250px;
+        gap: 4px;
+    }
+}
+@media(max-width: 1230px) {
+    .container-encomenda {
+        width: 770px;
+    }
+    .prev {
+        left: 6%;
+        top: 560px;
+    }
+    .next{
+        right: 6%;
+        top: 560px;
+    }
+    .card-list-encomenda {
+        gap: 10px
+    }
+
+    .card-list-encomenda li {
+        width: 250px;
+        gap: 4px;
+    }
+    .card-list-encomenda li .content {
+        gap: 5px;
+        padding: 5px;
+        .title{
+            font-size: 1.5rem;
+        }
+        span {
+            font-size: 1rem;
+            font-weight: 400;
+        }
+        .ingredientes {
+            min-height: 85px;
+        }
+        .valor {
+            font-size: 1.5rem;
+            font-weight: 500;
+            .cifrao {
+                padding-right: 5px;
+                font-size: 1.2rem;
+            }
+        }
+    }
+   
 }
 @media(max-width: 1024px) {
     .container-encomenda {
-        width: 61%;
+        width: 510px;
     }
-
+    .prev {
+        left: 13%;
+        padding: 8px;
+        span {
+            font-size: 35px;
+        }
+    }
+    .next{
+        right: 13%;
+        padding: 8px;
+        span {
+            font-size: 35px;
+        }
+    }
 }
 
 @media (max-width: 858px) {
@@ -330,32 +424,29 @@
             font-size: 1.8rem;
         }
     }
+    .prev {
+        display: none;
+    }
+    .next {
+        display: none;
+    }
+    .container-encomenda {
+        width: 80%;
+    }
+    .card-list-encomenda {
+        overflow-x: auto;
+        overscroll-behavior-inline: contain;
+    }
 }
 
 @media (max-width: 768px) {
     .head-page {
         height: 120px;
-
         .container {
             padding: 50px;
         }
-
         h1 {
             font-size: 1.6rem;
         }
-    }
-
-    .container-padaria {
-        column-count: 2;
-        column-gap: 8px;
-        margin: 25px;
-    }
-}
-
-@media (max-width: 480px) {
-    .container-padaria {
-        column-count: 1;
-        column-gap: 8px;
-        margin: 20px;
     }
 }

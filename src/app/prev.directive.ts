@@ -8,7 +8,7 @@ export class PrevDirective {
   constructor(private el: ElementRef) { }
 
   @HostListener('click')
-  prevFunc(){
+  prevFunc() {
     const elm = this.el.nativeElement.parentElement.parentElement.children[0];
     const items = elm.querySelectorAll('.item');
 

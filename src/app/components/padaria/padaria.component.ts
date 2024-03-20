@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { OrderService } from '../order.service';
-import { ProdutoService } from '../produtos.service';
-import { pedidoItem } from '../pedido-item.model';
+import { OrderService } from '../../services/order.service';
+import { ProdutoService } from '../../services/produtos.service';
+import { pedidoItem } from '../../pedido-item.model';
 
 @Component({
     selector: 'app-padaria',

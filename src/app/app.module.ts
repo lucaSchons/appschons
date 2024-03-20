@@ -4,7 +4,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatBadgeModule } from '@angular/material/badge';
-import { OrderService } from './order.service';
+import { OrderService } from './services/order.service';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -13,14 +13,17 @@ import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { FormsModule } from '@angular/forms';
-import { PadariaComponent } from './padaria/padaria.component';
-import { DialogPadaria } from './dialog-padaria/dialog-padaria.component';
-import { OrderComponent } from './order/order.component';
-import { ProdutoService } from './produtos.service';
-import { PrevDirective } from './prev.directive';
-import { NextDirective } from './next.directive';
-import { SobreComponent } from './sobre/sobre.component';
-import { ContatoComponent } from './contato/contato.component';
+import { PadariaComponent } from './components/padaria/padaria.component';
+import { DialogPadaria } from './components/dialog-padaria/dialog-padaria.component';
+import { OrderComponent } from './components/order/order.component';
+import { ProdutoService } from './services/produtos.service';
+import { PrevDirective } from './services/prev.directive';
+import { NextDirective } from './services/next.directive';
+import { SobreComponent } from './components/sobre/sobre.component';
+import { ContatoComponent } from './components/contato/contato.component';
+import { HeaderComponent } from './components/header/header.component';
+import { HomeComponent } from './components/home/home.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +34,10 @@ import { ContatoComponent } from './contato/contato.component';
     PrevDirective,
     NextDirective,
     SobreComponent,
-    ContatoComponent
+    ContatoComponent,
+    HeaderComponent,
+    HomeComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

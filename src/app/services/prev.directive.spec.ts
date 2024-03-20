@@ -1,4 +1,4 @@
-import { PrevDirective } from './prev.directive';
+import { PrevDirective } from './services/prev.directive';
 
 describe('PrevDirective', () => {
   it('should create an instance', () => {

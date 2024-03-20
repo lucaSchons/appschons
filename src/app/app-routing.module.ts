@@ -2,16 +2,16 @@ import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 
 import { Routes } from "@angular/router";
-import { homeComponent } from "./home/home.component";
-import { PadariaComponent } from "./padaria/padaria.component";
-import { DialogPadaria } from "./dialog-padaria/dialog-padaria.component";
-import { OrderComponent } from "./order/order.component";
-import { SobreComponent } from "./sobre/sobre.component";
-import { ContatoComponent } from "./contato/contato.component";
+import { HomeComponent } from "./components/home/home.component";
+import { PadariaComponent } from "./components/padaria/padaria.component";
+import { DialogPadaria } from "./components/dialog-padaria/dialog-padaria.component";
+import { OrderComponent } from "./components/order/order.component";
+import { SobreComponent } from "./components/sobre/sobre.component";
+import { ContatoComponent } from "./components/contato/contato.component";
 
 export const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
-    { path: 'home', component: homeComponent },
+    { path: 'home', component: HomeComponent },
     { path: 'padaria', component: PadariaComponent },
     { path: 'dialog', component: DialogPadaria },
     { path: 'order', component: OrderComponent },

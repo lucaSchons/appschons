@@ -1,0 +1,23 @@
+<section>
+  <div class="header-container">
+    <a><button>Continuar escolhendo</button></a>
+    <img src="../../../assets/img/logo_site.png" />
+
+  </div>
+</section>
+<section>
+  <div class="container-order">
+    <h1>Pedido</h1>
+    <div *ngFor="let dados of dadosDaOrdem ">
+      <span *ngFor="let produto of dados.items.produto">
+        Descrição: {{ produto.descricao_produto }}
+        Quantidade: {{ produto.quantity }}
+        Preço Unitário: {{ produto.valor_unitario_produto }}
+      </span>
+    </div>
+    <input type="tel" placeholder="Digite seu número de celular" [(ngModel)]="numeroCelular" name="numeroCelular" />
+    <span>Valor Total: {{ precoTotal | async }}</span>
+    <a (click)="finishOrder()">Finalizar</a>
+    <!-- <a href={{linkWhatsApp}} (click)="finishOrder()">Finalizar</a> -->
+  </div>
+</section>

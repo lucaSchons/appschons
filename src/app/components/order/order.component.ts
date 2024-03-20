@@ -1,10 +1,10 @@
 import { BehaviorSubject, Observable } from 'rxjs';
-import { OrderService } from '../order.service';
+import { OrderService } from '../../services/order.service';
 import { Component, OnInit } from "@angular/core";
 import { collection, addDoc } from 'firebase/firestore';
 import { Firestore } from '@angular/fire/firestore';
-import { pedidoItem } from '../pedido-item.model';
-import { ProdutoService } from '../produtos.service';
+import { pedidoItem } from '../../pedido-item.model';
+import { ProdutoService } from '../../services/produtos.service';
 
 @Component({
   selector: 'app-order',
@@ -18,6 +18,8 @@ export class OrderComponent implements OnInit {
   dadosDaOrdem: pedidoItem[] = [];
   dadosString: string = "";
   linkWhatsApp: any;
+  numeroCelular: string = '';
+
   constructor(private orderService: OrderService, public produtoService: ProdutoService, private firestore: Firestore) { }
 
   ngOnInit() {
@@ -67,18 +69,21 @@ export class OrderComponent implements OnInit {
       })),
     }));
 
+    this.dadosString += `Mercearia Schons. \n\n`;
+    this.dadosString += `Agradecemos por realizar seu pedido. Segue abaixo um resumo do mesmo: \n\n `;
+
     dadosParaFirestore.forEach((item) => {
       item.produto.forEach((produtoItem) => {
-        this.dadosString += `Descrição: ${produtoItem.descricao_produto}, `;
-        this.dadosString += `Valor unitário: ${produtoItem.valor_unitario_produto}, `;
-        this.dadosString += `Quantidade: ${produtoItem.quantity}\n`;
+        this.dadosString += `Descrição: ${produtoItem.descricao_produto},\n`;
+        this.dadosString += `Valor Unitário: R$ ${produtoItem.valor_unitario_produto},\n`;
+        this.dadosString += `Quantidade: ${produtoItem.quantity}\n\n`;
       });
     });
-
+    this.dadosString += `\nValor Total: R$ ${this.precoTotal.value}`;
     const dadosStringEncoded = encodeURIComponent(this.dadosString);
 
     this.linkWhatsApp = `https://wa.me/5551980521997?text=${dadosStringEncoded}`;
-
+    console.log('Número de celular:', this.numeroCelular);
 
     const docRef = addDoc(collection(this.firestore, "pedido_item"), {
       items: dadosParaFirestore,
@@ -86,6 +91,18 @@ export class OrderComponent implements OnInit {
       user: null,
       phone: null,
     });
+
+    const docRefMessage = addDoc(collection(this.firestore, "messages"), {
+      to: "+5551980521997",
+      from: "+12067178491",
+      body: this.dadosString,
+    })
+
+    const docRefMessageMercearia = addDoc(collection(this.firestore, "messages"), {
+      to: "+5551980302443",
+      from: "+12067178491",
+      body: this.dadosString,
+    })
     console.log(docRef);
   }
 

@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Firestore, collectionData } from '@angular/fire/firestore';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { Observable} from 'rxjs';
-import { Produto } from './produto.model';
-import { DialogPadaria } from './dialog-padaria/dialog-padaria.component';
+import { Produto } from '../produto.model';
+import { DialogPadaria } from '../components/dialog-padaria/dialog-padaria.component';
 import { MatDialog } from '@angular/material/dialog';
 
 

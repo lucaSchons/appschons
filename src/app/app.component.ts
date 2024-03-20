@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
+import { HeaderControlService } from './services/header-control.service';
+import { FooterControlService } from './services/footer-control.service';
 
 @Component({
   selector: 'app-root',
@@ -6,34 +9,21 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'appschons';
-  hidden = false;
-  isMenuOpen = false;
-  quantidade: number = 0;
+
+  constructor(private router: Router, public headerControlService: HeaderControlService, public footerControlService: FooterControlService) {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        if (event.url === '/order') {
+          this.headerControlService.showHeader = false;
+          this.footerControlService.showFooter = false;
+        } else {
+          this.headerControlService.showHeader = true;
+          this.footerControlService.showFooter = true;
+        }
+      }
+    });
+  }
+
+  ngOnInit(){}
  
-  constructor(){}
-
-  ngOnInit(){
-    this.obtemTotalContador();
-  }
-  
-  toggleBadgeVisibility() {
-    this.hidden = !this.hidden;
-  }
-
-  closeMenu() {
-    this.isMenuOpen = false;
-  }
-
-  obtemTotalContador() {
-    if (localStorage.getItem('contador')) {
-      const quantidadeString = localStorage.getItem('contador');
-      const quantidade = quantidadeString ? +quantidadeString : 0;
-      this.quantidade = quantidade;
-    } else{
-      this.quantidade = 0;
-    }
-    return this.quantidade;
-  }
-  
 }

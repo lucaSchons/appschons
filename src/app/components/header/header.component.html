@@ -1,0 +1,22 @@
+<header>
+    <div class="container">
+        <label for="check" class="checkbtn">
+            <i class="fas fa-bars"></i>
+        </label>
+        <input type="checkbox" id="check" [(ngModel)]="isMenuOpen">
+        <div class="logo">
+            <a href=""><img src="assets/img/logo_site.png" /></a>
+        </div>
+        <ul class="menu">
+            <li><a (click)="closeMenu()" routerLink="/home"><span>Início</span></a></li>
+            <li><a (click)="closeMenu()" routerLink="/padaria"><span>Padaria</span></a></li>
+            <li><a (click)="closeMenu()" routerLink="/sobre"><span>Sobre</span></a></li>
+            <li><a (click)="closeMenu()" routerLink="/contato"><span>Contato</span></a></li>
+        </ul>
+        <div class="shopping">
+            <a routerLink="order" mat-raised-button [matBadge]="(obtemTotalContador() || undefined)">
+                <span class="material-symbols-outlined">shopping_cart</span> 
+            </a>
+        </div>
+    </div>
+</header>

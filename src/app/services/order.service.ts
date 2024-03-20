@@ -1,7 +1,7 @@
 import { Injectable, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { pedidoItem } from './pedido-item.model';
-import { ProdutoEncomenda } from './produto-encomenda.model';
+import { pedidoItem } from '../pedido-item.model';
+import { ProdutoEncomenda } from '../produto-encomenda.model';
 
 @Injectable({
   providedIn: 'root',

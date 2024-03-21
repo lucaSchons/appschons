@@ -9,6 +9,7 @@ import { ProdutoEncomenda } from '../produto-encomenda.model';
 export class OrderService implements OnInit {
   contadorSubject = new BehaviorSubject<number>(0);
   contador = this.contadorSubject.asObservable();
+  contador_var = new BehaviorSubject<number>(0);
   memorizador_index: any[] = [];
   isSelect_buttonAdd: boolean[] = [];
   isSelect_button: boolean[] = [];
@@ -19,8 +20,18 @@ export class OrderService implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit() { }
 
+  getContador(){
+    if (localStorage.getItem('contador')) {
+      const quantidadeString = localStorage.getItem('contador');
+      const quantidade = quantidadeString ? +quantidadeString : 0;
+      this.contador_var.next(quantidade);
+    } else {
+      this.contador_var.next(this.contadorSubject.value);
+    }
+
+    return this.contador_var;
   }
 
   getOrder() {
@@ -189,7 +200,6 @@ export class OrderService implements OnInit {
           const quantidade = itemExistente.items.produto[0].quantity;
           const varNewOrder: pedidoItem[] = [...this.orderSubject.value];
           const index = varNewOrder.findIndex(item => item.items.produto[0].descricao_produto === produto.descricao);
-          console.log("INDEX ACRESCENTAR ", index);
           if (quantidade >= 2 && index !== -1) {
             varNewOrder[index].items.produto[0].quantity = quantidade - 1;
             this.orderSubject.next(varNewOrder);
@@ -206,7 +216,6 @@ export class OrderService implements OnInit {
                   if (Array.isArray(item)) {
                     const resultado = item.find(index => index.descricao === produto.descricao);
                     if (resultado) {
-                      console.log(resultado.id);
                       this.removeProduct(resultado.id);
                     }
                   }

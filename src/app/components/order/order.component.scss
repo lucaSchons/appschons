@@ -1,25 +1,76 @@
-.header-container{
-    padding: 20px;
+.header-container {
+    display: flex;
+    padding: 15px 100px;
+    justify-content: space-between;
+    border-bottom: 2px solid var(--grey-light);
+    align-items: center;
+    span {
+        font-size: 1.2rem;
+        font-weight: bold;
+        vertical-align: bottom;
+    }
+    .voltar{
+        font-size: 28px;
+        padding-right: 5px;
+        vertical-align: bottom;
+    }
 }
 
-h1{
-    font-size: 2.5rem;
+.container-order {
+    max-width: 898px;
+    margin: 0 auto;
 }
 
-span{
+.head {
+    display: flex;
+    border: 2px solid var(--grey-light);
+    border-radius: 6px;
+    margin: 20px 0; 
+    padding: 15px;
+    justify-content: space-between;
+}
+
+.head .title{
+    display: flex;
+    align-items: center;
+    h1 {
+        display: flex;
+        font-size: 22px;
+        align-items: center;
+    }
+    .shopping {
+        display: flex;
+        font-weight: bold;
+        font-size: 22px;
+        padding-right: 10px;
+        align-items: center;
+    }
+}
+
+.head .monitor{
+    display: flex;
+    align-items: center;
+    span{
+        color: var(--grey-dark);
+        font-size: 18px;
+    }
+    .contador {
+        padding-right: 5px;
+    }
+}
+
+
+
+
+span {
     font-size: 1.5rem;
 }
 
-button{
+button {
     padding: 10px
-
 }
 
 img {
+    display: flex;
     width: 200px;
-}
-
-.container-order{
-    max-width: 1400px;
-    margin: 0 auto;
 }

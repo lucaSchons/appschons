@@ -19,8 +19,13 @@ export class OrderComponent implements OnInit {
   dadosString: string = "";
   linkWhatsApp: any;
   numeroCelular: string = '';
+  contador = new BehaviorSubject<number>(0);
+  
 
-  constructor(private orderService: OrderService, public produtoService: ProdutoService, private firestore: Firestore) { }
+  constructor(private orderService: OrderService, public produtoService: ProdutoService, private firestore: Firestore) { 
+    this.contador = this.orderService.getContador();
+    this.contador.subscribe({})
+  }
 
   ngOnInit() {
     this.produtos = this.orderService.getOrder();

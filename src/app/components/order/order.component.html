@@ -1,13 +1,24 @@
 <section>
   <div class="header-container">
-    <a><button>Continuar escolhendo</button></a>
+    <a routerLink="/padaria">
+      <span class="material-symbols-outlined voltar">
+        arrow_left_alt
+      </span>
+      <span>Continuar escolhendo</span></a>
     <img src="../../../assets/img/logo_site.png" />
-
   </div>
 </section>
 <section>
   <div class="container-order">
-    <h1>Pedido</h1>
+    <div class="head">
+      <div class="title">
+        <span class="material-symbols-outlined shopping">shopping_cart</span>
+        <h1>Carrinho</h1>
+      </div>
+      <div class="monitor">
+        <span class="contador">{{ contador.value }}</span><span class="produto">Produtos</span>
+      </div>
+    </div>
     <div *ngFor="let dados of dadosDaOrdem ">
       <span *ngFor="let produto of dados.items.produto">
         Descrição: {{ produto.descricao_produto }}

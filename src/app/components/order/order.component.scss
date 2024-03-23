@@ -23,7 +23,7 @@
 
 .head {
     display: flex;
-    border: 2px solid var(--grey-light);
+    border: 1px solid var(--grey-light);
     border-radius: 6px;
     margin: 20px 0; 
     padding: 15px;
@@ -59,12 +59,25 @@
     }
 }
 
+.content li {
+    display: flex;
+    border: 1px solid var(--grey-light);
+    border-radius: 6px;
+    margin: 20px 0; 
+    padding: 15px;
+    img {
+        width: 80px;
+    }
+    span {
+        font-size: 22px;
+        font-weight: 600;
+        padding: 0 10px;
+    }
 
-
-
-span {
-    font-size: 1.5rem;
 }
+
+
+
 
 button {
     padding: 10px

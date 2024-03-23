@@ -1,3 +1,4 @@
+import { ProdutoEncomenda } from './../../produto-encomenda.model';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { OrderService } from '../../services/order.service';
 import { Component, OnInit } from "@angular/core";
@@ -20,11 +21,19 @@ export class OrderComponent implements OnInit {
   linkWhatsApp: any;
   numeroCelular: string = '';
   contador = new BehaviorSubject<number>(0);
-  
+  contadorProduto: Observable<any>;
+  cont!: number;
 
-  constructor(private orderService: OrderService, public produtoService: ProdutoService, private firestore: Firestore) { 
+  ProdutoEncomenda: ProdutoEncomenda[] = [];
+
+
+  constructor(public orderService: OrderService, public produtoService: ProdutoService, private firestore: Firestore) {
     this.contador = this.orderService.getContador();
-    this.contador.subscribe({})
+    this.contador.asObservable().subscribe(res => {
+      console.log(res);
+      this.cont = res;
+    })
+    this.contadorProduto = this.orderService.getOrder();
   }
 
   ngOnInit() {
@@ -38,6 +47,7 @@ export class OrderComponent implements OnInit {
         const valor_unitario = item.items.produto[0].valor_unitario_produto || 0;
         const quantidade = item.items.produto[0].quantity;
         const resultado = valor_unitario * quantidade;
+        const image = item.items.produto[0].imageUrl;
         resultado_total += resultado;
         if (quantidade > 0) {
           const novoItem: pedidoItem = {
@@ -47,7 +57,7 @@ export class OrderComponent implements OnInit {
                 valor_unitario_produto: valor_unitario,
                 quantity: quantidade,
                 ingredientes: null,
-                imageUrl: null
+                imageUrl: image,
               }],
               valor_total: null,
             },
@@ -57,12 +67,77 @@ export class OrderComponent implements OnInit {
             }
           };
           this.dadosDaOrdem.push(novoItem);
+
+          const produtoEncomenda = {
+            descricao: descricao,
+            valor: valor_unitario,
+            quantidade: quantidade,
+            ingredientes: null,
+            imageUrl: image
+          }
+          this.ProdutoEncomenda.push(produtoEncomenda);
           // this.orderService.orderSubject.next(this.dadosDaOrdem);
         }
       });
 
       this.precoTotal.next(resultado_total);
     }
+  }
+  getOrderQuantity(produto: string) {
+    let quantidades;
+    const produtoStorage = localStorage.getItem('@schons');
+  
+    if (produtoStorage !== null) {
+      let objetoProdutoEncomenda = JSON.parse(produtoStorage);
+      let descricao_produto = "";
+      let valor_unitario = 0;
+      let quantidade = 0;
+      let image = "";
+      let resultado_total = 0;
+  
+      for (let i = 0; i < objetoProdutoEncomenda.length; i++) {
+        descricao_produto = objetoProdutoEncomenda[i].items.produto[0].descricao_produto;
+        valor_unitario = objetoProdutoEncomenda[i].items.produto[0].valor_unitario_produto || 0;
+        quantidade = objetoProdutoEncomenda[i].items.produto[0].quantity;
+        const resultado = valor_unitario * quantidade;
+        image = objetoProdutoEncomenda[i].items.produto[0].imageUrl;
+        resultado_total += resultado;
+  
+        if (descricao_produto === produto) {
+          const quant = objetoProdutoEncomenda[i].items.produto[0].quantity;
+          quantidades = quant;
+          if (quantidades === 0) {
+            console.log("ZEROOO");
+            objetoProdutoEncomenda.splice(i, 1); // Remove o objetoProdutoEncomendaeto do array na posição i
+            i--; // Decrementa o índice para compensar a remoção do objetoProdutoEncomendaeto
+            console.log("ARRAY NOVO: ", objetoProdutoEncomenda);
+            // // Atualiza a lista de produtos na classe
+            // this.ProdutoEncomenda = objetoProdutoEncomenda.map((item: pedidoItem ) => ({
+            //   descricao: item.items.produto[0].descricao_produto,
+            //   valor: item.items.produto[0].valor_unitario_produto,
+            //   quantidade: item.items.produto[0].quantity,
+            //   ingredientes: null,
+            //   imageUrl: item.items.produto[0].imageUrl
+            // }));
+            const produtoEncomenda = {
+              descricao: descricao_produto,
+              valor: valor_unitario,
+              quantidade: quantidade,
+              ingredientes: null,
+              imageUrl: image
+            }
+            this.ProdutoEncomenda.push(produtoEncomenda);
+            
+          }
+        }
+      }
+  
+      
+  
+      this.precoTotal.next(resultado_total);
+    }
+  
+    return quantidades;
   }
 
   finishOrder() {
@@ -97,17 +172,17 @@ export class OrderComponent implements OnInit {
       phone: null,
     });
 
-    const docRefMessage = addDoc(collection(this.firestore, "messages"), {
-      to: "+5551980521997",
-      from: "+12067178491",
-      body: this.dadosString,
-    })
+    // const docRefMessage = addDoc(collection(this.firestore, "messages"), {
+    //   to: "+5551980521997",
+    //   from: "+12067178491",
+    //   body: this.dadosString,
+    // })
 
-    const docRefMessageMercearia = addDoc(collection(this.firestore, "messages"), {
-      to: "+5551980302443",
-      from: "+12067178491",
-      body: this.dadosString,
-    })
+    // const docRefMessageMercearia = addDoc(collection(this.firestore, "messages"), {
+    //   to: "+5551980302443",
+    //   from: "+12067178491",
+    //   body: this.dadosString,
+    // })
     console.log(docRef);
   }
 

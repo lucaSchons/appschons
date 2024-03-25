@@ -19,7 +19,7 @@
         <span class="contador">{{ cont }}</span><span class="produto">Produtos</span>
       </div>
     </div>
-    <div class="content">
+    <!-- <div class="content">
       <ul *ngFor="let produtos of ProdutoEncomenda">
         <li>
           <img src="{{ produtos.imageUrl }}" />
@@ -34,7 +34,39 @@
           <span>R$ {{ produtos.valor | number:'1.2-2'}}</span>
         </li>
       </ul>
+    </div> -->
+    <div class="content">
+      <ul *ngFor="let item of produtoEncomendaSubject | async">
+        <li *ngFor="let produto of item.items.produto">
+          <img src="{{ produto.imageUrl }}" />
+          <span>{{ produto.descricao}}</span>
+          <div class="button">
+            <a class="button_material" (click)="orderService.decrementProduct(produto)"><span
+                class="material-symbols-outlined icon">remove</span></a>
+            <span class="contador">{{ getOrderQuantity(produto.descricao)}}</span>
+            <a class="button_material" (click)="orderService.incrementProduct(produto)"><span
+                class="material-symbols-outlined icon">add</span></a>
+          </div>
+          <span>R$ {{ produto.valor | number:'1.2-2'}}</span>
+        </li>
+      </ul>
     </div>
+    <!-- <div class="content">
+      <ul *ngFor="let produto of produtoEncomendaSubject | async">
+        <li>
+          <img src="{{ produto.imageUrl }}" />
+          <span>{{ produto.descricao_produto }}</span>
+          <div class="button">
+            <a class="button_material" (click)="orderService. decrementProduct(produto)"><span
+                class="material-symbols-outlined icon">remove</span></a>
+            <span class="contador">{{ getOrderQuantity(produto.descricao_produto)}}</span>
+            <a class="button_material" (click)="orderService.incrementProduct(produto)"><span
+                class="material-symbols-outlined icon">add</span></a>
+          </div>
+          <span>R$ {{ produto.valor_unitario_produto | number:'1.2-2'}}</span>
+        </li>
+      </ul>
+    </div> -->
     <input type="tel" placeholder="Digite seu número de celular" [(ngModel)]="numeroCelular" name="numeroCelular" />
     <span>Valor Total: {{ precoTotal | async }}</span>
     <a (click)="finishOrder()">Finalizar</a>

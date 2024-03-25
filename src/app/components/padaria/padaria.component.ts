@@ -25,7 +25,6 @@ export class PadariaComponent implements OnInit {
             this.orderService.isSelect_button = produtos.map(() => false);
         });
 
-
         const produtosLocalStorage = localStorage.getItem('@schons');
 
         if (produtosLocalStorage !== null) {
@@ -40,8 +39,8 @@ export class PadariaComponent implements OnInit {
 
                 );
                 this.produtosEncomenda.subscribe(res => {
-                    quantidadesMaioresQueZero.forEach((item: { items: { produto: { descricao_produto: any; }[]; }; }) => {
-                        const descricao = item.items.produto[0].descricao_produto;
+                    quantidadesMaioresQueZero.forEach((item: { items: { produto: { descricao: any; }[]; }; }) => {
+                        const descricao = item.items.produto[0].descricao;
                         const index = res.findIndex((produto: any) => produto.descricao === descricao);
                         this.orderService.isSelect_buttonAdd[index] = false;
                         this.orderService.isSelect_button[index] = true;
@@ -59,7 +58,7 @@ export class PadariaComponent implements OnInit {
             const quantidadeObj = JSON.parse(quantidadeStorage);
             let descricao_produto = "";
             quantidadeObj.forEach((item: { items: { produto: any; }; }) => {
-                descricao_produto = item.items.produto[0].descricao_produto;
+                descricao_produto = item.items.produto[0].descricao;
                 if (descricao_produto === produto) {
                     const quant = item.items.produto[0].quantity;
                     quantidades = quant;

@@ -15,14 +15,14 @@ export class OrderService implements OnInit {
   isSelect_button: boolean[] = [];
 
   pedido: pedidoItem[] = [];
-  orderSubject = new BehaviorSubject<pedidoItem[]>(this.pedido);
+  orderSubject = new BehaviorSubject<any[]>(this.pedido);
   order = this.orderSubject.asObservable();
 
   constructor() { }
 
   ngOnInit() { }
 
-  getContador(){
+  getContador() {
     if (localStorage.getItem('contador')) {
       const quantidadeString = localStorage.getItem('contador');
       const quantidade = quantidadeString ? +quantidadeString : 0;
@@ -35,10 +35,45 @@ export class OrderService implements OnInit {
   }
 
   getOrder() {
-    return this.order;
+    const produtosLocalStorage = localStorage.getItem('@schons');
+    if (produtosLocalStorage !== null) {
+      const objeto = JSON.parse(produtosLocalStorage);
+      const instancia = objeto;
+      const novoPedido: pedidoItem[] = [];
+      if (instancia !== undefined) {
+        instancia.forEach((item: { items: { produto: any; }; }) => {
+          const descricao = item.items.produto[0].descricao;
+          const valor_unitario = item.items.produto[0].valor || 0;
+          const quantidade = item.items.produto[0].quantity;
+          const resultado = valor_unitario * quantidade;
+          const image = item.items.produto[0].imageUrl;
+
+          const novoItem: pedidoItem = {
+            items: {
+              produto: [{
+                descricao: descricao,
+                valor: valor_unitario,
+                quantity: quantidade,
+                ingredientes: null,
+                imageUrl: image
+              }],
+              valor_total: null,
+            },
+            user: {
+              name: null,
+              phone: null,
+            }
+          };
+          novoPedido.push(novoItem);
+        });
+        this.orderSubject.next(novoPedido);
+      }
+    }
+
+    return this.orderSubject;
   }
 
-  newProduct(index: number, produto: ProdutoEncomenda) {
+  newProduct(index: number, produto: any) {
     const novoIndex = {
       id: index,
       descricao: produto.descricao
@@ -51,7 +86,7 @@ export class OrderService implements OnInit {
     const novoPedido: pedidoItem[] = [...this.orderSubject.value];
 
     const itemExistente = novoPedido.find(item => {
-      return item.items.produto.some(produtoExistente => produtoExistente.descricao_produto === produto.descricao);
+      return item.items.produto.some(produtoExistente => produtoExistente.descricao === produto.descricao);
     });
 
     if (itemExistente) {
@@ -62,8 +97,8 @@ export class OrderService implements OnInit {
       const novoItem: pedidoItem = {
         items: {
           produto: [{
-            descricao_produto: produto.descricao,
-            valor_unitario_produto: produto.valor,
+            descricao: produto.descricao,
+            valor: produto.valor,
             quantity: 1,
             ingredientes: produto.ingredientes,
             imageUrl: produto.imageUrl
@@ -85,20 +120,17 @@ export class OrderService implements OnInit {
     localStorage.setItem('contador', JSON.stringify(this.contadorSubject.value));
   }
 
-  removeProduct(index: number) {
-    console.log("DENTRO DO REMOVEPRODUCT ", index);
+  removeProduct(index: number, idx_array: number) {
     this.isSelect_buttonAdd[index] = true;
     this.isSelect_button[index] = false;
     const currentProducts = this.orderSubject.getValue();
-    console.log("DENTRO DO REMOVER: ", currentProducts)
+    currentProducts.splice(idx_array, 1);
 
-    if (index >= 0 && index < currentProducts.length) {
-      currentProducts.splice(index, 1);
-      this.orderSubject.next(currentProducts);
-    }
+    this.orderSubject.next(currentProducts);
+    localStorage.setItem('@schons', JSON.stringify(currentProducts));
   }
 
-  incrementProduct(produto: ProdutoEncomenda) {
+  incrementProduct(produto: any) {
     const novoPedido: pedidoItem[] = [...this.orderSubject.value];
     const produtosLocalStorage = localStorage.getItem('@schons');
 
@@ -119,7 +151,7 @@ export class OrderService implements OnInit {
       }
 
       if (instancia !== undefined) {
-        const itemExistente = objeto.find((item: pedidoItem) => item.items.produto.some(p => p.descricao_produto === produto.descricao));
+        const itemExistente = objeto.find((item: pedidoItem) => item.items.produto.some(p => p.descricao === produto.descricao));
 
         if (itemExistente !== undefined) {
           const quantidade = itemExistente.items.produto[0].quantity;
@@ -129,7 +161,7 @@ export class OrderService implements OnInit {
             itemExistente.items.produto[0].quantity = quantidade + 1;
             varNewOrder.push(itemExistente);
           } else {
-            const index = varNewOrder.findIndex(item => item.items.produto[0].descricao_produto === produto.descricao);
+            const index = varNewOrder.findIndex(item => item.items.produto[0].descricao === produto.descricao);
             if (index !== -1) {
               varNewOrder[index].items.produto[0].quantity = quantidade + 1;
             }
@@ -142,8 +174,8 @@ export class OrderService implements OnInit {
           const novoItem: pedidoItem = {
             items: {
               produto: [{
-                descricao_produto: produto.descricao,
-                valor_unitario_produto: produto.valor,
+                descricao: produto.descricao,
+                valor: produto.valor,
                 quantity: 1,
                 ingredientes: produto.ingredientes,
                 imageUrl: produto.imageUrl
@@ -166,7 +198,7 @@ export class OrderService implements OnInit {
     localStorage.setItem('contador', JSON.stringify(this.contadorSubject.value));
   }
 
-  decrementProduct(produto: ProdutoEncomenda) {
+  decrementProduct(produto: any) {
     const novoPedido: pedidoItem[] = [...this.orderSubject.value];
     console.log("DECREMENT ", novoPedido);
     const produtosLocalStorage = localStorage.getItem('@schons');
@@ -194,20 +226,21 @@ export class OrderService implements OnInit {
       }
 
       if (instancia !== undefined) {
-        const itemExistente = objeto.find((item: pedidoItem) => item.items.produto.some(p => p.descricao_produto === produto.descricao));
+        const itemExistente = objeto.find((item: pedidoItem) => item.items.produto.some(p => p.descricao === produto.descricao));
 
         if (itemExistente !== undefined) {
           const quantidade = itemExistente.items.produto[0].quantity;
           const varNewOrder: pedidoItem[] = [...this.orderSubject.value];
-          const index = varNewOrder.findIndex(item => item.items.produto[0].descricao_produto === produto.descricao);
+          const index = varNewOrder.findIndex(item => item.items.produto[0].descricao === produto.descricao);
           if (quantidade >= 2 && index !== -1) {
             varNewOrder[index].items.produto[0].quantity = quantidade - 1;
             this.orderSubject.next(varNewOrder);
+            localStorage.setItem('@schons', JSON.stringify(varNewOrder));
 
           } else if (quantidade === 1 && index !== -1) {
             alert("Tem certeza que deseja excluir item?");
             varNewOrder[index].items.produto[0].quantity = 0;
-           
+
             if (idx_localStorage !== null) {
               const obj = JSON.parse(idx_localStorage);
               if (Array.isArray(obj) && obj.length > 0) {
@@ -216,17 +249,17 @@ export class OrderService implements OnInit {
                   if (Array.isArray(item)) {
                     const resultado = item.find(index => index.descricao === produto.descricao);
                     if (resultado) {
-                      this.removeProduct(resultado.id);
+                      //mandar o index do array tb para excluir o certo 
+                      this.removeProduct(resultado.id, index);
                     }
                   }
                 })
               }
             }
-
-            this.orderSubject.next(varNewOrder);
+            // this.orderSubject.next(varNewOrder);
           }
 
-          localStorage.setItem('@schons', JSON.stringify(varNewOrder));
+
         }
       }
     }

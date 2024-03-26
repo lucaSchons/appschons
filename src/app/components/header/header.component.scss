@@ -84,7 +84,7 @@ header .container {
 }
 
 @media (max-width: 858px) {
-    .container {
+    header .container {
         width: 100%;
         padding: 0 40px;
         justify-content: space-between;

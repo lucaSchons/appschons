@@ -23,12 +23,7 @@ export class OrderComponent implements OnInit {
   contadorProduto: Observable<any>;
   cont!: number;
   resultado_varivel: number = 0;
-
-  produtoEncomenda: ProdutoEncomenda[] = [];
-
   produtoEncomendaSubject: BehaviorSubject<any> = new BehaviorSubject<any>([]);
-
-
 
   constructor(public orderService: OrderService, public produtoService: ProdutoService, private firestore: Firestore) {
     this.contador = this.orderService.getContador();
@@ -54,7 +49,6 @@ export class OrderComponent implements OnInit {
       let valor = 0;
       let quantidade = 0;
       let image = "";
-      
 
       for (let i = 0; i < objetoProdutoEncomenda.length; i++) {
         descricao = objetoProdutoEncomenda[i].items.produto[0].descricao;
@@ -69,6 +63,8 @@ export class OrderComponent implements OnInit {
           quantidades = quant;
         }
       }
+    } else {
+      console.log("CARRINHO VAZIO");
     }
 
     return quantidades;

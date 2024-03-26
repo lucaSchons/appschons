@@ -153,7 +153,7 @@
     display: flex;
     position: absolute;
     left: 8%;
-    top: 600px;
+    top: 500px;
     padding: 10px;
     border-radius: 50%;
     border: 1px solid var(--cinza);
@@ -173,7 +173,7 @@
     display: flex;
     position: absolute;
     right: 8%;
-    top: 600px;
+    top: 500px;
     padding: 10px;
     border-radius: 50%;
     border: 1px solid var(--cinza);
@@ -353,11 +353,11 @@
     }
     .prev {
         left: 6%;
-        top: 560px;
+        top: 460px;
     }
     .next{
         right: 6%;
-        top: 560px;
+        top: 460px;
     }
     .card-list-encomenda {
         gap: 10px
@@ -398,6 +398,7 @@
     .prev {
         left: 13%;
         padding: 8px;
+        top: 450px;
         span {
             font-size: 35px;
         }
@@ -405,6 +406,7 @@
     .next{
         right: 13%;
         padding: 8px;
+        top: 450px;
         span {
             font-size: 35px;
         }
@@ -429,9 +431,11 @@
     .next {
         display: none;
     }
-    .container-encomenda {
-        width: 80%;
+    .container-encomenda{
+        width: 100%;
+        margin-left: 40px;
     }
+ 
     .card-list-encomenda {
         overflow-x: auto;
         overscroll-behavior-inline: contain;

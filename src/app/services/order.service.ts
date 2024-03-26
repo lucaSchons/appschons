@@ -238,27 +238,27 @@ export class OrderService implements OnInit {
             localStorage.setItem('@schons', JSON.stringify(varNewOrder));
 
           } else if (quantidade === 1 && index !== -1) {
-            alert("Tem certeza que deseja excluir item?");
-            varNewOrder[index].items.produto[0].quantity = 0;
+            var resposta = confirm("Tem certeza que deseja excluir o item?");
 
-            if (idx_localStorage !== null) {
-              const obj = JSON.parse(idx_localStorage);
-              if (Array.isArray(obj) && obj.length > 0) {
-                this.memorizador_index.push(obj);
-                this.memorizador_index.forEach((item: any[]) => {
-                  if (Array.isArray(item)) {
-                    const resultado = item.find(index => index.descricao === produto.descricao);
-                    if (resultado) {
-                      //mandar o index do array tb para excluir o certo 
-                      this.removeProduct(resultado.id, index);
+            if (resposta) {
+              varNewOrder[index].items.produto[0].quantity = 0;
+              if (idx_localStorage !== null) {
+                const obj = JSON.parse(idx_localStorage);
+                if (Array.isArray(obj) && obj.length > 0) {
+                  this.memorizador_index.push(obj);
+                  this.memorizador_index.forEach((item: any[]) => {
+                    if (Array.isArray(item)) {
+                      const resultado = item.find(index => index.descricao === produto.descricao);
+                      if (resultado) {
+                        this.removeProduct(resultado.id, index);
+                      }
                     }
-                  }
-                })
+                  })
+                }
               }
             }
-            // this.orderSubject.next(varNewOrder);
-          }
 
+          }
 
         }
       }

@@ -36,7 +36,7 @@
       </ul>
     </div>
     <input type="tel" placeholder="Digite seu número de celular" [(ngModel)]="numeroCelular" name="numeroCelular" />
-    <span>Valor Total: {{ precoTotal | async }}</span>
+    <span>Valor Total: {{ precoTotal.value }}</span>
     <a (click)="finishOrder()">Finalizar</a>
     <!-- <a href={{linkWhatsApp}} (click)="finishOrder()">Finalizar</a> -->
   </div>

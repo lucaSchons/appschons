@@ -1,4 +1,3 @@
-import { ProdutoEncomenda } from './../../produto-encomenda.model';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { OrderService } from '../../services/order.service';
 import { Component, OnInit } from "@angular/core";
@@ -22,13 +21,12 @@ export class OrderComponent implements OnInit {
   contador = new BehaviorSubject<number>(0);
   contadorProduto: Observable<any>;
   cont!: number;
-  resultado_varivel: number = 0;
+
   produtoEncomendaSubject: BehaviorSubject<any> = new BehaviorSubject<any>([]);
 
   constructor(public orderService: OrderService, public produtoService: ProdutoService, private firestore: Firestore) {
     this.contador = this.orderService.getContador();
     this.contador.asObservable().subscribe(res => {
-      console.log(res);
       this.cont = res;
     })
     this.contadorProduto = this.orderService.getOrder();
@@ -36,7 +34,17 @@ export class OrderComponent implements OnInit {
 
   ngOnInit() {
     this.produtoEncomendaSubject = this.orderService.getOrder();
-    this.produtoEncomendaSubject.asObservable().subscribe({ });
+    this.produtoEncomendaSubject.asObservable().subscribe(result => {
+      let resultado = 0;
+      for (let i = 0; i < result.length; i++) {
+        const valor_unitario = result[i].items.produto[0].valor || 0;
+        const quantidade = result[i].items.produto[0].quantity;
+        const resultado_var = valor_unitario * quantidade; 
+        resultado += resultado_var;
+      }
+      this.precoTotal.next(resultado);
+    });
+
   }
 
   getOrderQuantity(produto: string) {
@@ -54,9 +62,7 @@ export class OrderComponent implements OnInit {
         descricao = objetoProdutoEncomenda[i].items.produto[0].descricao;
         valor = objetoProdutoEncomenda[i].items.produto[0].valor || 0;
         quantidade = objetoProdutoEncomenda[i].items.produto[0].quantity;
-        const resultado = valor * quantidade;
         image = objetoProdutoEncomenda[i].items.produto[0].imageUrl;
-        this.resultado_varivel += resultado;
 
         if (descricao === produto) {
           const quant = objetoProdutoEncomenda[i].items.produto[0].quantity;

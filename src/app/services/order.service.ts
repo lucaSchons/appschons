@@ -1,7 +1,6 @@
 import { Injectable, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { pedidoItem } from '../pedido-item.model';
-import { ProdutoEncomenda } from '../produto-encomenda.model';
 
 @Injectable({
   providedIn: 'root',
@@ -11,10 +10,12 @@ export class OrderService implements OnInit {
   contador = this.contadorSubject.asObservable();
   contador_var = new BehaviorSubject<number>(0);
   memorizador_index: any[] = [];
+
   isSelect_buttonAdd: boolean[] = [];
   isSelect_button: boolean[] = [];
 
   pedido: pedidoItem[] = [];
+
   orderSubject = new BehaviorSubject<any[]>(this.pedido);
   order = this.orderSubject.asObservable();
 
@@ -43,9 +44,8 @@ export class OrderService implements OnInit {
       if (instancia !== undefined) {
         instancia.forEach((item: { items: { produto: any; }; }) => {
           const descricao = item.items.produto[0].descricao;
-          const valor_unitario = item.items.produto[0].valor || 0;
+          const valor_unitario = item.items.produto[0].valor;
           const quantidade = item.items.produto[0].quantity;
-          const resultado = valor_unitario * quantidade;
           const image = item.items.produto[0].imageUrl;
 
           const novoItem: pedidoItem = {
@@ -74,12 +74,30 @@ export class OrderService implements OnInit {
   }
 
   newProduct(index: number, produto: any) {
-    const novoIndex = {
-      id: index,
-      descricao: produto.descricao
+    const memoria_localStorage = localStorage.getItem('memory_idx');
+    if (memoria_localStorage !== null) {
+      const objeto = JSON.parse(memoria_localStorage);
+      const itemExistente = objeto.find((item: { descricao: any; }) => item.descricao === produto.descricao);
+      if (!itemExistente) {
+        const novoIndex = {
+          id: index,
+          descricao: produto.descricao
+        }
+        const varNovoArray: any[] = [...objeto];
+        varNovoArray.push(novoIndex);
+        localStorage.setItem('memory_idx', JSON.stringify(varNovoArray));
+      }
+
+    } else {
+      
+      const novoIndex = {
+        id: index,
+        descricao: produto.descricao
+      }
+      this.memorizador_index.push(novoIndex);
+      localStorage.setItem('memory_idx', JSON.stringify(this.memorizador_index));
     }
-    this.memorizador_index.push(novoIndex);
-    localStorage.setItem('memory_idx', JSON.stringify(this.memorizador_index));
+
     this.isSelect_buttonAdd[index] = false;
     this.isSelect_button[index] = true;
 
@@ -200,7 +218,6 @@ export class OrderService implements OnInit {
 
   decrementProduct(produto: any) {
     const novoPedido: pedidoItem[] = [...this.orderSubject.value];
-    console.log("DECREMENT ", novoPedido);
     const produtosLocalStorage = localStorage.getItem('@schons');
     const idx_localStorage = localStorage.getItem('memory_idx');
 
@@ -244,16 +261,9 @@ export class OrderService implements OnInit {
               varNewOrder[index].items.produto[0].quantity = 0;
               if (idx_localStorage !== null) {
                 const obj = JSON.parse(idx_localStorage);
-                if (Array.isArray(obj) && obj.length > 0) {
-                  this.memorizador_index.push(obj);
-                  this.memorizador_index.forEach((item: any[]) => {
-                    if (Array.isArray(item)) {
-                      const resultado = item.find(index => index.descricao === produto.descricao);
-                      if (resultado) {
-                        this.removeProduct(resultado.id, index);
-                      }
-                    }
-                  })
+                const itemExistente = obj.find((item: { descricao: any; }) => item.descricao === produto.descricao);
+                if(itemExistente){
+                  this.removeProduct(itemExistente.id, index);
                 }
               }
             }
@@ -265,4 +275,3 @@ export class OrderService implements OnInit {
     }
   }
 }
-

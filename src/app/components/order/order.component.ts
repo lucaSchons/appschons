@@ -19,18 +19,11 @@ export class OrderComponent implements OnInit {
   linkWhatsApp: any;
   numeroCelular: string = '';
   contador = new BehaviorSubject<number>(0);
-  contadorProduto: Observable<any>;
-  cont!: number;
+  contadorProduto = new BehaviorSubject<number>(0);
 
   produtoEncomendaSubject: BehaviorSubject<any> = new BehaviorSubject<any>([]);
 
-  constructor(public orderService: OrderService, public produtoService: ProdutoService, private firestore: Firestore) {
-    this.contador = this.orderService.getContador();
-    this.contador.asObservable().subscribe(res => {
-      this.cont = res;
-    })
-    this.contadorProduto = this.orderService.getOrder();
-  }
+  constructor(public orderService: OrderService, public produtoService: ProdutoService, private firestore: Firestore) { }
 
   ngOnInit() {
     this.produtoEncomendaSubject = this.orderService.getOrder();
@@ -44,6 +37,10 @@ export class OrderComponent implements OnInit {
       }
       this.precoTotal.next(resultado);
     });
+    this.contadorProduto = this.orderService.getContador();
+    this.contadorProduto.subscribe(res => {
+      this.contador.next(res);
+    })
 
   }
 
@@ -69,6 +66,7 @@ export class OrderComponent implements OnInit {
           quantidades = quant;
         }
       }
+
     } else {
       console.log("CARRINHO VAZIO");
     }

@@ -8,7 +8,6 @@ import { pedidoItem } from '../pedido-item.model';
 export class OrderService implements OnInit {
   contadorSubject = new BehaviorSubject<number>(0);
   contador = this.contadorSubject.asObservable();
-  contador_var = new BehaviorSubject<number>(0);
   memorizador_index: any[] = [];
 
   isSelect_buttonAdd: boolean[] = [];
@@ -27,12 +26,10 @@ export class OrderService implements OnInit {
     if (localStorage.getItem('contador')) {
       const quantidadeString = localStorage.getItem('contador');
       const quantidade = quantidadeString ? +quantidadeString : 0;
-      this.contador_var.next(quantidade);
-    } else {
-      this.contador_var.next(this.contadorSubject.value);
-    }
+      this.contadorSubject.next(quantidade);
+    } 
 
-    return this.contador_var;
+    return this.contadorSubject;
   }
 
   getOrder() {
@@ -75,6 +72,7 @@ export class OrderService implements OnInit {
 
   newProduct(index: number, produto: any) {
     const memoria_localStorage = localStorage.getItem('memory_idx');
+
     if (memoria_localStorage !== null) {
       const objeto = JSON.parse(memoria_localStorage);
       const itemExistente = objeto.find((item: { descricao: any; }) => item.descricao === produto.descricao);
@@ -96,6 +94,15 @@ export class OrderService implements OnInit {
       }
       this.memorizador_index.push(novoIndex);
       localStorage.setItem('memory_idx', JSON.stringify(this.memorizador_index));
+    }
+
+    if (localStorage.getItem('contador')) {
+      const quantidadeString = localStorage.getItem('contador');
+      const quantidade = quantidadeString ? +quantidadeString : 0;
+      const resultado = quantidade + 1;
+      this.contadorSubject.next(resultado);
+    } else {
+      this.contadorSubject.next(this.contadorSubject.value + 1);
     }
 
     this.isSelect_buttonAdd[index] = false;
@@ -132,9 +139,6 @@ export class OrderService implements OnInit {
     }
     this.orderSubject.next(novoPedido);
     localStorage.setItem('@schons', JSON.stringify(novoPedido));
-
-    this.contadorSubject.next(this.contadorSubject.value + 1)
-
     localStorage.setItem('contador', JSON.stringify(this.contadorSubject.value));
   }
 
@@ -217,7 +221,6 @@ export class OrderService implements OnInit {
   }
 
   decrementProduct(produto: any) {
-    const novoPedido: pedidoItem[] = [...this.orderSubject.value];
     const produtosLocalStorage = localStorage.getItem('@schons');
     const idx_localStorage = localStorage.getItem('memory_idx');
 
@@ -225,6 +228,7 @@ export class OrderService implements OnInit {
       const quantidadeString = localStorage.getItem('contador');
       const quantidade = quantidadeString ? +quantidadeString : 0;
       let quantidade_ext = quantidade;
+      
       if (quantidade_ext >= 2) {
         const resultado = quantidade_ext - 1;
         this.contadorSubject.next(resultado);
@@ -232,8 +236,6 @@ export class OrderService implements OnInit {
         this.contadorSubject.next(0);
       }
     }
-
-    localStorage.setItem('contador', JSON.stringify(this.contadorSubject.value));
 
     if (produtosLocalStorage !== null) {
       const objeto = JSON.parse(produtosLocalStorage);
@@ -267,11 +269,12 @@ export class OrderService implements OnInit {
                 }
               }
             }
-
           }
-
         }
       }
+
     }
+
+    localStorage.setItem('contador', JSON.stringify(this.contadorSubject.value));
   }
 }

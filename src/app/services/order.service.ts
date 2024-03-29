@@ -27,7 +27,7 @@ export class OrderService implements OnInit {
       const quantidadeString = localStorage.getItem('contador');
       const quantidade = quantidadeString ? +quantidadeString : 0;
       this.contadorSubject.next(quantidade);
-    } 
+    }
 
     return this.contadorSubject;
   }
@@ -87,7 +87,7 @@ export class OrderService implements OnInit {
       }
 
     } else {
-      
+
       const novoIndex = {
         id: index,
         descricao: produto.descricao
@@ -223,18 +223,12 @@ export class OrderService implements OnInit {
   decrementProduct(produto: any) {
     const produtosLocalStorage = localStorage.getItem('@schons');
     const idx_localStorage = localStorage.getItem('memory_idx');
-
+    let quantidade_ext = 0;
+    
     if (localStorage.getItem('contador')) {
       const quantidadeString = localStorage.getItem('contador');
       const quantidade = quantidadeString ? +quantidadeString : 0;
-      let quantidade_ext = quantidade;
-      
-      if (quantidade_ext >= 2) {
-        const resultado = quantidade_ext - 1;
-        this.contadorSubject.next(resultado);
-      } else if (quantidade_ext === 1) {
-        this.contadorSubject.next(0);
-      }
+      quantidade_ext = quantidade;
     }
 
     if (produtosLocalStorage !== null) {
@@ -261,10 +255,17 @@ export class OrderService implements OnInit {
 
             if (resposta) {
               varNewOrder[index].items.produto[0].quantity = 0;
+              if (quantidade_ext >= 2) {
+                const resultado = quantidade_ext - 1;
+                this.contadorSubject.next(resultado);
+              } else if (quantidade_ext === 1) {
+                this.contadorSubject.next(0);
+              }
+
               if (idx_localStorage !== null) {
                 const obj = JSON.parse(idx_localStorage);
                 const itemExistente = obj.find((item: { descricao: any; }) => item.descricao === produto.descricao);
-                if(itemExistente){
+                if (itemExistente) {
                   this.removeProduct(itemExistente.id, index);
                 }
               }

@@ -79,8 +79,17 @@
 
 
 
-button {
-    padding: 10px
+.button {
+    padding: 10px;
+    span{
+        user-select: none;
+    }
+
+    &:hover {
+        cursor: pointer;
+    }
+
+   
 }
 
 img {

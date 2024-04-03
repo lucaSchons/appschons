@@ -4,12 +4,14 @@
     justify-content: space-between;
     border-bottom: 2px solid var(--grey-light);
     align-items: center;
+
     span {
         font-size: 1.2rem;
         font-weight: bold;
         vertical-align: bottom;
     }
-    .voltar{
+
+    .voltar {
         font-size: 28px;
         padding-right: 5px;
         vertical-align: bottom;
@@ -25,19 +27,21 @@
     display: flex;
     border: 1px solid var(--grey-light);
     border-radius: 6px;
-    margin: 20px 0; 
+    margin: 20px 0;
     padding: 15px;
     justify-content: space-between;
 }
 
-.head .title{
+.head .title {
     display: flex;
     align-items: center;
+
     h1 {
         display: flex;
         font-size: 22px;
         align-items: center;
     }
+
     .shopping {
         display: flex;
         font-weight: bold;
@@ -47,13 +51,15 @@
     }
 }
 
-.head .monitor{
+.head .monitor {
     display: flex;
     align-items: center;
-    span{
+
+    span {
         color: var(--grey-dark);
         font-size: 18px;
     }
+
     .contador {
         padding-right: 5px;
     }
@@ -64,13 +70,15 @@
     border: 1px solid var(--grey-light);
     border-radius: 6px;
     justify-content: space-between;
-    margin: 20px 0; 
+    margin: 20px 0;
     padding: 15px;
+
     img {
         display: flex;
         width: 45px;
         padding-right: 8px;
     }
+
     span {
         font-size: 22px;
         font-weight: 600;
@@ -91,11 +99,13 @@
     align-items: center;
     border: 1px solid var(--grey-light);
     border-radius: 6px;
+
     span {
         display: flex;
         user-select: none;
         padding: 4px;
     }
+
     &:hover {
         cursor: pointer;
     }
@@ -105,15 +115,17 @@ img {
     display: flex;
     width: 200px;
 }
+
 .content .price {
     display: flex;
     border: 1px solid var(--grey-light);
     border-radius: 6px;
     box-shadow: inset -1px 1px #fff, inset 1px 1px #fff;
     background-color: #f5f5f8;
-    margin: 20px 0; 
+    margin: 20px 0;
     padding: 15px;
     justify-content: space-between;
+
     span {
         font-size: 22px;
         font-weight: 600;
@@ -126,28 +138,68 @@ img {
     padding: 0 50px;
     width: 100%;
     margin-bottom: 50px;
-    h2{
+
+    h2 {
         font-size: 32px;
         padding-bottom: 20px;
     }
-    .subtitle{
+
+    .subtitle {
         font-size: 20px;
         font-weight: 600;
         padding-bottom: 20px;
     }
 }
+
 .user-form {
     display: flex;
     flex-direction: column;
     width: 500px;
     width: 100%;
     gap: 10px;
+
     button {
         padding: 25px 0;
         font-size: 18px;
         font-weight: 600;
     }
 }
+
 .contact .container-contact {
     max-width: 500px;
+}
+
+.carrinho-vazio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px 0;
+    gap: 10px;
+
+    button {
+        display: flex;
+        margin-top: 10px;
+        box-shadow: 8px 8px 0 0 rgb(44 44 44 / 25%);
+        max-width: 300px;
+        padding: 15px 30px;
+        border: 1px solid #a5684d;
+        color: var(--text-botao);
+        font-weight: 600;
+        font-size: 14px;
+        letter-spacing: .05625rem;
+        text-transform: uppercase;
+        cursor: pointer;
+
+        &:hover {
+            border: 2px solid #a5684d;
+            box-shadow: 9px 9px 0 0 rgb(44 44 44 / 30%);
+
+        }
+    }
+}
+
+@media (max-width: 858px) {
+    .header-container {
+        padding: 20px;
+    }
 }

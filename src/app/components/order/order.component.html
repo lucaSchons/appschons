@@ -8,7 +8,12 @@
     <img src="../../../assets/img/logo_site.png" />
   </div>
 </section>
-<section class="body-order">
+<div class="carrinho-vazio" *ngIf="carrinhoVazio">
+  <h1>Seu carrinho está vazio.</h1>
+  <p>Busque pelo produto desejado.</p>
+  <button routerLink="/padaria">Escolher Produtos</button>
+</div>
+<section *ngIf="!carrinhoVazio" class="body-order">
   <div class="head">
     <div class="title">
       <span class="material-symbols-outlined shopping">shopping_cart</span>
@@ -43,7 +48,7 @@
     </div>
   </div>
 </section>
-<section class="contact">
+<section *ngIf="!carrinhoVazio" class="contact">
   <div class="container-contact">
     <h2>Informações de Contato</h2>
     <h2 class="subtitle">Deixe seus dados abaixo para que sua encomenda seja confirmada.</h2>

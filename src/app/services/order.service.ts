@@ -224,11 +224,16 @@ export class OrderService implements OnInit {
     const produtosLocalStorage = localStorage.getItem('@schons');
     const idx_localStorage = localStorage.getItem('memory_idx');
     let quantidade_ext = 0;
+    let resultado = 0;
     
     if (localStorage.getItem('contador')) {
       const quantidadeString = localStorage.getItem('contador');
       const quantidade = quantidadeString ? +quantidadeString : 0;
       quantidade_ext = quantidade;
+
+      if (quantidade_ext >= 2) {
+        resultado = quantidade_ext - 1;
+      }
     }
 
     if (produtosLocalStorage !== null) {
@@ -249,16 +254,14 @@ export class OrderService implements OnInit {
             varNewOrder[index].items.produto[0].quantity = quantidade - 1;
             this.orderSubject.next(varNewOrder);
             localStorage.setItem('@schons', JSON.stringify(varNewOrder));
+            
 
           } else if (quantidade === 1 && index !== -1) {
             var resposta = confirm("Tem certeza que deseja excluir o item?");
 
             if (resposta) {
               varNewOrder[index].items.produto[0].quantity = 0;
-              if (quantidade_ext >= 2) {
-                const resultado = quantidade_ext - 1;
-                this.contadorSubject.next(resultado);
-              } else if (quantidade_ext === 1) {
+              if (quantidade_ext === 1) {
                 this.contadorSubject.next(0);
               }
 
@@ -269,13 +272,18 @@ export class OrderService implements OnInit {
                   this.removeProduct(itemExistente.id, index);
                 }
               }
+
+            } else {
+              resultado = quantidade_ext;
+
             }
+
           }
         }
       }
-
     }
 
+    this.contadorSubject.next(resultado);
     localStorage.setItem('contador', JSON.stringify(this.contadorSubject.value));
   }
 }

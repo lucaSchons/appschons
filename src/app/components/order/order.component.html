@@ -8,23 +8,25 @@
     <img src="../../../assets/img/logo_site.png" />
   </div>
 </section>
-<section>
-  <div class="container-order">
-    <div class="head">
-      <div class="title">
-        <span class="material-symbols-outlined shopping">shopping_cart</span>
-        <h1>Carrinho</h1>
-      </div>
-      <div class="monitor">
-        <span class="contador">{{ contador.value }}</span><span class="produto">Produtos</span>
-      </div>
+<section class="body-order">
+  <div class="head">
+    <div class="title">
+      <span class="material-symbols-outlined shopping">shopping_cart</span>
+      <h1>Carrinho</h1>
     </div>
-    <div class="content">
-      <ul *ngFor="let item of produtoEncomendaSubject | async">
-        <li *ngFor="let produto of item.items.produto">
+    <div class="monitor">
+      <span class="contador">{{ contador.value }}</span><span class="produto">Produto(s)</span>
+    </div>
+  </div>
+  <div class="content">
+    <ul *ngFor="let item of produtoEncomendaSubject | async">
+      <li *ngFor="let produto of item.items.produto">
+        <div class="container-content-info">
           <img src="{{ produto.imageUrl }}" />
           <span>{{ produto.descricao}}</span>
-          <div class="button">
+        </div>
+        <div class="container-content">
+          <div class="box-button">
             <a class="button_material" (click)="orderService.decrementProduct(produto)"><span
                 class="material-symbols-outlined icon">remove</span></a>
             <span class="contador">{{ getOrderQuantity(produto.descricao)}}</span>
@@ -32,16 +34,54 @@
                 class="material-symbols-outlined icon">add</span></a>
           </div>
           <span>R$ {{ produto.valor | number:'1.2-2'}}</span>
-        </li>
-      </ul>
+        </div>
+      </li>
+    </ul>
+    <div class="price">
+      <span>Total</span>
+      <span>R$ {{ precoTotal.value | number:'1.2-2'}}</span>
     </div>
-    <input type="tel" placeholder="Digite seu número de celular" [(ngModel)]="numeroCelular" name="numeroCelular" />
-    <span>Valor Total: {{ precoTotal.value }}</span>
-    <a (click)="finishOrder()">Finalizar</a>
+  </div>
+</section>
+<section class="contact">
+  <div class="container-contact">
+    <h2>Informações de Contato</h2>
+    <h2 class="subtitle">Deixe seus dados abaixo para que sua encomenda seja confirmada.</h2>
+    <form class="user-form" #f="ngForm" (ngSubmit)="onSubmit(f)">
+      <mat-form-field>
+        <input type="text" 
+          matInput 
+          minlength="3"
+          maxlength="40"
+          placeholder="Digite seu nome completo aqui" 
+          ngModel 
+          name="nome" 
+          required
+          #nomeInput="ngModel">
+        <mat-error *ngIf="nomeInput.hasError('required')">* Campo obrigatório</mat-error>
+        <mat-error *ngIf="!nomeInput.hasError('required')">Mínimo de 3 caracteres</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input type="tel" 
+          matInput 
+          minlength="11" 
+          placeholder="Digite seu número de celular aqui" 
+          ngModel 
+          name="telefone" 
+          required
+          mask="(00) 00000-0000"
+          #telInput="ngModel">
+        <mat-error *ngIf="telInput.hasError('required')">* Campo obrigatório</mat-error>
+        <mat-error *ngIf="!telInput.hasError('required')">Número inválido</mat-error>
+        <mat-hint align="end"> {{ telInput.value?.length }} / 11</mat-hint>
+      </mat-form-field>
+      <button type="submit" mat-raised-button color="primary" [disabled]="f.invalid">Encomendar</button>
+    </form>
+    <!-- <input type="number" placeholder="Digite seu celular aqui" [(ngModel)]="numeroCelular" name="numeroCelular" /> -->
+
+    <!-- <a (click)="finishOrder()">Finalizar</a> -->
     <!-- <a href={{linkWhatsApp}} (click)="finishOrder()">Finalizar</a> -->
-  </div>
-  <div class="container-information">
-
 
   </div>
+
 </section>

@@ -14,7 +14,7 @@
             <li><a (click)="closeMenu()" routerLink="/contato"><span>Contato</span></a></li>
         </ul>
         <div class="shopping">
-            <a routerLink="order" mat-raised-button [matBadge]="(obtemTotalContador() || undefined)">
+            <a routerLink="order" [matBadge]="(obtemTotalContador() || undefined)">
                 <span class="material-symbols-outlined">shopping_cart</span>
             </a>
         </div>

@@ -4,9 +4,12 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatBadgeModule } from '@angular/material/badge';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
+
 import { OrderService } from './services/order.service';
-
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
@@ -47,10 +50,14 @@ import { FooterComponent } from './components/footer/footer.component';
     MatIconModule,
     MatDividerModule,
     MatBadgeModule,
+    MatInputModule,
+    MatButtonModule,
+    BrowserAnimationsModule,
+    NgxMaskDirective,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore())
   ],
-  providers: [OrderService, ProdutoService],
+  providers: [OrderService, ProdutoService, [provideNgxMask({ })]],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

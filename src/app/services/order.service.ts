@@ -1,7 +1,7 @@
+import { Component } from '@angular/core';
 import { Injectable, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { pedidoItem } from '../pedido-item.model';
-
 @Injectable({
   providedIn: 'root',
 })
@@ -225,7 +225,7 @@ export class OrderService implements OnInit {
     const idx_localStorage = localStorage.getItem('memory_idx');
     let quantidade_ext = 0;
     let resultado = 0;
-    
+
     if (localStorage.getItem('contador')) {
       const quantidadeString = localStorage.getItem('contador');
       const quantidade = quantidadeString ? +quantidadeString : 0;
@@ -254,7 +254,7 @@ export class OrderService implements OnInit {
             varNewOrder[index].items.produto[0].quantity = quantidade - 1;
             this.orderSubject.next(varNewOrder);
             localStorage.setItem('@schons', JSON.stringify(varNewOrder));
-            
+
 
           } else if (quantidade === 1 && index !== -1) {
             var resposta = confirm("Tem certeza que deseja excluir o item?");

@@ -13,7 +13,7 @@ import { pedidoItem } from '../../pedido-item.model';
 export class PadariaComponent implements OnInit {
     produtos!: Observable<any>;
     produtosEncomenda!: Observable<any>;
-    imageObject: any[] = []; 
+    imageObject: any[] = [];
 
     constructor(public orderService: OrderService, public produtoService: ProdutoService) { }
 
@@ -71,4 +71,5 @@ export class PadariaComponent implements OnInit {
 
         return quantidades;
     }
+
 }

@@ -4,6 +4,7 @@ import { RouterModule } from "@angular/router";
 import { Routes } from "@angular/router";
 import { HomeComponent } from "./components/home/home.component";
 import { PadariaComponent } from "./components/padaria/padaria.component";
+import { DialogComponent } from "./components/dialog/dialog.component";
 import { DialogPadaria } from "./components/dialog-padaria/dialog-padaria.component";
 import { OrderComponent } from "./components/order/order.component";
 import { SobreComponent } from "./components/sobre/sobre.component";
@@ -14,6 +15,7 @@ export const routes: Routes = [
     { path: 'home', component: HomeComponent },
     { path: 'padaria', component: PadariaComponent },
     { path: 'dialog', component: DialogPadaria },
+    { path: 'app-dialog', component: DialogComponent },
     { path: 'order', component: OrderComponent },
     { path: 'sobre', component: SobreComponent },
     { path: 'contato', component: ContatoComponent }

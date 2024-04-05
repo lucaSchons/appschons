@@ -6,6 +6,10 @@ import { Firestore } from '@angular/fire/firestore';
 import { pedidoItem } from '../../pedido-item.model';
 import { ProdutoService } from '../../services/produtos.service';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
+import { DialogComponent } from '../dialog/dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+
 
 @Component({
   selector: 'app-order',
@@ -15,17 +19,14 @@ import { NgForm } from '@angular/forms';
 
 export class OrderComponent implements OnInit {
   precoTotal = new BehaviorSubject<number>(0);
-  dadosDaOrdem: pedidoItem[] = [];
   dadosString: string = "";
   linkWhatsApp: any;
-  numeroCelular: string = '';
   contador = new BehaviorSubject<number>(0);
   contadorProduto = new BehaviorSubject<number>(0);
   produtoEncomendaSubject: BehaviorSubject<any> = new BehaviorSubject<any>([]);
-
   carrinhoVazio: boolean = false;
 
-  constructor(public orderService: OrderService, public produtoService: ProdutoService, private firestore: Firestore) { }
+  constructor(public orderService: OrderService, public produtoService: ProdutoService, private firestore: Firestore, private router: Router, public dialog: MatDialog) { }
 
   ngOnInit() {
     const produtoStorage = localStorage.getItem('@schons');
@@ -63,7 +64,7 @@ export class OrderComponent implements OnInit {
   getOrderQuantity(produto: string) {
     let quantidades;
     const produtoStorage = localStorage.getItem('@schons');
-
+    
     if (produtoStorage !== null) {
       this.carrinhoVazio = false;
       const objetoProdutoEncomenda = JSON.parse(produtoStorage);
@@ -88,6 +89,26 @@ export class OrderComponent implements OnInit {
     return quantidades;
   }
 
+  cleanPage() {
+    localStorage.removeItem('@schons');
+    localStorage.removeItem('memory_idx');
+    localStorage.removeItem('contador');
+  }
+
+  encaminharUsuario() {
+    this.router.navigate(['/padaria']).then(() => {
+      const dialogRef = this.dialog.open(DialogComponent, {
+        width: '400px',
+        data: this.linkWhatsApp
+      });
+
+      dialogRef.afterClosed().subscribe({ });
+    });
+
+    this.cleanPage();
+    
+  }
+
   onSubmit(form: NgForm) {
     this.produtoEncomendaSubject.asObservable().subscribe((res: pedidoItem[]) => {
       const dadosParaFirestore = res.map((item: pedidoItem) => ({
@@ -97,9 +118,11 @@ export class OrderComponent implements OnInit {
           quantity: produtoItem.quantity,
         })),
       }));
+      const nome = form.value.nome;
+      const telefone = form.value.telefone;
 
-      this.dadosString += `Mercearia Schons. \n\n`;
-      this.dadosString += `Agradecemos por realizar seu pedido. Segue abaixo um resumo do mesmo: \n\n `;
+      this.dadosString += `Olá, ${nome}! Somos da Mercearia Schons. \n\n`;
+      this.dadosString += `Agradecemos por realizar seu pedido. Segue abaixo um resumo do mesmo: \n\n`;
 
       dadosParaFirestore.forEach((item) => {
         item.produto.forEach((produtoItem) => {
@@ -108,13 +131,10 @@ export class OrderComponent implements OnInit {
           this.dadosString += `Quantidade: ${produtoItem.quantity}\n\n`;
         });
       });
-      this.dadosString += `\nValor Total: R$ ${this.precoTotal.value}`;
+      this.dadosString += `Valor Total do pedido: R$ ${this.precoTotal.value}.\n`;
       const dadosStringEncoded = encodeURIComponent(this.dadosString);
-
       this.linkWhatsApp = `https://wa.me/5551980521997?text=${dadosStringEncoded}`;
-
-      const nome = form.value.nome;
-      const telefone = form.value.telefone;
+      
       const docRef = addDoc(collection(this.firestore, "pedido_item"), {
         items: dadosParaFirestore,
         valor_total: this.precoTotal.value,
@@ -123,21 +143,19 @@ export class OrderComponent implements OnInit {
       });
 
       const numeroCompleto = "+55" + telefone;
-
-      const docRefMessage = addDoc(collection(this.firestore, "messages"), {
-        to: "'" + numeroCompleto + "'",
-        from: "+12067178491",
-        body: this.dadosString,
-      })
-
+      // const docRefMessage = addDoc(collection(this.firestore, "messages"), {
+      //   to: "'" + numeroCompleto + "'",
+      //   from: "+12067178491",
+      //   body: this.dadosString,
+      // })
       // const docRefMessageMercearia = addDoc(collection(this.firestore, "messages"), {
       //   to: "+5551980302443",
       //   from: "+12067178491",
       //   body: this.dadosString,
       // })
-      
     });
 
+    this.encaminharUsuario();
   }
 
 }

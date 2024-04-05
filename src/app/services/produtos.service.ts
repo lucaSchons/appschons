@@ -16,15 +16,11 @@ export class ProdutoService {
 
   constructor(private firestore: Firestore, public dialog: MatDialog) {
     const collectionProdutoEncomenda = collection(this.firestore, 'produto_encomenda');
-    collectionData(collectionProdutoEncomenda, { idField: 'id' }).subscribe(resul => {
-      console.log(resul);
-    })
+    collectionData(collectionProdutoEncomenda, { idField: 'id' }).subscribe({ });
     this.produtosEncomenda = collectionData(collectionProdutoEncomenda, { idField: 'id' });
 
     const collectionProduto = collection(this.firestore, 'produtos_padaria');
-    collectionData(collectionProduto, { idField: 'id' }).subscribe(resul => {
-      console.log(resul);
-    })
+    collectionData(collectionProduto, { idField: 'id' }).subscribe({ });
     this.produtos = collectionData(collectionProduto, { idField: 'id' });
   }
 

@@ -80,7 +80,7 @@
         <mat-error *ngIf="!telInput.hasError('required')">Número inválido</mat-error>
         <mat-hint align="end"> {{ telInput.value?.length }} / 11</mat-hint>
       </mat-form-field>
-      <button type="submit" mat-raised-button color="primary" [disabled]="f.invalid">Encomendar</button>
+     <button type="submit" id="botaoEncomendar" mat-raised-button color="primary" [disabled]="f.invalid">Encomendar</button>
     </form>
     <!-- <input type="number" placeholder="Digite seu celular aqui" [(ngModel)]="numeroCelular" name="numeroCelular" /> -->
 

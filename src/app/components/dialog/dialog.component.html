@@ -1,7 +1,13 @@
 <section class="section_dialog">
+    <div class="imagem">
+        <img src="../../../assets/img/icons8-selecionado.svg">
+    </div>
     <div class="header-dialog">
         <h1 mat-dialog-title>Recebemos sua encomenda!</h1>
     </div>
-    <span>Clique no botão abaixo para nos enviar o pedido pelo WhatsApp</span>
-    <button mat-raised-button color="primary" (click)="enviarparawhats()">OK</button>
+    <p class="text">Não se esqueça de clicar no botão abaixo para enviar seu pedido 
+        pelo WhatsApp.</p>
+    <div class="botao">
+        <button mat-raised-button color="primary" (click)="enviarparawhats()">Enviar pedido pelo WhatsApp</button>
+    </div>
 </section>

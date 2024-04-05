@@ -1,6 +1,38 @@
-.section_dialog-padaria{
-    .header-dialog{
+.section_dialog {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    padding: 20px;
+
+    .header-dialog {
+        display: flex;
+        justify-content: center;
+
+        h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+    }
+
+    .text {
+        text-align: center;
+    }
+
+    .botao {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    .imagem{
+        display: flex;
+        justify-content: center;
+    }
+
+    img{
         display: flex;
         align-items: center;
+        width: 100px;
     }
+
 }

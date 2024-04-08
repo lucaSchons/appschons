@@ -2,7 +2,8 @@
     display: flex;
     padding: 15px 100px;
     justify-content: space-between;
-    border-bottom: 2px solid var(--grey-light);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, .1);
+    // border-bottom: 2px solid var(--grey-light);
     align-items: center;
 
     span {
@@ -10,11 +11,14 @@
         font-weight: bold;
         vertical-align: bottom;
     }
-
     .voltar {
         font-size: 28px;
         padding-right: 5px;
         vertical-align: bottom;
+    }
+    img {
+        display: flex;
+        width: 200px;
     }
 }
 
@@ -82,7 +86,6 @@
     span {
         font-size: 22px;
         font-weight: 600;
-        padding-left: 10px;
     }
 }
 
@@ -92,6 +95,7 @@
 
 .content li .container-content {
     display: flex;
+    gap: 10px;
 }
 
 .box-button {
@@ -103,17 +107,12 @@
     span {
         display: flex;
         user-select: none;
-        padding: 4px;
+        padding: 6px;
     }
 
     &:hover {
         cursor: pointer;
     }
-}
-
-img {
-    display: flex;
-    width: 200px;
 }
 
 .content .price {
@@ -201,5 +200,32 @@ img {
 @media (max-width: 858px) {
     .header-container {
         padding: 20px;
+        .voltar{
+            font-size: 22px;
+        }
+        span{
+            font-size: 1rem;
+        }
+        img{
+            width: 125px;
+        }
+    }
+    .content li {
+        span{
+            font-size: 18px;
+        }
+    }
+    .carrinho-vazio {
+        padding: 25px;
+        h1 {
+            font-size: 1.5rem;
+        }
+    }
+    .body-order {
+        margin: 0;
+        padding: 20px;
+    }
+    .contact {
+        padding: 0 20px;
     }
 }

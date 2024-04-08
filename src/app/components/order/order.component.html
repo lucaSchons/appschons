@@ -10,8 +10,8 @@
 </section>
 <div class="carrinho-vazio" *ngIf="carrinhoVazio">
   <h1>Seu carrinho está vazio.</h1>
-  <p>Busque pelo produto desejado.</p>
-  <button routerLink="/padaria">Escolher Produtos</button>
+  <p>Busque pelo(s) produto(s) desejado(s).</p>
+  <button routerLink="/padaria">Escolher Produto(s)</button>
 </div>
 <section *ngIf="!carrinhoVazio" class="body-order">
   <div class="head">
@@ -54,39 +54,20 @@
     <h2 class="subtitle">Deixe seus dados abaixo para que sua encomenda seja confirmada.</h2>
     <form class="user-form" #f="ngForm" (ngSubmit)="onSubmit(f)">
       <mat-form-field>
-        <input type="text" 
-          matInput 
-          minlength="3"
-          maxlength="40"
-          placeholder="Digite seu nome completo aqui" 
-          ngModel 
-          name="nome" 
-          required
-          #nomeInput="ngModel">
+        <input type="text" matInput minlength="3" maxlength="40" placeholder="Digite seu nome completo aqui" ngModel
+          name="nome" required #nomeInput="ngModel">
         <mat-error *ngIf="nomeInput.hasError('required')">* Campo obrigatório</mat-error>
         <mat-error *ngIf="!nomeInput.hasError('required')">Mínimo de 3 caracteres</mat-error>
       </mat-form-field>
       <mat-form-field>
-        <input type="tel" 
-          matInput 
-          minlength="11" 
-          placeholder="Digite seu número de celular aqui" 
-          ngModel 
-          name="telefone" 
-          required
-          mask="(00) 00000-0000"
-          #telInput="ngModel">
+        <input type="tel" matInput minlength="11" placeholder="Digite seu número de celular aqui" ngModel
+          name="telefone" required mask="(00) 00000-0000" #telInput="ngModel">
         <mat-error *ngIf="telInput.hasError('required')">* Campo obrigatório</mat-error>
         <mat-error *ngIf="!telInput.hasError('required')">Número inválido</mat-error>
         <mat-hint align="end"> {{ telInput.value?.length }} / 11</mat-hint>
       </mat-form-field>
-     <button type="submit" id="botaoEncomendar" mat-raised-button color="primary" [disabled]="f.invalid">Encomendar</button>
+      <button type="submit" id="botaoEncomendar" mat-raised-button color="primary"
+        [disabled]="f.invalid">Encomendar</button>
     </form>
-    <!-- <input type="number" placeholder="Digite seu celular aqui" [(ngModel)]="numeroCelular" name="numeroCelular" /> -->
-
-    <!-- <a (click)="finishOrder()">Finalizar</a> -->
-    <!-- <a href={{linkWhatsApp}} (click)="finishOrder()">Finalizar</a> -->
-
   </div>
-
 </section>

@@ -30,15 +30,14 @@ export class OrderComponent implements OnInit {
 
   ngOnInit() {
     const produtoStorage = localStorage.getItem('@schons');
-
     if (produtoStorage !== null) {
       const arrayProdutoEncomenda = JSON.parse(produtoStorage);
-      if (Array.isArray(arrayProdutoEncomenda) && arrayProdutoEncomenda.length === 0) {
+      if (Array.isArray(arrayProdutoEncomenda) && arrayProdutoEncomenda.length === 0 ) {
         this.carrinhoVazio = true;
       } else {
         this.carrinhoVazio = false;
       }
-    }
+    } 
 
     this.produtoEncomendaSubject = this.orderService.getOrder();
     this.produtoEncomendaSubject.asObservable().subscribe(result => {
@@ -58,13 +57,12 @@ export class OrderComponent implements OnInit {
       }
       this.contador.next(res);
     })
-
   }
-
+ 
   getOrderQuantity(produto: string) {
     let quantidades;
     const produtoStorage = localStorage.getItem('@schons');
-    
+
     if (produtoStorage !== null) {
       this.carrinhoVazio = false;
       const objetoProdutoEncomenda = JSON.parse(produtoStorage);
@@ -92,21 +90,19 @@ export class OrderComponent implements OnInit {
   cleanPage() {
     localStorage.removeItem('@schons');
     localStorage.removeItem('memory_idx');
-    localStorage.removeItem('contador');
+    localStorage.removeItem('contador'); 
   }
 
   encaminharUsuario() {
-    this.router.navigate(['/padaria']).then(() => {
-      const dialogRef = this.dialog.open(DialogComponent, {
-        width: '400px',
-        data: this.linkWhatsApp
-      });
-
-      dialogRef.afterClosed().subscribe({ });
-    });
-
     this.cleanPage();
-    
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '400px',
+      data: this.linkWhatsApp
+    });
+  
+    dialogRef.afterClosed().subscribe(() => {
+      window.location.href = '/padaria';
+    });
   }
 
   onSubmit(form: NgForm) {
@@ -134,7 +130,7 @@ export class OrderComponent implements OnInit {
       this.dadosString += `Valor Total do pedido: R$ ${this.precoTotal.value}.\n`;
       const dadosStringEncoded = encodeURIComponent(this.dadosString);
       this.linkWhatsApp = `https://wa.me/5551980521997?text=${dadosStringEncoded}`;
-      
+
       const docRef = addDoc(collection(this.firestore, "pedido_item"), {
         items: dadosParaFirestore,
         valor_total: this.precoTotal.value,
@@ -142,7 +138,7 @@ export class OrderComponent implements OnInit {
         phone: telefone,
       });
 
-      const numeroCompleto = "+55" + telefone;
+      // const numeroCompleto = "+55" + telefone;
       // const docRefMessage = addDoc(collection(this.firestore, "messages"), {
       //   to: "'" + numeroCompleto + "'",
       //   from: "+12067178491",
@@ -154,7 +150,7 @@ export class OrderComponent implements OnInit {
       //   body: this.dadosString,
       // })
     });
-
+   
     this.encaminharUsuario();
   }
 

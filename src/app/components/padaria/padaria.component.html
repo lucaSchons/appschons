@@ -14,10 +14,10 @@
           <div class="content">
             <span class="title">{{ produtoEncomenda.descricao }}</span>
             <span class="ingredientes">{{ produtoEncomenda.ingredientes }}</span>
-            <span class="valor">
+            <div class="valor">
               <span class="cifrao"><i class="fa-solid fa-brazilian-real-sign"></i></span>{{ produtoEncomenda.valor |
               number:'1.2-2'}}
-            </span>
+            </div>
           </div>
           <button (click)="orderService.newProduct(i, produtoEncomenda)"
             [ngStyle]="{'display': orderService.isSelect_buttonAdd[i] ? 'flex' : 'none'}" class="button_add"><span

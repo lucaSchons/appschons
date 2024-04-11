@@ -6,13 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-
-    title = 'appschons';
+    title = 'Mercearia Schons';
     hidden = false;
     isMenuOpen = false;
     quantidade: number = 0;
+    icon_close = false;
+    icon_hambuguer = true;
    
-    constructor(){}
+    constructor() { }
   
     ngOnInit(){
       this.obtemTotalContador();
@@ -24,6 +25,18 @@ export class HeaderComponent implements OnInit {
   
     closeMenu() {
       this.isMenuOpen = false;
+      this.icon_close = false;
+      this.icon_hambuguer = true;
+    }
+
+    iconCloseActive(){
+      this.icon_close = true;
+      this.icon_hambuguer = false;
+    }
+
+    iconCloseDesativar(){
+      this.icon_close = false;
+      this.icon_hambuguer = true;
     }
   
     obtemTotalContador() {

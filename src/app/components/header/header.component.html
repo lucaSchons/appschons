@@ -1,7 +1,16 @@
 <header>
     <div class="container">
         <label for="check" class="checkbtn">
-            <i class="fas fa-bars"></i>
+            <div *ngIf="icon_hambuguer" (click)="iconCloseActive()">
+                <span class="icon material-symbols-outlined icon">
+                    dehaze
+                </span>
+            </div>
+            <div *ngIf="icon_close" (click)="iconCloseDesativar()">
+                <span class="icon material-symbols-outlined">
+                    close
+                </span>
+            </div>
         </label>
         <input type="checkbox" id="check" [(ngModel)]="isMenuOpen">
         <div class="logo">
@@ -9,13 +18,16 @@
         </div>
         <ul class="menu">
             <li><a (click)="closeMenu()" routerLink="/home"><span>Home</span></a></li>
+            <mat-divider class="divider-check"></mat-divider>
             <li><a (click)="closeMenu()" routerLink="/padaria"><span>Padaria</span></a></li>
+            <mat-divider class="divider-check"></mat-divider>
             <li><a (click)="closeMenu()" routerLink="/sobre"><span>Sobre</span></a></li>
+            <mat-divider class="divider-check"></mat-divider>
             <li><a (click)="closeMenu()" routerLink="/contato"><span>Contato</span></a></li>
         </ul>
         <div class="shopping">
             <a routerLink="order" [matBadge]="(obtemTotalContador() || undefined)">
-                <span class="material-symbols-outlined">shopping_cart</span>
+                <span class="icon material-symbols-outlined">shopping_cart</span>
             </a>
         </div>
     </div>

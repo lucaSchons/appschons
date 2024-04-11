@@ -24,15 +24,31 @@
         margin-bottom: 20px;
     }
 
-    .imagem{
+    button {
+        padding: 25px 35px;
+        font-size: 1rem;
+        font-weight: 600;
+    }
+
+    .imagem {
         display: flex;
         justify-content: center;
     }
 
-    img{
+    img {
         display: flex;
         align-items: center;
         width: 100px;
+    }
+}
+
+@media (max-width: 768px) {
+    .section_dialog .header-dialog h1 {
+        font-size: 1.2rem;
+    }
+
+    .section_dialog button {
+        padding: 25px 20px;
     }
 
 }

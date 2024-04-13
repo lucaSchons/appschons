@@ -1,19 +1,20 @@
-.head-page{
-    background: rgb(206, 206, 206) 0% 0% no-repeat padding-box;
-    height: 189px;
-    padding-bottom: 40px;
-    padding: 0 5%;
+.head-page {
+    background: url(../../../assets/img/banner_geral.png) 50% no-repeat;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
+    height: 150px;
+}
 
-    .container{
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 80px;
-    }
+.head-page .container-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
 
-    h1{
-        color: var(--cinza);
-        font-size: 2rem;
-    }
+.head-page h1 {
+    color: var(--cinza);
+    font-size: 3rem;
 }
 .container{
     max-width: 1200px;

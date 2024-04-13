@@ -37,12 +37,11 @@ header .container {
 
     .menu {
         display: flex;
-        padding: 15px;
+        gap: 20px;
         span {
             font-weight: bold;
             font-size: 18px;
             font-family: sans-serif;
-            padding: 10px;
             &:hover {
                 color: #8B0000;
                 transition: 0.2s;

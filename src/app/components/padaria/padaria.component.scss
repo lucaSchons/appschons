@@ -1,19 +1,20 @@
 .head-page {
-    background: rgb(206, 206, 206) 0% 0% no-repeat padding-box;
+    background: url(../../../assets/img/cabecalho_bakery.png) 50% no-repeat;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
     height: 150px;
-    padding-bottom: 40px;
-    padding: 0 5%;
 }
 
 .head-page .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .head-page h1 {
     color: var(--cinza);
-    font-size: 2rem;
+    font-size: 3rem;
 }
 
 .container-encomenda {
@@ -407,7 +408,6 @@
         left: 13%;
         padding: 8px;
         top: 450px;
-
         span {
             font-size: 35px;
         }
@@ -426,14 +426,8 @@
 
 @media (max-width: 858px) {
     .head-page {
-        height: 160px;
-
-        .container {
-            padding: 60px;
-        }
-
         h1 {
-            font-size: 1.8rem;
+            font-size: 2rem;
         }
     }
 
@@ -458,11 +452,5 @@
 @media (max-width: 768px) {
     .head-page {
         height: 120px;
-        .container {
-            padding: 50px;
-        }
-        h1 {
-            font-size: 1.6rem;
-        }
     }
 }

@@ -201,10 +201,10 @@
     display: flex;
     flex-wrap: wrap;
 
-    max-width: 90%;
+    max-width: 1400px;
     margin: 0 auto;
+    padding-bottom: 50px;
 }
-
 
 .card-list-produto {
     display: flex;
@@ -270,6 +270,7 @@
 
 .divider-legend {
     width: 75%;
+    max-width: 1200px;
     margin: 0 auto;
 
     span {
@@ -285,6 +286,7 @@
     height: 6px;
     border-top: 1px solid #000;
     border-bottom: 1px solid #000;
+    max-width: 1200px;
     width: 75%;
     margin: 0 auto;
 }

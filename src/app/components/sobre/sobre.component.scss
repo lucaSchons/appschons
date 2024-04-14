@@ -17,20 +17,27 @@
     font-size: 3rem;
 }
 
-.container{
+.container {
     max-width: 1200px;
     margin: 0 auto;
-    height: 78vh;
 }
 
-.sobre-content{
-    margin: 0 40px 40px;
-    justify-content: space-between;
-    display: inline-flex;
-    
+.title h2 {
+    text-align: center;
+    font-size: 1.8rem;
+    color: var(--cinza);
+    margin-bottom: 40px;
 
-    .sobre-img{
+}
+
+.sobre-content {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 40px 80px;
+
+    .sobre-img {
         width: calc(50% - 20px);
+
         img {
             background-position: center;
             background-repeat: no-repeat;
@@ -39,71 +46,68 @@
             width: 100%;
         }
     }
-    .sobre-text{
+
+    .sobre-text {
         width: calc(50% - 20px);
 
-        h2{
-            text-align: center;
-            color: var(--cinza);
-            margin-bottom: 40px;
-            font-size: 1.5rem;
+
+
+        p {
+            letter-spacing: 1px;
+            line-height: 32px;
+            font-size: 22px;
         }
     }
 }
 
-@media (max-width: 858px){
-    .head-page{
+@media (max-width: 992px) {
+    .head-page {
         height: 160px;
-        h1{
+
+        h1 {
             font-size: 1.8rem;
         }
     }
-    .container{
-        height: 125vh;
-    }
 
-    .sobre-content{
+    .sobre-content {
+        display: flex;
         flex-direction: column;
-        
-        .sobre-img{
-            display: flex;
-            justify-content: center;
+        align-items: center;
+
+        .sobre-img {
             width: 80%;
         }
 
-        .sobre-text{
-            text-align: center;
-            width: 100%;
+        .sobre-text {
             margin-bottom: 50px;
+            width: 100%;
+        }
+
+        .title h2 {
+            font-size: 1.5rem;
+        }
+
+        .sobre-text p {
+            font-size: 18px;
+
         }
     }
 }
 
-@media (max-width: 768px){
-    .head-page{
+@media (max-width: 768px) {
+    .head-page {
         height: 120px;
 
-        .container{
+        .container {
             padding: 50px;
         }
 
-        h1{
+        h1 {
             font-size: 1.6rem;
         }
     }
-}
 
-@media (max-width: 480px){
-    .sobre-content{
-        flex-direction: column;
-        
-        .sobre-img{
-            display: flex;
-            justify-content: center;
-            width: 100%;
-        }   
-    }
-    .container{
-        height: 135vh;
+    .sobre-content .sobre-img {
+        width: 100%;
     }
 }

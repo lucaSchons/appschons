@@ -19,7 +19,8 @@ import { MatDialog } from '@angular/material/dialog';
 
 export class OrderComponent implements OnInit {
   precoTotal = new BehaviorSubject<number>(0);
-  dadosString: string = "";
+  dadosStringCliente: string = "";
+  dadosString = "";
   linkWhatsApp: any;
   contador = new BehaviorSubject<number>(0);
   contadorProduto = new BehaviorSubject<number>(0);
@@ -117,16 +118,22 @@ export class OrderComponent implements OnInit {
       const nome = form.value.nome;
       const telefone = form.value.telefone;
 
-      this.dadosString += `Olá, ${nome}! Somos da Mercearia Schons. \n\n`;
-      this.dadosString += `Agradecemos por realizar seu pedido. Segue abaixo um resumo do mesmo: \n\n`;
+      this.dadosStringCliente += `Olá, ${nome}! Somos da Mercearia Schons. \n\n`;
+      this.dadosStringCliente += `Agradecemos por realizar seu pedido. Segue abaixo um resumo do mesmo: \n\n`;
+      this.dadosString += `Mercearia Schons.\n`;
+      this.dadosString += `Olá! Segue pedido realizado pelo site:\n\n`;
 
       dadosParaFirestore.forEach((item) => {
         item.produto.forEach((produtoItem) => {
+          this.dadosStringCliente += `Descrição: ${produtoItem.descricao_produto},\n`;
+          this.dadosStringCliente += `Valor Unitário: R$ ${produtoItem.valor_unitario_produto},\n`;
+          this.dadosStringCliente += `Quantidade: ${produtoItem.quantity}\n\n`;
           this.dadosString += `Descrição: ${produtoItem.descricao_produto},\n`;
           this.dadosString += `Valor Unitário: R$ ${produtoItem.valor_unitario_produto},\n`;
           this.dadosString += `Quantidade: ${produtoItem.quantity}\n\n`;
         });
       });
+      this.dadosStringCliente += `Valor Total do pedido: R$ ${this.precoTotal.value}.\n`;
       this.dadosString += `Valor Total do pedido: R$ ${this.precoTotal.value}.\n`;
       const dadosStringEncoded = encodeURIComponent(this.dadosString);
       this.linkWhatsApp = `https://wa.me/5551980521997?text=${dadosStringEncoded}`;
@@ -138,17 +145,17 @@ export class OrderComponent implements OnInit {
         phone: telefone,
       });
 
-      // const numeroCompleto = "+55" + telefone;
-      // const docRefMessage = addDoc(collection(this.firestore, "messages"), {
-      //   to: "'" + numeroCompleto + "'",
-      //   from: "+12067178491",
-      //   body: this.dadosString,
-      // })
-      // const docRefMessageMercearia = addDoc(collection(this.firestore, "messages"), {
-      //   to: "+5551980302443",
-      //   from: "+12067178491",
-      //   body: this.dadosString,
-      // })
+      const numeroCompleto = "+55" + telefone;
+      const docRefMessage = addDoc(collection(this.firestore, "messages"), {
+        to: "'" + numeroCompleto + "'",
+        from: "+12067178491",
+        body: this.dadosString,
+      })
+      const docRefMessageMercearia = addDoc(collection(this.firestore, "messages"), {
+        to: "+5551980302443",
+        from: "+12067178491",
+        body: this.dadosStringCliente,
+      })
     });
    
     this.encaminharUsuario();

@@ -1,15 +1,26 @@
 .head-page {
     background: url(../../../assets/img/cabecalho_bakery.png) 50% no-repeat;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
     margin-bottom: 50px;
     height: 150px;
 }
 
 .head-page .container {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
 }
 
 .head-page h1 {
@@ -18,17 +29,26 @@
 }
 
 .container-encomenda {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
 
     max-width: 1300px;
     margin: 0 auto;
 }
 
 .card-list-encomenda {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
 
     padding-top: 50px;
     padding-bottom: 100px;
@@ -42,9 +62,16 @@
 }
 
 .card-list-encomenda li {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     gap: 8px;
     border: 1px solid #d6d6d6;
     padding: 5px;
@@ -62,8 +89,13 @@
 }
 
 .card-list-encomenda li .content {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: column;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
     padding: 10px;
     gap: 10px;
 
@@ -82,13 +114,21 @@
     }
 
     .valor {
+        display: -webkit-box;
+        display: -ms-flexbox;
         display: flex;
-        justify-content: flex-end;
+        -webkit-box-pack: end;
+            -ms-flex-pack: end;
+                justify-content: flex-end;
         font-size: 1.8rem;
         font-weight: 500;
-        align-items: center;
+        -webkit-box-align: center;
+            -ms-flex-align: center;
+                align-items: center;
 
         .cifrao {
+            display: -webkit-box;
+            display: -ms-flexbox;
             display: flex;
             padding-right: 6px;
             font-size: 1.4rem;
@@ -97,9 +137,15 @@
 }
 
 .card-list-encomenda li .button {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
     margin-bottom: 10px;
     border: 1px solid #8d0101;
     border-radius: 30px;
@@ -111,26 +157,42 @@
     }
 
     .icon {
+        display: -webkit-box;
+        display: -ms-flexbox;
         display: flex;
         font-size: 2rem;
         font-weight: 300;
         padding: 0 8px;
-        user-select: none;
+        -webkit-user-select: none;
+           -moz-user-select: none;
+            -ms-user-select: none;
+                user-select: none;
     }
 
     .contador {
+        display: -webkit-box;
+        display: -ms-flexbox;
         display: flex;
         font-size: 1.5rem;
         font-weight: 400;
-        user-select: none;
+        -webkit-user-select: none;
+           -moz-user-select: none;
+            -ms-user-select: none;
+                user-select: none;
     }
 }
 
 .card-list-encomenda li .button_add {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    align-items: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     background: none;
-    justify-content: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
     margin-bottom: 10px;
     border: 1px solid #8d0101;
     border-radius: 30px;
@@ -148,16 +210,22 @@
 
 .card-list-encomenda li img {
     width: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     background-color: #f6f7f2;
 }
 
 .button-area {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
 
 }
 
 .prev {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     position: absolute;
     left: 8%;
@@ -166,7 +234,9 @@
     border-radius: 50%;
     border: 1px solid var(--cinza);
     background: transparent;
-    justify-content: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
 
     span {
         font-size: 40px;
@@ -178,6 +248,8 @@
 }
 
 .next {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     position: absolute;
     right: 8%;
@@ -186,7 +258,9 @@
     border-radius: 50%;
     border: 1px solid var(--cinza);
     background: transparent;
-    justify-content: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
 
     span {
         font-size: 40px;
@@ -198,8 +272,11 @@
 }
 
 .container-produto {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
 
     max-width: 1400px;
     margin: 0 auto;
@@ -207,13 +284,20 @@
 }
 
 .card-list-produto {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
     gap: 10px;
     padding-top: 50px;
 
     ul {
+        display: -webkit-box;
+        display: -ms-flexbox;
         display: flex;
         max-width: 400px;
     }
@@ -234,6 +318,8 @@
 
         img {
             width: 100%;
+            display: -webkit-box;
+            display: -ms-flexbox;
             display: flex;
             border-radius: 4px;
         }
@@ -243,8 +329,12 @@
 .container-legenda {
     background-color: #f6f6f6;
     border-radius: 4px;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
     margin-top: 5px;
 
     span {
@@ -260,8 +350,12 @@
 .container-legenda .legenda {
     margin-top: 3px;
     padding: 10px;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    align-items: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
 
     .no-underline {
         margin-left: 10px;
@@ -274,6 +368,8 @@
     margin: 0 auto;
 
     span {
+        display: -webkit-box;
+        display: -ms-flexbox;
         display: flex;
         font-size: 1.5rem;
         font-weight: bold;
@@ -292,8 +388,19 @@
 }
 
 .animate {
-    animation-name: animate-carousel;
-    animation-duration: 2s;
+    -webkit-animation-name: animate-carousel;
+            animation-name: animate-carousel;
+    -webkit-animation-duration: 2s;
+            animation-duration: 2s;
+}
+
+@-webkit-keyframes animate-carousel {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 @keyframes animate-carousel {

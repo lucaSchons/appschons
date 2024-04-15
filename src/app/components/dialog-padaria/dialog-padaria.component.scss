@@ -1,8 +1,14 @@
 .section_dialog-padaria {
     .header-dialog {
+        display: -webkit-box;
+        display: -ms-flexbox;
         display: flex;
-        justify-content: space-between;
-        align-items: center;
+        -webkit-box-pack: justify;
+            -ms-flex-pack: justify;
+                justify-content: space-between;
+        -webkit-box-align: center;
+            -ms-flex-align: center;
+                align-items: center;
 
         .material-icons {
             width: 100%;
@@ -13,9 +19,13 @@
     }
 
     .data-dialog {
+        display: -webkit-box;
+        display: -ms-flexbox;
         display: flex;
         padding: 20px 20px 0 20px;
-        align-items: center;
+        -webkit-box-align: center;
+            -ms-flex-align: center;
+                align-items: center;
 
         .md-36 {
             font-size: 36px;

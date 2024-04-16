@@ -12,9 +12,10 @@ import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { OrderService } from './services/order.service';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { provideAnalytics,getAnalytics } from '@angular/fire/analytics';
 import { environment } from '../environments/environment';
-import { provideFirestore,getFirestore } from '@angular/fire/firestore';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { FormsModule } from '@angular/forms';
 import { PadariaComponent } from './components/padaria/padaria.component';
 import { DialogPadaria } from './components/dialog-padaria/dialog-padaria.component';
@@ -57,7 +58,8 @@ import { DialogComponent } from './components/dialog/dialog.component';
     BrowserAnimationsModule,
     NgxMaskDirective,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideFirestore(() => getFirestore())
+    provideFirestore(() => getFirestore()),
+    provideAnalytics(() => getAnalytics()),
   ],
   providers: [OrderService, ProdutoService, [provideNgxMask({ })]],
   bootstrap: [AppComponent]

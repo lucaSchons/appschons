@@ -136,7 +136,7 @@ export class OrderComponent implements OnInit {
       this.dadosStringCliente += `Valor Total do pedido: R$ ${this.precoTotal.value}.\n`;
       this.dadosString += `Valor Total do pedido: R$ ${this.precoTotal.value}.\n`;
       const dadosStringEncoded = encodeURIComponent(this.dadosString);
-      this.linkWhatsApp = `https://wa.me/5551980521997?text=${dadosStringEncoded}`;
+      this.linkWhatsApp = `https://wa.me/5551980302443?text=${dadosStringEncoded}`;
 
       const docRef = addDoc(collection(this.firestore, "pedido_item"), {
         items: dadosParaFirestore,
@@ -149,12 +149,12 @@ export class OrderComponent implements OnInit {
       const docRefMessage = addDoc(collection(this.firestore, "messages"), {
         to: "'" + numeroCompleto + "'",
         from: "+12067178491",
-        body: this.dadosString,
+        body: this.dadosStringCliente,
       })
       const docRefMessageMercearia = addDoc(collection(this.firestore, "messages"), {
         to: "+5551980302443",
         from: "+12067178491",
-        body: this.dadosStringCliente,
+        body: this.dadosString,
       })
     });
    

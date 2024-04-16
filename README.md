@@ -8,7 +8,7 @@
 
 <h2 id="started">Sobre</h2>
 
-Este projeto foi feito para a empresa Mercearia Schons. Foi idealizado para expor os produtos que são produzidos na padaria, como também, ter a possibilidade do cliente fazer seus pedidos de doces e salgados direto do site de forma mais automática.
+Este projeto foi implementado para a empresa Mercearia Schons. Foi idealizado para expor os produtos que são produzidos na padaria, como também, ter a possibilidade do cliente fazer seus pedidos de doces e salgados direto do site de forma mais automática.
 
 ## Stack
 

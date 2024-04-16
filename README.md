@@ -8,9 +8,11 @@
 
 <h2 id="started">Sobre</h2>
 
+
 Este projeto foi implementado para a empresa Mercearia Schons. Foi idealizado para expor os produtos que são produzidos na padaria, como também, ter a possibilidade do cliente fazer seus pedidos de doces e salgados direto do site de forma mais automática.
 
 ## Stack
+
 
 ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
 
@@ -20,15 +22,16 @@ Este projeto foi implementado para a empresa Mercearia Schons. Foi idealizado pa
 
 ![typescript][TYPESCRIPT__BADGE]
 
-**Front-end:** HTML, CSS, Firebase.
-
+**Front-end:** HTML, CSS, Angular, Typescript e Firebase.
 
 ## Deploy
 
 Este projeto foi implementado com Firebase.
 
+[![project][PROJECT__BADGE]][PROJECT__URL]
+
 ## Licença
 
 [MIT](LICENSE)
 
-[![project][PROJECT__BADGE]][PROJECT__URL]
+

@@ -7,13 +7,8 @@
 
 ![angular][ANGULAR__BADGE]
 ![typescript][TYPESCRIPT__BADGE]
-![javascript][JAVASCRIPT__BADGE]
 
-<p align="center">
- <a href="#about">About</a> • 
-</p>
-
-<h2 id="started">📌 About</h2>
+<h2 id="started">Sobre</h2>
 
 Este projeto foi feito para a empresa Mercearia Schons. Foi idealizado para expor os produtos que são produzidos na padaria, como também, ter a possibilidade do cliente fazer seus pedidos de doces e salgados direto do site de forma mais automática.
 

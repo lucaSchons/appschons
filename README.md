@@ -30,8 +30,5 @@ Este projeto foi implementado com Firebase.
 
 [![project][PROJECT__BADGE]][PROJECT__URL]
 
-## Licença
-
-[MIT](LICENSE)
 
 

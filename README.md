@@ -6,11 +6,29 @@
 
 <h1 align="center" style="font-weight: bold;">Site da Mercearia Schons</h1>
 
-![angular][ANGULAR__BADGE]
-![typescript][TYPESCRIPT__BADGE]
-
 <h2 id="started">Sobre</h2>
 
 Este projeto foi feito para a empresa Mercearia Schons. Foi idealizado para expor os produtos que são produzidos na padaria, como também, ter a possibilidade do cliente fazer seus pedidos de doces e salgados direto do site de forma mais automática.
+
+## Stack
+
+![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
+
+![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
+
+![angular][ANGULAR__BADGE]
+
+![typescript][TYPESCRIPT__BADGE]
+
+**Front-end:** HTML, CSS, Firebase.
+
+
+## Deploy
+
+Este projeto foi implementado com Firebase.
+
+## Licença
+
+[MIT](LICENSE)
 
 [![project][PROJECT__BADGE]][PROJECT__URL]

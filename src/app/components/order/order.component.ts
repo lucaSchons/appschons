@@ -2,7 +2,7 @@ import { BehaviorSubject } from 'rxjs';
 import { OrderService } from '../../services/order.service';
 import { Component, OnInit } from "@angular/core";
 import { collection, addDoc } from 'firebase/firestore';
-import { Firestore } from '@angular/fire/firestore';
+import { Firestore, serverTimestamp } from '@angular/fire/firestore';
 import { pedidoItem } from '../../pedido-item.model';
 import { ProdutoService } from '../../services/produtos.service';
 import { NgForm } from '@angular/forms';
@@ -120,7 +120,6 @@ export class OrderComponent implements OnInit {
 
       this.dadosStringCliente += `Olá, ${nome}! Somos da Mercearia Schons. \n\n`;
       this.dadosStringCliente += `Agradecemos por realizar seu pedido. Segue abaixo um resumo do mesmo: \n\n`;
-      this.dadosString += `Mercearia Schons.\n`;
       this.dadosString += `Olá! Segue pedido realizado pelo site:\n\n`;
 
       dadosParaFirestore.forEach((item) => {
@@ -135,14 +134,16 @@ export class OrderComponent implements OnInit {
       });
       this.dadosStringCliente += `Valor Total do pedido: R$ ${this.precoTotal.value}.\n`;
       this.dadosString += `Valor Total do pedido: R$ ${this.precoTotal.value}.\n`;
+      
       const dadosStringEncoded = encodeURIComponent(this.dadosString);
       this.linkWhatsApp = `https://wa.me/5551980302443?text=${dadosStringEncoded}`;
-
       const docRef = addDoc(collection(this.firestore, "pedido_item"), {
         items: dadosParaFirestore,
         valor_total: this.precoTotal.value,
         user: nome,
         phone: telefone,
+        status: "aberto",
+        orderDate: serverTimestamp()
       });
 
       const numeroCompleto = "+55" + telefone;
@@ -150,11 +151,6 @@ export class OrderComponent implements OnInit {
         to: "'" + numeroCompleto + "'",
         from: "+12067178491",
         body: this.dadosStringCliente,
-      })
-      const docRefMessageMercearia = addDoc(collection(this.firestore, "messages"), {
-        to: "+5551980302443",
-        from: "+12067178491",
-        body: this.dadosString,
       })
     });
    

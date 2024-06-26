@@ -24,7 +24,8 @@ Este projeto foi implementado para a empresa Mercearia Schons. Foi idealizado pa
 
 **Front-end:** HTML, CSS, Angular, Typescript e Firebase.
 <br>
-**Foi utilizado Twilio para envio de SMS.**
+<br>
+**Foi utilizado a API do Twilio para envio de SMS.**
 
 ## Deploy
 

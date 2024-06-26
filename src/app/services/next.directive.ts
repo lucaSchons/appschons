@@ -9,7 +9,7 @@ export class NextDirective {
 
   @HostListener('click')
   nextFunc() {
-    const elm = this.el.nativeElement.parentElement.parentElement.children[0];
+    const elm = this.el.nativeElement.parentElement.children[0];
     const card = elm.querySelector(".item");
 
     if (card) {

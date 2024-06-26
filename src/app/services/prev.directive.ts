@@ -9,7 +9,7 @@ export class PrevDirective {
 
   @HostListener('click')
   prevFunc() {
-    const elm = this.el.nativeElement.parentElement.parentElement.children[0];
+    const elm = this.el.nativeElement.parentElement.children[0];
     const items = elm.querySelectorAll('.item');
 
     if (items.length > 0) {

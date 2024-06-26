@@ -6,42 +6,42 @@
   </div>
   <div class="divider-legend"><span>Faça seu pedido!</span></div>
   <div class="divider"></div>
-  <div class="container-encomenda" id="containerEncomenda">
-    <div class="card-list-encomenda">
-      <ul class="item" *ngFor="let produtoEncomenda of produtosEncomenda | async; let i = index">
-        <li>
-          <img src="{{ produtoEncomenda.imageUrl }}">
-          <div class="content">
-            <span class="title">{{ produtoEncomenda.descricao }}</span>
-            <span class="ingredientes">{{ produtoEncomenda.ingredientes }}</span>
-            <div class="valor">
-              <span class="cifrao"><i class="fa-solid fa-brazilian-real-sign"></i></span>{{ produtoEncomenda.valor |
-              number:'1.2-2'}}
+  <div class="container-encomenda-geral">
+    <div class="container-encomenda" id="containerEncomenda">
+      <div class="card-list-encomenda">
+        <ul class="item" *ngFor="let produtoEncomenda of produtosEncomenda | async; let i = index">
+          <li>
+            <img src="{{ produtoEncomenda.imageUrl }}">
+            <div class="content">
+              <span class="title">{{ produtoEncomenda.descricao }}</span>
+              <span class="ingredientes">{{ produtoEncomenda.ingredientes }}</span>
+              <div class="valor">
+                <span class="cifrao"><i class="fa-solid fa-brazilian-real-sign"></i></span>{{ produtoEncomenda.valor |
+                number:'1.2-2'}}
+              </div>
             </div>
-          </div>
-          <button (click)="orderService.newProduct(i, produtoEncomenda)"
-            [ngStyle]="{'display': orderService.isSelect_buttonAdd[i] ? 'flex' : 'none'}" class="button_add"><span
-              class="text">Adicionar</span></button>
-          <div class="button" [ngStyle]="{'display': orderService.isSelect_button[i] ? 'flex' : 'none'}">
-            <a class="button_material" (click)="orderService.decrementProduct(produtoEncomenda)"><span
-                class="material-symbols-outlined icon">remove</span></a>
-            <span class="contador">{{ getOrderQuantity(produtoEncomenda.descricao)}}</span>
-            <a class="button_material" (click)="orderService.incrementProduct(produtoEncomenda)"><span
-                class="material-symbols-outlined icon">add</span></a>
-          </div>
-        </li>
-      </ul>
-    </div>
-    <div class="button-area">
+            <button (click)="orderService.newProduct(i, produtoEncomenda)"
+              [ngStyle]="{'display': orderService.isSelect_buttonAdd[i] ? 'flex' : 'none'}" class="button_add"><span
+                class="text">Adicionar</span></button>
+            <div class="button" [ngStyle]="{'display': orderService.isSelect_button[i] ? 'flex' : 'none'}">
+              <a class="button_material" (click)="orderService.decrementProduct(produtoEncomenda)"><span
+                  class="material-symbols-outlined icon">remove</span></a>
+              <span class="contador">{{ getOrderQuantity(produtoEncomenda.descricao)}}</span>
+              <a class="button_material" (click)="orderService.incrementProduct(produtoEncomenda)"><span
+                  class="material-symbols-outlined icon">add</span></a>
+            </div>
+          </li>
+        </ul>
+      </div>
       <button type="button" class="prev" appPrev>
         <span class="material-symbols-outlined">
           chevron_left
-          </span>
+        </span>
       </button>
       <button type="button" class="next" appNext>
         <span class="material-symbols-outlined">
           chevron_right
-          </span>
+        </span>
       </button>
     </div>
   </div>

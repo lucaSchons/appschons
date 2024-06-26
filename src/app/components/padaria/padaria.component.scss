@@ -29,14 +29,20 @@
 }
 
 .container-encomenda {
+    padding: 50px 60px;
+    overflow: hidden;
+    display: flex;
+    max-width: 1419px;
+    position: relative;
+}
+
+.container-encomenda-geral{
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
     -ms-flex-wrap: wrap;
         flex-wrap: wrap;
-
-    max-width: 1300px;
-    margin: 0 auto;
+    justify-content: center;
 }
 
 .card-list-encomenda {
@@ -49,12 +55,10 @@
     -webkit-box-pack: start;
         -ms-flex-pack: start;
             justify-content: flex-start;
-
-    padding-top: 50px;
-    padding-bottom: 100px;
-
-    overflow-x: auto;
+    overflow: hidden;
     overscroll-behavior-inline: contain;
+    position: relative;
+    width: 100%;
 }
 
 .card-list-encomenda::-webkit-scrollbar {
@@ -77,6 +81,7 @@
     padding: 5px;
     border-radius: 4px;
     width: 300px;
+    position: relative;
 
     margin-left: 20px;
 
@@ -199,6 +204,9 @@
     border-radius: 30px;
     width: 90%;
     height: 50px;
+    &:hover{
+        cursor: pointer;
+    }
 
     .text {
         font-size: 1rem;
@@ -210,11 +218,12 @@
 }
 
 .card-list-encomenda li img {
-    width: 100%;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
     background-color: #f6f7f2;
+    border-radius: 3px;
+    width: 100%;
 }
 
 .button-area {
@@ -229,8 +238,8 @@
     display: -ms-flexbox;
     display: flex;
     position: absolute;
-    left: 8%;
-    top: 500px;
+    left: 0;
+    top: 50%;
     padding: 10px;
     border-radius: 50%;
     border: 1px solid var(--cinza);
@@ -253,8 +262,8 @@
     display: -ms-flexbox;
     display: flex;
     position: absolute;
-    right: 8%;
-    top: 500px;
+    right: 0;
+    top: 50%;
     padding: 10px;
     border-radius: 50%;
     border: 1px solid var(--cinza);
@@ -415,46 +424,17 @@
 
 @media(max-width: 1700px) {
     .container-encomenda {
-        width: 1100px;
-    }
-    .prev {
-        left: 12%
-    }
-    .next {
-        right: 12%;
+        width: 1220px;
     }
     .card-list-encomenda li {
         width: 250px;
     }
 }
 
-@media(max-width: 1600px) {
-    .prev {
-        left: 10%
-    }
-    .next {
-        right: 10%;
-    }
-}
-
-@media(max-width: 1500px) {
-    .prev {
-        left: 6%
-    }
-    .next {
-        right: 6%;
-    }
-}
 
 @media(max-width: 1380px) {
     .container-encomenda {
-        width: 830px;
-    }
-    .prev {
-        left: 12%
-    }
-    .next {
-        right: 12%;
+        width: 949px;
     }
     .card-list-encomenda li {
         width: 250px;
@@ -463,17 +443,6 @@
 }
 
 @media(max-width: 1230px) {
-    .container-encomenda {
-        width: 830px;
-    }
-    .prev {
-        left: 6%;
-        top: 460px;
-    }
-    .next {
-        right: 6%;
-        top: 460px;
-    }
     .card-list-encomenda li {
         width: 250px;
         gap: 4px;
@@ -511,23 +480,18 @@
 
 @media(max-width: 1050px) {
     .container-encomenda {
-        width: 560px;
+        width: 679px;
     }
 
     .prev {
-        left: 13%;
         padding: 8px;
-        top: 450px;
         span {
             font-size: 35px;
         }
     }
 
     .next {
-        right: 13%;
         padding: 8px;
-        top: 450px;
-
         span {
             font-size: 35px;
         }
@@ -535,6 +499,9 @@
 }
 
 @media (max-width: 858px) {
+    .container-encomenda {
+        padding: 50px 0;
+    }
     .head-page {
         h1 {
             font-size: 2rem;

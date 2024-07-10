@@ -5,9 +5,10 @@
     display: flex;
     -webkit-box-pack: center;
     -ms-flex-pack: center;
+    height: 150px;
     justify-content: center;
     margin-bottom: 50px;
-    height: 150px;
+
 }
 
 .head-page .container-header {
@@ -29,16 +30,15 @@
 }
 
 .container {
-    max-width: 1200px;
     margin: 0 auto;
+    max-width: 1200px;
 }
 
 .title h2 {
-    text-align: center;
-    font-size: 1.8rem;
     color: var(--cinza);
+    font-size: 1.8rem;
     margin-bottom: 40px;
-
+    text-align: center;
 }
 
 .sobre-content {
@@ -49,29 +49,30 @@
     -ms-flex-pack: justify;
     justify-content: space-between;
     padding: 0 40px 80px;
+}
 
-    .sobre-img {
-        width: calc(50% - 20px);
+.sobre-content .sobre-img {
+    width: calc(50% - 20px);
 
-        img {
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            border-radius: 20px;
-            width: 100%;
-        }
-    }
-
-    .sobre-text {
-        width: calc(50% - 20px);
-
-        p {
-            letter-spacing: 1px;
-            line-height: 32px;
-            font-size: 22px;
-        }
+    img {
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        border-radius: 20px;
+        width: 100%;
     }
 }
+
+.sobre-content .sobre-text {
+    width: calc(50% - 20px);
+
+    p {
+        font-size: 22px;
+        letter-spacing: 1px;
+        line-height: 32px;
+    }
+}
+
 
 @media (max-width: 992px) {
     .head-page {
@@ -86,18 +87,16 @@
         display: -webkit-box;
         display: -ms-flexbox;
         display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
         -webkit-box-orient: vertical;
         -webkit-box-direction: normal;
         -ms-flex-direction: column;
         flex-direction: column;
-        -webkit-box-align: center;
-        -ms-flex-align: center;
-        align-items: center;
-
         .sobre-img {
             width: 80%;
         }
-
         .sobre-text {
             margin-bottom: 50px;
             width: 100%;

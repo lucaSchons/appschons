@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { OrderService } from '../../services/order.service';
 import { ProdutoService } from '../../services/produtos.service';
@@ -11,11 +11,50 @@ import { pedidoItem } from '../../pedido-item.model';
 })
 
 export class PadariaComponent implements OnInit {
+    @ViewChild('containerEncomenda') containerEncomenda!: ElementRef;
+
     produtos!: Observable<any>;
     produtosEncomenda!: Observable<any>;
     imageObject: any[] = [];
 
-    constructor(public orderService: OrderService, public produtoService: ProdutoService) { }
+    constructor(public orderService: OrderService, public produtoService: ProdutoService, private renderer: Renderer2) { }
+
+    addProductToCart(event: MouseEvent, imageUrl: string, index: number) {
+        const imgElement = this.createFlyImage(event, imageUrl);
+        this.animateFlyImage(imgElement, event);
+    }
+
+    private createFlyImage(event: MouseEvent, imageUrl: string): HTMLElement {
+        const img = this.renderer.createElement('img');
+        img.src = imageUrl;
+        this.renderer.setStyle(img, 'width', '50px');
+        this.renderer.setStyle(img, 'height', '50px');
+        this.renderer.setStyle(img, 'position', 'fixed');
+        this.renderer.setStyle(img, 'z-index', '1000');
+
+        const startRect = (event.target as HTMLElement).getBoundingClientRect();
+        this.renderer.setStyle(img, 'top', `${startRect.top}px`);
+        this.renderer.setStyle(img, 'left', `${startRect.left}px`);
+
+        document.body.appendChild(img);
+        return img;
+    }
+
+    private animateFlyImage(img: HTMLElement, event: MouseEvent) {
+        const shopping_cart = document.querySelector('#shopping'); 
+        if (!shopping_cart) {
+            console.error('error');
+            return;
+        }
+        const shopping_cart_pos = shopping_cart.getBoundingClientRect();
+        const flying_img_pos = (event.target as HTMLElement).getBoundingClientRect();
+        img.style.setProperty('--end-x', `${shopping_cart_pos.x}px`);
+        this.renderer.addClass(img, 'fly-to-cart');
+        img.addEventListener('animationend', () => {
+            img.remove();
+        });
+
+    }
 
     ngOnInit() {
         this.produtosEncomenda = this.produtoService.getProdutosEncomenda();

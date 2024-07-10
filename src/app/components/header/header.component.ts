@@ -14,9 +14,10 @@ export class HeaderComponent implements OnInit {
     icon_hambuguer = true;
    
     constructor() { }
-  
+    
     ngOnInit(){
       this.obtemTotalContador();
+    
     }
     
     toggleBadgeVisibility() {

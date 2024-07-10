@@ -25,7 +25,7 @@
             <mat-divider class="divider-check"></mat-divider>
             <li><a (click)="closeMenu()" routerLink="/contato"><span>Contato</span></a></li>
         </ul>
-        <div class="shopping">
+        <div class="shopping" id="shopping">
             <a routerLink="order" [matBadge]="(obtemTotalContador() || undefined)">
                 <span class="icon material-symbols-outlined">shopping_cart</span>
             </a>

@@ -242,15 +242,14 @@
     left: 0;
     top: 50%;
     padding: 10px;
-    border-radius: 50%;
-    border: 1px solid var(--cinza);
+    border: none;
     background: transparent;
     -webkit-box-pack: center;
     -ms-flex-pack: center;
     justify-content: center;
 
-    span {
-        font-size: 40px;
+    img {
+        width: 60px;
     }
 
     &:hover {
@@ -266,15 +265,14 @@
     right: 0;
     top: 50%;
     padding: 10px;
-    border-radius: 50%;
-    border: 1px solid var(--cinza);
+    border: none;
     background: transparent;
     -webkit-box-pack: center;
     -ms-flex-pack: center;
     justify-content: center;
 
-    span {
-        font-size: 40px;
+    img {
+        width: 60px;
     }
 
     &:hover {

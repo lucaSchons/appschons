@@ -35,16 +35,19 @@ header .container {
         display: -webkit-box;
         display: -ms-flexbox;
         display: flex;
-        font-weight: bold;
-        font-size: 18px;
+        // font-weight: bold;
+        // font-size: 18px;
         -webkit-box-align: center;
             -ms-flex-align: center;
                 align-items: center;
-        &:hover {
-            color: #8B0000;
-            -webkit-transition: 0.2s;
-            -o-transition: 0.2s;
-            transition: 0.2s;
+        // &:hover {
+        //     color: #8B0000;
+        //     -webkit-transition: 0.2s;
+        //     -o-transition: 0.2s;
+        //     transition: 0.2s;
+        // }
+        img{
+            width: 30px;
         }
     }
 
@@ -114,10 +117,10 @@ header .container {
             display: flex;
             width: 165px;
         }
-        .icon{ 
-            font-size: 28px;
-            font-weight: 500;
-        }
+        // .icon{ 
+        //     font-size: 28px;
+        //     font-weight: 500;
+        // }
     }
 
     .checkbtn {

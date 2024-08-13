@@ -147,11 +147,11 @@ export class OrderComponent implements OnInit {
       });
 
       const numeroCompleto = "+55" + telefone;
-      const docRefMessage = addDoc(collection(this.firestore, "messages"), {
-        to: "'" + numeroCompleto + "'",
-        from: "+12067178491",
-        body: this.dadosStringCliente,
-      })
+      // const docRefMessage = addDoc(collection(this.firestore, "messages"), {
+      //   to: "'" + numeroCompleto + "'",
+      //   from: "+12067178491",
+      //   body: this.dadosStringCliente,
+      // })
     });
    
     this.encaminharUsuario();
